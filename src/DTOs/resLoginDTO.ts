@@ -4,7 +4,7 @@ export interface resLoginDTO {
 
     branch: BranchDTO,
     status: number,
-    store: Store,
+    store: string,
     token: string
 
   }

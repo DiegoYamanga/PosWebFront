@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { CommonModule } from '@angular/common';
 import { HttpService } from '../../service/HttpService';
 import { ReqRegisterDTO } from '../../../DTOs/reqRegisterDTO';
+import { AppModule } from '../../app.component';
 
 
 

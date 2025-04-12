@@ -1,0 +1,5 @@
+    <div *ngIf="comercio$ | async as comercio">
+      <h1>Sorteo - {{ comercio.nombre }}</h1>
+      <img [src]="comercio.imagenUrl" alt="Logo Comercio" />
+      <p>Ubicación: {{ comercio.ubicacion }}</p>
+    </div>

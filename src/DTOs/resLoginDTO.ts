@@ -1,10 +1,11 @@
 import { BranchDTO } from "./brachDTO";
+import { StoreDTO } from "./storeDTO";
 
 export interface resLoginDTO {
 
     branch: BranchDTO,
     status: number,
-    store: string,
+    store: StoreDTO,
     token: string
 
   }

@@ -1,0 +1,42 @@
+.imgLogin{
+    width: 50%;
+    margin: 0 auto;
+    padding-top: 6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+h1{
+    font-size: 1.2rem;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.loginError{
+    display: flex;
+    align-items: center;
+  }
+  .loginError span{
+    padding-top: 4px;
+    padding-left: 0.2rem;
+  }
+
+  .form{
+    margin: auto;
+    margin-top: 10rem;
+    max-width: 80%;
+  }
+
+  .btnSign{
+    margin-top: 1rem;
+    border-radius: 0.3125rem;
+    background-color: #0d5787;
+    color: white;
+  }
+  .btnSign:hover{
+    color: #0d5787;
+    background-color: white;
+    border-color: #0d5787;
+  }

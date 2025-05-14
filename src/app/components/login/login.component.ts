@@ -4,6 +4,10 @@ import { Router, RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { StateComercioAction } from '../../redux/action';
 import { AppModule } from '../../app.component';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 
 
 
@@ -18,11 +22,19 @@ export interface Comercio {
 @Component({
   standalone : true,
   selector: 'app-login',
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatIconModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
+
+  public hide = true;
+  public loginError: boolean = false;
+
+  public loginForm = new FormGroup({
+    user: new FormControl('', [Validators.required]),
+    password: new FormControl('', [Validators.required]),
+  });
 
   constructor(private store: Store, private router: Router) {}
 

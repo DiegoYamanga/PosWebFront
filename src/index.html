@@ -1,13 +1,34 @@
 <!doctype html>
-<html lang="en">
+<html translate="no" lang="es">
 <head>
   <meta charset="utf-8">
-  <title>PosWebFront</title>
+  <title id="dynamic-name">Fidely</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" id="dynamic-favicon" type="image/x-icon" href="assets/fidelyIco.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+        <!-- MODIFICACIONES PARA ICONO TANTO EN PESTAÑA COMO IOS/ANDROID -->
+  <link rel="icon" type="image/png" sizes="32x32" class="dynamic-favicon1" href="assets/fidelyIco.ico">
+  <link rel="icon" type="image/png" sizes="192x192" class="dynamic-favicon2" href="assets/fidelyIco.ico">
+  <link rel="apple-touch-icon" class="dynamic-favicon3" href="assets/fidelyIco.ico">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" class="dynamic-name1" content="Fidely">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="application-name" class="dynamic-name2" content="Fidely">
+  <meta name="mobile-web-app-title" class="dynamic-name3" content="Fidely">
+  <!-- <link rel="manifest" href="assets/manifest.json"> -->
+        <!-- FIN MODIFICACIONES PARA ICONOS -->
+
+
 </head>
-<body>
+<body class="mat-typography">
   <app-root></app-root>
 </body>
 </html>

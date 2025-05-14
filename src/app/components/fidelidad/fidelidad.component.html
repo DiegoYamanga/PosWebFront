@@ -1,7 +1,29 @@
-<div class="grid-container">
+<!-- <div class="grid-container">
     <button (click)="goToCompras()">COMPRAS</button>
     <button (click)="goToCanje()">CANJE</button>
     <button routerLink="/anulacion" class="grid-item anulacion">ANULACIÓN</button>
     <button routerLink="/consultar-saldo" class="grid-item saldo">CONSULTAR SALDO</button>
     <button (click)="goToSorteo()">SORTEO</button>
+</div> -->
+
+<div class="container">
+  <div class="main-content"></div>
+  <div class="grid-buttons">
+    <button class="compra" (click)="goToCompras()">
+      <i class="material-icons">shopping_cart</i>
+      COMPRA
+    </button>
+    <button class="canje" (click)="goToCanje()">
+      <i class="material-icons">sync_alt</i>
+      CANJE
+    </button>
+    <button class="anulacion">
+      <i class="material-icons">cancel</i>
+      ANULACIÓN
+    </button>
+    <button class="saldo">
+      <i class="material-icons">search</i>
+      CONSULTAR SALDO
+    </button>
+  </div>
 </div>

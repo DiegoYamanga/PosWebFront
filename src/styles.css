@@ -13,7 +13,7 @@ body {
     margin: auto!important;
     box-shadow: -10px 0 15px -5px rgba(90, 90, 90, 0.3), 
             10px 0 15px -5px rgba(90, 90, 90, 0.3);
-            padding: 2rem;
+
 }
 h1, h2, h3, p, a, li, div{
     font-family: "Red Hat Display", sans-serif !important;

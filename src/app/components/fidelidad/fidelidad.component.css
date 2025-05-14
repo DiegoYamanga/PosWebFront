@@ -1,4 +1,4 @@
-.grid-container {
+/* .grid-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 10px;
@@ -13,7 +13,7 @@
   .compra { background-color: orange; }
   .canje { background-color: deepskyblue; }
   .anulacion { background-color: seagreen; }
-  .saldo { background-color: purple; }
+  .saldo { background-color: purple; } */
   
   .container {
   display: flex;
@@ -44,7 +44,7 @@
       font-size: 1rem;
 
       i {
-        font-size: 2rem;
+        font-size: 4rem;
         margin-bottom: 0.5rem;
       }
     }

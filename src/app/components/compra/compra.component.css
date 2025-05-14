@@ -1,4 +1,4 @@
-.dialog-container {
+/* .dialog-container {
     position: fixed;
     top: 0; left: 0;
     width: 100%; height: 100%;
@@ -19,4 +19,43 @@
   
   .actions button {
     margin: 0.5rem;
+  } */
+
+  .container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+  padding: 0;
   }
+
+  .main-content {
+    flex-grow: 1;
+    background-color: white;
+  }
+
+  .grid-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    height: 20%;
+  }
+
+    button {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-weight: bold;
+      font-size: 1rem;
+
+      i {
+        font-size: 4rem;
+        margin-bottom: 0.5rem;
+      }
+    }
+
+    .tarjetas { background-color: #f59e0b; border: 1px solid white;} /* naranja */
+    .documento { background-color: #3b82f6; border: 1px solid white;}  /* azul */
+    .qr { background-color: #8b5cf6; border: 1px solid white;}  /* violeta */
+  

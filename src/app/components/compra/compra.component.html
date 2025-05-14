@@ -1,4 +1,4 @@
-<div class="compra-botones">
+<!-- <div class="compra-botones">
   <button class="boton tarjetas" (click)="accionTarjeta()">
     <img />
     TARJETAS
@@ -13,4 +13,22 @@
     <img/>
     DOCUMENTO
   </button>
+</div> -->
+
+<div class="container">
+  <div class="main-content"></div>
+  <div class="grid-buttons">
+    <button class="tarjetas" (click)="accionTarjeta()">
+      <i class="material-icons">credit_score</i>
+      TARJETAS
+    </button>
+    <button class="qr" (click)="accionQR()">
+      <i class="material-icons">qr_code_scanner</i>
+      QR
+    </button>
+    <button class="documento">
+      <i class="material-icons">contact_mail</i>
+      DOCUMENTO
+    </button>
+  </div>
 </div>

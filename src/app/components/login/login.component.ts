@@ -9,25 +9,22 @@ import { NavigationService } from '../../../logic/navigationService';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
-import { AppModule } from '../../app.component';
+import { MatButtonModule } from '@angular/material/button';
 
 
 @Component({
   standalone: true,
   selector: 'app-login',
-  imports: [CommonModule, FormsModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatIconModule, RouterModule],
+  imports: [CommonModule, FormsModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatButtonModule, MatIconModule, RouterModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  // loginForm: FormGroup;
-  // hide = true;
+
   error: string | null = null;
   public hide = true;
   public loginError: boolean = false;
-
-  // public hide = true;
-  // public loginError: boolean = false;
+  public loginSpinner: boolean = false;
 
   public loginForm = new FormGroup({
     user: new FormControl('', [Validators.required]),
@@ -50,6 +47,7 @@ export class LoginComponent {
 
   onSubmit(): void {
     if (this.loginForm.invalid) return;
+    this.loginSpinner = true;
 
     if(this.loginForm.value.user && this.loginForm.value.password){
 
@@ -60,12 +58,15 @@ export class LoginComponent {
           if (res && res.token) {
             this.sessionLogic.setLoginData(res.token, res);
             this.navigation.irAFidelidad();
+            this.loginSpinner = false;
           } else {
             this.error = 'Credenciales incorrectas.';
+            this.loginSpinner = false;
           }
         },
         error: () => {
           this.router.navigate(['/error-login']);
+          this.loginSpinner = false;
         }
       });
       }

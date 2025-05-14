@@ -1,0 +1,12 @@
+<div class="dialogo">
+    <h3 *ngIf="tipo === 'documento'">Número de documento</h3>
+    <input *ngIf="tipo === 'documento'" [(ngModel)]="documento" type="text" />
+  
+    <h3 *ngIf="tipo === 'tarjeta'">Número de tarjeta</h3>
+    <input *ngIf="tipo === 'tarjeta'" type="text" />
+  
+    <h3 *ngIf="tipo === 'qr'">Escaneá el código QR</h3>
+  
+    <button (click)="aceptar()">ACEPTAR</button>
+  </div>
+  

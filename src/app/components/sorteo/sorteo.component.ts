@@ -1,10 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { Comercio, LoginComponent } from '../login/login.component';
+import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs/internal/Observable';
+import { EndpointAdapterLogic } from '../../../logic/endpointAdapterLogic';
+import { SessionLogic } from '../../../logic/sessionLogic';
+import { LotsDTO } from '../../../DTOs/lotsDTO';
+import { ResClienteDTO } from '../../../DTOs/resClienteDTO';
 import { AppSelectors } from '../../redux/selectors';
-import { AppModule } from '../../app.component';
+import { StateResLotsDTOAction } from '../../redux/action';
 
 
 @Component({
@@ -12,17 +14,32 @@ import { AppModule } from '../../app.component';
   selector: 'app-sorteo',
   imports: [CommonModule],
   templateUrl: './sorteo.component.html',
-  styleUrl: './sorteo.component.css'
+  styleUrls: ['./sorteo.component.css']
 })
-export class SorteoComponent {
-  comercio$: Observable<Comercio | undefined>;
+export class SorteoComponent implements OnInit {
+  lots: LotsDTO[] = [];
+  clienteInfo: ResClienteDTO | undefined;
 
-  constructor(private store: Store,
-  ) {
-    this.comercio$ = this.store.select(AppSelectors.selectComercio);
+  constructor(
+    private store: Store,
+    private endpointLogic: EndpointAdapterLogic,
+  ) {}
+
+  ngOnInit(): void {
+    this.store.select(AppSelectors.selectResClienteDTO).subscribe(cliente => {
+      this.clienteInfo = cliente;
+       console.log("---> cliente", cliente)
+
+      if (true) {
+
+        const storeID = 32;
+        const branchID = 43;
+
+        this.endpointLogic.obtenerSortosStore(storeID, branchID).then(sorteos => {
+          this.lots = sorteos;
+          this.store.dispatch(StateResLotsDTOAction.setLotsDTO({ resLotsDTO: sorteos }));
+        });
+      }
+    });
   }
 }
-
-
-
-

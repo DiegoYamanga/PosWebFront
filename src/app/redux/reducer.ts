@@ -1,19 +1,29 @@
 import { createReducer, on, State } from '@ngrx/store';
-import { StateComercioAction } from './action';
-import { Comercio } from '../components/login/login.component';
+import { StateResClienteDTOAction, StateResLoginDTOAction, StateResLotsDTOAction } from './action';
+
 import { AppState } from './state';
 
 
 export const initialState: AppState = {
-  comercio: undefined
-}
+  resLoginDTO: undefined,
+  resClienteDTO : undefined,
+  reslotsDTO : undefined
+};
 
 
 
 export const reduxReducer = createReducer(
   initialState,
-  on(StateComercioAction.setComercio, (state, {comercio}) => {
-      return ({...state, comercio: comercio})
-    }
-  )
+  on(StateResLoginDTOAction.setResLoginDTO, (state, { resLoginDTO }) => ({
+    ...state,
+    resLoginDTO: resLoginDTO
+  })),
+  on(StateResClienteDTOAction.setClienteDTO, (state, { resClienteDTO }) => ({
+    ...state,
+    resClienteDTO: resClienteDTO
+  })),
+  on(StateResLotsDTOAction.setLotsDTO, (state, { resLotsDTO }) => ({
+    ...state,
+    reslotsDTO: resLotsDTO  // ✅ nombre de la propiedad debe coincidir con el estado
+  }))
 );

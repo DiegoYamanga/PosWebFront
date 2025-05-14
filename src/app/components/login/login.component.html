@@ -1,2 +1,17 @@
-<h1>Login</h1>
-<button (click)="login()">Login</button>
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="user">Usuario</label>
+    <input id="user" formControlName="user" type="text" />
+  </div>
+
+  <div>
+    <label for="password">Contraseña</label>
+    <input id="password" formControlName="password" [type]="hide ? 'password' : 'text'" />
+  </div>
+
+  <button type="submit" [disabled]="loginForm.invalid">Ingresar</button>
+
+  <div *ngIf="error" style="color: red; margin-top: 10px;">
+    {{ error }}
+  </div>
+</form>

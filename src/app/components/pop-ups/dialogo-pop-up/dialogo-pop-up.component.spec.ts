@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SorteComponent } from './sorte.component';
+import { DialogoPopUpComponent } from './dialogo-pop-up.component';
 
-describe('SorteComponent', () => {
-  let component: SorteComponent;
-  let fixture: ComponentFixture<SorteComponent>;
+describe('DialogoPopUpComponent', () => {
+  let component: DialogoPopUpComponent;
+  let fixture: ComponentFixture<DialogoPopUpComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SorteComponent]
+      imports: [DialogoPopUpComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(SorteComponent);
+    fixture = TestBed.createComponent(DialogoPopUpComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

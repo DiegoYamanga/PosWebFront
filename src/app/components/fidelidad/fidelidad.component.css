@@ -1,0 +1,18 @@
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    padding: 1rem;
+  }
+  .grid-item {
+    padding: 1rem;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 8px;
+    color: white;
+  }
+  .compra { background-color: orange; }
+  .canje { background-color: deepskyblue; }
+  .anulacion { background-color: seagreen; }
+  .saldo { background-color: purple; }
+  

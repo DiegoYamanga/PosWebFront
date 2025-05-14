@@ -1,10 +1,28 @@
 import { createAction, createActionGroup, props } from '@ngrx/store';
-import { Comercio } from '../components/login/login.component';
+import { resLoginDTO } from '../../DTOs/resLoginDTO';
+import { ResClienteDTO } from '../../DTOs/resClienteDTO';
+import { LotsDTO } from '../../DTOs/lotsDTO';
 
 
-export const StateComercioAction = createActionGroup({
-  source: 'ComercioState',
+export const StateResLoginDTOAction = createActionGroup({
+  source: 'ResLoginDTOState',
   events: {
-    'setComercio': props<{ comercio: Comercio }>(),
+    'setResLoginDTO': props<{ resLoginDTO: resLoginDTO }>(),
   },
 });
+
+export const StateResClienteDTOAction = createActionGroup({
+  source: 'ResClienteDTOState',
+  events: {
+    'setClienteDTO': props<{ resClienteDTO : ResClienteDTO }>(),
+  },
+});
+
+export const StateResLotsDTOAction = createActionGroup({
+  source: 'ResLotsDTOState',
+  events: {
+    'setLotsDTO': props<{ resLotsDTO : LotsDTO[] | undefined }>(),
+  },
+});
+
+

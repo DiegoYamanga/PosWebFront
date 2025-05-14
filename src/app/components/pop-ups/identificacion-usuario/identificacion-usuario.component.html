@@ -1,1 +1,12 @@
-<p>identificacion-usuario works!</p>
+<div class="popup">
+    <h3>Número de documento</h3>
+    <p>Ingresa el documento del cliente.</p>
+    <input [(ngModel)]="documento" placeholder="Número de documento" />
+  
+    <div class="acciones">
+      <button>CAMBIAR TECLADO</button>
+      <button (click)="buscarCliente()">ACEPTAR</button>
+    </div>
+  
+    <div *ngIf="error" class="error">{{ error }}</div>
+  </div>

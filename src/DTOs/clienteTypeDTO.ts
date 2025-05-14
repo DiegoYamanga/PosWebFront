@@ -1,4 +1,4 @@
-export interface ClientTypeDTO {
+export interface ClienteTipoDTO {
     id: number;
     name: string;
     description: string;
@@ -20,6 +20,6 @@ export interface ClientTypeDTO {
     discount_7: number;
     min_allowed_points: number;
     is_default: number;
-    branch_id?: number;         
+    branch_id: number;         
     client_type_id?: number; 
   }

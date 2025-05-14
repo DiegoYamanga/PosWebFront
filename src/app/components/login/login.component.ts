@@ -2,31 +2,30 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { StateComercioAction } from '../../redux/action';
-import { AppModule } from '../../app.component';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { EndpointAdapterLogic } from '../../../logic/endpointAdapterLogic';
+import { SessionLogic } from '../../../logic/sessionLogic';
+import { NavigationService } from '../../../logic/navigationService';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
-
-
-
-export interface Comercio {
-  id: string | undefined;
-  nombre: string | undefined;
-  ubicacion: string | undefined;
-  imagenUrl: string | undefined;
-}
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AppModule } from '../../app.component';
 
 
 @Component({
-  standalone : true,
+  standalone: true,
   selector: 'app-login',
-  imports: [CommonModule, FormsModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatIconModule],
+  imports: [CommonModule, FormsModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatIconModule, RouterModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
+  loginForm: FormGroup;
+  hide = true;
+  error: string | null = null;
+  public hide = true;
+  public loginError: boolean = false;
 
   public hide = true;
   public loginError: boolean = false;
@@ -36,19 +35,39 @@ export class LoginComponent {
     password: new FormControl('', [Validators.required]),
   });
 
-  constructor(private store: Store, private router: Router) {}
-
-  login() {
-    const datosComercio: Comercio = {
-      id: '123',
-      nombre: 'Supermercado Juan',
-      ubicacion: 'Calle Falsa 123',
-      imagenUrl: 'https://placehold.co/200x100'
-    };
-
-    this.store.dispatch(StateComercioAction.setComercio({ comercio: datosComercio }));
-    this.router.navigate(['/sorteo']);
+  constructor(
+    private fb: FormBuilder,
+    private store: Store,
+    private router: Router,
+    private endPointAdapterLogic: EndpointAdapterLogic,
+    private sessionLogic: SessionLogic,
+    private navigation: NavigationService
+  ) {
+    this.loginForm = this.fb.group({
+      user: ['', Validators.required],
+      password: ['', Validators.required]
+    });
   }
+
+  onSubmit(): void {
+    if (this.loginForm.invalid) return;
+
+    const credentials = this.loginForm.value;
+
+    this.endPointAdapterLogic.loginFinal(credentials).subscribe({
+      next: (res: { token: string; }) => {
+        if (res && res.token) {
+          this.sessionLogic.setLoginData(res.token, res);
+          this.navigation.irAFidelidad();
+        } else {
+          this.error = 'Credenciales incorrectas.';
+        }
+      },
+      error: () => {
+        this.router.navigate(['/error-login']);
+      }
+    });
+    }
 }
 
 

@@ -1,9 +1,16 @@
-import { Comercio } from "../components/login/login.component";
+import { LotsDTO } from "../../DTOs/lotsDTO";
+import { ResClienteDTO } from "../../DTOs/resClienteDTO";
+import { resLoginDTO } from "../../DTOs/resLoginDTO";
+
 
 export interface AppState {
 
 
-    comercio: Comercio | undefined;
+    resLoginDTO: resLoginDTO | undefined;
+
+    resClienteDTO : ResClienteDTO | undefined;
+
+    reslotsDTO: LotsDTO[] | undefined;
 
 
 }

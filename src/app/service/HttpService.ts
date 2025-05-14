@@ -32,7 +32,8 @@ export class HttpService {
   }
 
   public login(body: ReqLogicDTO) : Observable<any> {
-    return this.http.post(this.BASE_URL + "/mobileLogin", body);
+    console.log("reqLogin--->",body)
+    return this.http.post(this.BASE_URL + "/mobile_login", body);
   }
 
   public register(body: ReqRegisterDTO) : Observable<any> {
@@ -43,8 +44,8 @@ export class HttpService {
     return this.http.get(this.BASE_URL + "/stores/" + storeID + "/branches/" + branchesID + "/clients/" + lookup + "/full",{});
   }
 
-  public getSorteosInfo(storeID : String, branchesID: String) : Observable<any> {
-    return this.http.get(this.BASE_URL + "/stores/" + storeID + "/branches/" + branchesID + "/lots/",{});
+  public getStoreSorteos( storeID: number , branchesID: number) : Observable<any> {
+    return this.http.get(this.BASE_URL + "/stores/" + storeID + "/branches/" + branchesID + "/lots",{});
   }
 
   public getParcipante(storeID : String, branchesID: String, lotsID : String, lookup : String) : Observable<any> {

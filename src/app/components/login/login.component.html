@@ -2,7 +2,7 @@
 <h1>Fidely Argentina - Fidely</h1>
 <!-- <button (click)="login()">Login</button> -->
 
-<form [formGroup]="loginForm" (keydown.enter)="$event.preventDefault(); login()" class="form">
+<form [formGroup]="loginForm" (keydown.enter)="$event.preventDefault(); onSubmit()" class="form">
     <div class="form-group example-container">
       <mat-form-field class="w-100">
         <mat-label for="user">Usuario</mat-label>
@@ -26,7 +26,7 @@
       </mat-form-field>
       <mat-error class="loginError" *ngIf="loginError"> <mat-icon>error_outline</mat-icon><span>Usuario o contraseña invalidos</span></mat-error>
     </div>
-    <button (click)="login()" [disabled]="loginForm.controls.user.invalid" class="btn btnSign btn-block w-100">Ingresar</button>
+    <button (click)="onSubmit()" [disabled]="loginForm.controls.user.invalid" class="btn btnSign btn-block w-100">Ingresar</button>
 </form>
 
 

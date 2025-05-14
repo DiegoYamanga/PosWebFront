@@ -2,14 +2,13 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule,FormsModule,FormControl } from '@angular/forms';
 import { EndpointAdapterLogic } from '../../../logic/endpointAdapterLogic';
 import { SessionLogic } from '../../../logic/sessionLogic';
 import { NavigationService } from '../../../logic/navigationService';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AppModule } from '../../app.component';
 
 
@@ -21,14 +20,14 @@ import { AppModule } from '../../app.component';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  loginForm: FormGroup;
-  hide = true;
+  // loginForm: FormGroup;
+  // hide = true;
   error: string | null = null;
   public hide = true;
   public loginError: boolean = false;
 
-  public hide = true;
-  public loginError: boolean = false;
+  // public hide = true;
+  // public loginError: boolean = false;
 
   public loginForm = new FormGroup({
     user: new FormControl('', [Validators.required]),
@@ -52,21 +51,24 @@ export class LoginComponent {
   onSubmit(): void {
     if (this.loginForm.invalid) return;
 
-    const credentials = this.loginForm.value;
+    if(this.loginForm.value.user && this.loginForm.value.password){
 
-    this.endPointAdapterLogic.loginFinal(credentials).subscribe({
-      next: (res: { token: string; }) => {
-        if (res && res.token) {
-          this.sessionLogic.setLoginData(res.token, res);
-          this.navigation.irAFidelidad();
-        } else {
-          this.error = 'Credenciales incorrectas.';
+      const credentials = {user:this.loginForm.value.user, password:this.loginForm.value.password};
+  
+      this.endPointAdapterLogic.loginFinal(credentials).subscribe({
+        next: (res: { token: string; }) => {
+          if (res && res.token) {
+            this.sessionLogic.setLoginData(res.token, res);
+            this.navigation.irAFidelidad();
+          } else {
+            this.error = 'Credenciales incorrectas.';
+          }
+        },
+        error: () => {
+          this.router.navigate(['/error-login']);
         }
-      },
-      error: () => {
-        this.router.navigate(['/error-login']);
+      });
       }
-    });
     }
 }
 

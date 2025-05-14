@@ -19,7 +19,7 @@ export const routes: Routes = [
     { path: 'clienteDatos', component: IdentificacionUsuarioComponent },
     { path: 'sorteo', component: SorteoComponent },
     { path: 'dniDetallesOperacion', component: DniDetallesOperacionComponent },
-    { path: 'canje', component: CanjeComponent }
+    { path: 'canje', component: CanjeComponent },
     { path: '', component: LoginComponent}
 
 ];

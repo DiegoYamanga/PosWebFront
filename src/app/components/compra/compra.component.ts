@@ -4,11 +4,13 @@ import { ResClienteDTO } from '../../../DTOs/resClienteDTO';
 import { Store } from '@ngrx/store';
 import { AppSelectors } from '../../redux/selectors';
 import { NavigationService } from '../../../logic/navigationService';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { IdentificacionUsuarioComponent } from '../pop-ups/identificacion-usuario/identificacion-usuario.component';
 
 @Component({
   standalone: true,
   selector: 'app-compra',
-  imports: [CommonModule],
+  imports: [CommonModule, MatDialogModule ],
   templateUrl: './compra.component.html',
   styleUrls: ['./compra.component.css']
 })
@@ -16,13 +18,14 @@ export class CompraComponent {
   cliente: ResClienteDTO | undefined;
 
   constructor(private store: Store,
-              private navigationService : NavigationService
+              private navigationService : NavigationService,
+              private dialog: MatDialog,
   ) {
     this.store.select(AppSelectors.selectResClienteDTO)
     .subscribe(value => {
       console.log("Valueee------>",value);
       this.cliente = value;
-    
+
     });
   }
 
@@ -35,7 +38,17 @@ export class CompraComponent {
   }
 
   goToIdentificacionUsuario(): void {
-    this.navigationService.goToInfCliente();
+    const dialogRef = this.dialog.open(IdentificacionUsuarioComponent, {
+        data: {} ,
+        width: '400px',
+        height: 'auto'
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result?.exitoso) {
+          this.navigationService.goToDNIDetallesOperacion();
+        }
+      });
   }
 
 

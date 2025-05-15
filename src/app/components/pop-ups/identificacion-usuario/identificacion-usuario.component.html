@@ -1,12 +1,24 @@
-<div class="popup">
-    <h3>Número de documento</h3>
-    <p>Ingresa el documento del cliente.</p>
-    <input [(ngModel)]="documento" placeholder="Número de documento" />
-  
-    <div class="acciones">
-      <button>CAMBIAR TECLADO</button>
-      <button (click)="buscarCliente()">ACEPTAR</button>
-    </div>
-  
-    <div *ngIf="error" class="error">{{ error }}</div>
+
+  <div class="popup">
+  <h3 class="titulo">Número de documento</h3>
+  <p class="subtitulo">Ingresa el documento del cliente.</p>
+
+  <input
+    type="text"
+    [(ngModel)]="documento"
+    placeholder="Número de documento"
+    class="input"
+  />
+
+  <div class="acciones">
+    <!-- <button class="boton texto-secundario" (click)="cambiarTeclado()">CAMBIAR TECLADO</button> -->
+     @if (!loading) {
+       <button class="boton texto-primario right" (click)="buscarCliente()">ACEPTAR</button>
+     }
+    @if (loading) {
+      <button class="boton texto-primario right" disabled><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></button>
+    }
   </div>
+
+  <div *ngIf="error" class="error">{{ error }}</div>
+</div>

@@ -8,6 +8,7 @@ import { DatosUsuarioComponent } from './components/pop-ups/datos-usuario/datos-
 import { IdentificacionUsuarioComponent } from './components/pop-ups/identificacion-usuario/identificacion-usuario.component';
 import { DniDetallesOperacionComponent } from './components/dni-detalles-operacion/dni-detalles-operacion.component';
 import { CanjeComponent } from './components/canje/canje.component';
+import { NotificacionComponent } from './components/notificacion/notificacion.component';
 
 
 export const routes: Routes = [
@@ -20,6 +21,7 @@ export const routes: Routes = [
     { path: 'sorteo', component: SorteoComponent },
     { path: 'dniDetallesOperacion', component: DniDetallesOperacionComponent },
     { path: 'canje', component: CanjeComponent },
+    { path: 'notificacion', component: NotificacionComponent },
     { path: '', component: LoginComponent}
 
 ];

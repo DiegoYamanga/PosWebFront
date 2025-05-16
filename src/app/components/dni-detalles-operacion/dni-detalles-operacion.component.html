@@ -1,86 +1,92 @@
-<!-- 
-<div class="cliente-info" *ngIf="cliente">
-  <div class="cliente-nombre">
-    <strong>{{ cliente.datosCliente.name }} {{ cliente.datosCliente.last_name }}</strong><br />
-    <small>{{ cliente.tipoCliente.name }}</small>
-  </div>
-
-  <div class="cliente-puntos">
-    <span>{{ cliente.datosCliente.points | number:'1.0-0' }} puntos</span><br />
-    <span>$ {{ cliente.datosCliente.cash | number:'1.2-2' }}</span>
-  </div>
-</div>
-
-<div class="monto-ingreso">
-  <h2>$ 0</h2>
-  <button class="btn-confirmar">✔</button>
-</div>
-
-<div class="teclado-numerico">
-  <div class="fila" *ngFor="let fila of [[1,2,3],[4,5,6],[7,8,9],[0]]">
-    <button *ngFor="let numero of fila">{{ numero }}</button>
-  </div>
-</div> -->
 
 <!-- ETAPA 1: INGRESO MONTO -->
 <div *ngIf="etapa === 'monto' && cliente">
-  <div class="cliente-info">
-    <div class="cliente-nombre">
-      <strong>{{ cliente.datosCliente.name }} {{ cliente.datosCliente.last_name }}</strong><br />
-      <small>{{ cliente.tipoCliente.name }}</small>
+  <app-header [headerTitle]="'Monto de compra'"></app-header>
+  <div class="container">
+    
+    <div class="cliente-info d-flex justify-content-between">
+      <div class="cliente-nombre">
+        <p class="clientName">{{ cliente.datosCliente.name }} {{ cliente.datosCliente.last_name }}</p>
+        <p class="clientType">{{ cliente.tipoCliente.name }}</p>
+      </div>
+  
+      <div class="cliente-puntos">
+        <span>{{ cliente.datosCliente.points | number:'1.0-0' }} puntos</span><br />
+        <span class="cash">$ {{ cliente.datosCliente.cash | number:'1.2-2' }}</span>
+      </div>
     </div>
 
-    <div class="cliente-puntos">
-      <span>{{ cliente.datosCliente.points | number:'1.0-0' }} puntos</span><br />
-      <span>$ {{ cliente.datosCliente.cash | number:'1.2-2' }}</span>
-    </div>
   </div>
 
-  <div class="monto-ingreso">
-    <h2>$ {{ monto || '0' }}</h2>
-    <button class="btn-confirmar" (click)="confirmarMonto()">✔</button>
-  </div>
-
-  <div class="teclado-numerico">
-    <div class="fila" *ngFor="let fila of [['1','2','3'],['4','5','6'],['7','8','9'],[',','0','←']]">
-      <button *ngFor="let numero of fila" (click)="numero === '←' ? borrarUltimo() : agregarNumero(numero)">
-        {{ numero }}
-      </button>
+    <div class="input-group inputAmount w-75">
+      <span class="input-group-text prefix">$</span>
+      <input type="number" class="form-control" inputmode="numeric" min="0" placeholder='Monto de compra' required [(ngModel)]="monto">
     </div>
-  </div>
+    <button class="btn btn-confirmar" > <i class="material-icons" (click)="confirmarMonto()">check_box</i></button>
+
 </div>
 
 <!-- ETAPA 2: DETALLE -->
-<div *ngIf="etapa === 'detalle' && cliente">
-  <div class="cliente-info">
-    <div class="cliente-nombre">
-      <strong>{{ cliente.datosCliente.name }} {{ cliente.datosCliente.last_name }}</strong><br />
-      <small>{{ cliente.tipoCliente.name }}</small>
+<div *ngIf="etapa === 'detalle' && cliente"  class="detalle-wrapper">
+  <app-header [headerTitle]="'Detalle operación'"></app-header>
+  <div class="container flex-grow">
+    
+    <div class="cliente-info d-flex justify-content-between">
+      <div class="cliente-nombre">
+        <p class="clientName">{{ cliente.datosCliente.name }} {{ cliente.datosCliente.last_name }}</p>
+        <p class="clientType">{{ cliente.tipoCliente.name }}</p>
+      </div>
+  
+      <div class="cliente-puntos">
+        <span>{{ cliente.datosCliente.points | number:'1.0-0' }} puntos</span><br />
+        <span class="cash">$ {{ cliente.datosCliente.cash | number:'1.2-2' }}</span>
+      </div>
     </div>
 
-    <div class="cliente-puntos">
-      <span>{{ cliente.datosCliente.points }} puntos</span><br />
-      <span>$ {{ cliente.datosCliente.cash }}</span>
+
+
+    <div class="detalleOp">
+      <div class="fila">
+        <div class="campoFila">
+          <p class="descripcionCampo">MEDIO DE PAGO</p>
+          <p class="valorCampo">{{ cliente.datosCliente.client_type_name }}</p>
+        </div>
+        <div class="campoFilaRigth">
+          <p class="descripcionCampo">NRO. TICKET</p>
+          <p class="valorCampo">123456</p>
+        </div>
+      </div>
+      <div class="fila">
+        <div class="campoFila">
+          <p class="descripcionCampo">TIPO DE OPERACION</p>
+          <p class="valorCampo">Fidelidad - Compra</p>
+        </div>
+        <div class="campoFilaRigth">
+          <p class="descripcionCampo">MONTO</p>
+          <p class="valorCampo">$ {{ monto }}</p>
+        </div>
+      </div>
+      <div class="fila">
+        <div class="campoFila">
+          <p class="descripcionCampo">PUNTOS</p>
+          <p class="valorCampo green">{{ cliente.datosCliente.points }} %</p>
+        </div>
+        <div class="campoFilaRigth">
+          <p class="descripcionCampo">PUNTOS OBTENIDOS</p>
+          <p class="valorCampo green">{{ cliente.tipoCliente.points_4 }}</p>
+        </div>
+      </div>
     </div>
+
   </div>
 
-  <div class="detalle-operacion">
-    <div><strong>MEDIO DE PAGO</strong> <span>{{ cliente.datosCliente.client_type_name }}</span></div>
-    <div><strong>NRO. TICKET</strong> <span>12132</span></div>
-    <div><strong>TIPO OPERACIÓN</strong> <span>Fidelidad - Compra</span></div>
-    <div><strong>MONTO</strong> <span>$ {{ monto }}</span></div> #
-    <div><strong>PUNTOS</strong> <span></span>{{ cliente.datosCliente.points }}</div>
-    <div><strong>PUNTOS OBTENIDOS</strong><span>{{ cliente.tipoCliente.points_4 }}</span>
+  <button class="btn-continuar btnContinuar btn" (click)="continuarAFirma()">CONTINUAR</button>
 
-    </div>
-  </div>
-
-  <button class="btn-continuar" (click)="continuarAFirma()">CONTINUAR</button>
 </div>
 
 <!-- ETAPA 3: FIRMA -->
-<div *ngIf="etapa === 'firma'">
+<!-- <div *ngIf="etapa === 'firma'">
   <h2>Firma Cliente</h2>
   <input [(ngModel)]="nombreFirmado" placeholder="Escriba su nombre..." />
   <button class="btn-continuar" (click)="confirmarOperacion()">CONFIRMAR</button>
-</div>
+</div> -->

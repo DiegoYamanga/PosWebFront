@@ -5,9 +5,11 @@ import { Store } from '@ngrx/store';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'; 
 import { EndpointAdapterLogic } from '../../../logic/endpointAdapterLogic';
+import { HeaderComponent } from "../header/header.component";
+import { NavigationService } from '../../../logic/navigationService';
 @Component({
   selector: 'app-dni-detalles-operacion',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, HeaderComponent],
   templateUrl: './dni-detalles-operacion.component.html',
   styleUrl: './dni-detalles-operacion.component.css'
 })
@@ -18,7 +20,8 @@ export class DniDetallesOperacionComponent {
   nombreFirmado: string = '';
 
   constructor(private store: Store,
-              private endpointAdapterlogic : EndpointAdapterLogic
+              private endpointAdapterlogic : EndpointAdapterLogic,
+              private navigation: NavigationService
   ) {}
 
   ngOnInit(): void {
@@ -28,13 +31,13 @@ export class DniDetallesOperacionComponent {
     });
   }
 
-  agregarNumero(valor: string) {
-    this.monto += valor;
-  }
+  // agregarNumero(valor: string) {
+  //   this.monto += valor;
+  // }
 
-  borrarUltimo() {
-    this.monto = this.monto.slice(0, -1);
-  }
+  // borrarUltimo() {
+  //   this.monto = this.monto.slice(0, -1);
+  // }
 
   confirmarMonto() {
     if (this.monto) {
@@ -43,7 +46,8 @@ export class DniDetallesOperacionComponent {
   }
 
   continuarAFirma() {
-    this.etapa = 'firma';
+    // this.etapa = 'firma';
+    this.navigation.goToNotificacion();
   }
 
   confirmarOperacion() {

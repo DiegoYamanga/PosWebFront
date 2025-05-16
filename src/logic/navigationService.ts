@@ -34,4 +34,8 @@ export class NavigationService{
     this.router.navigate(['/canje']);
   }
 
+  goToNotificacion(){
+    this.router.navigate(['/notificacion'])
+  }
+
 }

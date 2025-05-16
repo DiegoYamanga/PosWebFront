@@ -1,0 +1,31 @@
+*{
+  font-family: 'RedHatDisplay', sans-serif;
+}
+.failIcon{
+  font-size: 7rem;
+  padding-bottom: 1rem;
+}
+.failTitle{
+  font-size: 2rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+.failText{
+  text-align: center;
+  font-size: .85rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.succesIcon{
+  font-size: 7rem;
+  padding-bottom: 1rem;
+}
+.succesTitle{
+  font-size: 2rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  text-align: center;
+}

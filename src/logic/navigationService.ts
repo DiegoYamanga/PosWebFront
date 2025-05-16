@@ -35,7 +35,7 @@ export class NavigationService{
   }
 
   goToNotificacion(){
-    this.router.navigate(['/notificacion'])
+    this.router.navigate(['/notificacion']);
   }
 
 }

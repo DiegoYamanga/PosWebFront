@@ -1,0 +1,13 @@
+.header{
+    height: 5rem;
+    background-color: #3F51B5;
+    color: white;
+    display: flex;
+    align-items: end;
+    padding: .5rem;
+
+    h4{
+        margin: 0 auto;
+        font-size: 1.1rem;
+    }
+}

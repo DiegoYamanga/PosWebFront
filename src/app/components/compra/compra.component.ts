@@ -6,11 +6,12 @@ import { AppSelectors } from '../../redux/selectors';
 import { NavigationService } from '../../../logic/navigationService';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { IdentificacionUsuarioComponent } from '../pop-ups/identificacion-usuario/identificacion-usuario.component';
+import { HeaderComponent } from "../header/header.component";
 
 @Component({
   standalone: true,
   selector: 'app-compra',
-  imports: [CommonModule, MatDialogModule ],
+  imports: [CommonModule, MatDialogModule, HeaderComponent],
   templateUrl: './compra.component.html',
   styleUrls: ['./compra.component.css']
 })

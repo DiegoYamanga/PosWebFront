@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { NavigationService } from '../../../logic/navigationService';
+import { HeaderComponent } from "../header/header.component";
 
 @Component({
   selector: 'app-fidelidad',
-  imports: [],
+  imports: [HeaderComponent],
   templateUrl: './fidelidad.component.html',
   styleUrl: './fidelidad.component.css'
 })

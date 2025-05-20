@@ -7,6 +7,7 @@ import { resLoginDTO } from "../DTOs/resLoginDTO";
 import { firstValueFrom, map, Observable } from "rxjs";
 import { ResClienteDTO } from "../DTOs/resClienteDTO";
 import { LotsDTO } from "../DTOs/lotsDTO";
+import { ReqGiftCardDatosDTO } from "../DTOs/reqGiftCardDatosDTO";
 
 
 // @NgModule({
@@ -50,14 +51,31 @@ export class EndpointAdapterLogic {
     } as ResClienteDTO;
   }
 
-async obtenerSortosStore(storeID: number, branchID: number): Promise<LotsDTO[]> {
-  const lots = await firstValueFrom(
-    this.httpService.getStoreSorteos(storeID,branchID )
-  );
-  console.log("Sorteos recibidos:", lots);
+  async obtenerSortosStore(storeID: number, branchID: number): Promise<LotsDTO[]> {
+    const lots = await firstValueFrom(
+      this.httpService.getStoreSorteos(storeID,branchID )
+    );
+    console.log("Sorteos recibidos:", lots);
 
-  return lots as LotsDTO[];
-}
+    return lots as LotsDTO[];
+  }
+
+  async cargarSaldoGiftCard(storeID: string, branchID: string, cardNumber: string, amount: number ): Promise<any> {
+    const now = new Date().toISOString();
+
+    const payload: ReqGiftCardDatosDTO = {
+      serial_number: "MOBILE",            // si no tenés serial, podés usar el card_number
+      card_number: cardNumber,
+      identification :"34058686",
+      amount: amount,
+      local_datetime: "",
+      branch_id: branchID
+    };
+    console.log("A ver como qeudo el req-->",payload)
+
+    return await firstValueFrom(this.httpService.cargarGiftCards(storeID, payload));
+  }
+
 
 
 }

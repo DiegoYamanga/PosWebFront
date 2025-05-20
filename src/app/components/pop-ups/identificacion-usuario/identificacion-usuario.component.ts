@@ -8,11 +8,18 @@ import { CommonModule } from '@angular/common';
 import { NavigationService } from '../../../../logic/navigationService';
 import { StateResClienteDTOAction } from '../../../redux/action';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   standalone: true,
   selector: 'app-identificacion-usuario',
-  imports: [CommonModule, FormsModule, MatDialogModule],providers: [ServiceLogic],
+  imports: [CommonModule,
+    FormsModule,
+    MatDialogModule,
+    MatButtonModule,
+    MatInputModule],
+  providers: [ServiceLogic],
   templateUrl: './identificacion-usuario.component.html',
   styleUrl: './identificacion-usuario.component.css'
 })

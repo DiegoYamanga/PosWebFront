@@ -1,1 +1,24 @@
-<p>gift-card works!</p>
+<!-- Encabezado -->
+<app-header [headerTitle]="titulo || 'GiftCard'"></app-header>
+
+<!-- Etapa 1: selección de operación -->
+<div *ngIf="etapa === 'seleccion'" class="giftcard-container d-flex flex-column justify-content-center align-items-center text-center">
+  <div class="botonera d-flex flex-wrap justify-content-center mt-5">
+    <button class="btn-opcion compra" (click)="irACompra()">COMPRA</button>
+    <button class="btn-opcion cargar-saldo" (click)="irACargarSaldo()">CARGAR SALDO</button>
+    <button class="btn-opcion anulacion" (click)="irAAnulacion()">ANULACIÓN</button>
+    <button class="btn-opcion consultar-saldo" (click)="irAConsultarSaldo()">CONSULTAR SALDO</button>
+  </div>
+</div>
+
+<!-- Etapa 2: ingreso de monto -->
+<div *ngIf="etapa === 'monto'" class="giftcard-etapa-monto text-center mt-4">
+  <p>Número de tarjeta: <strong>{{ numeroTarjeta }}</strong></p>
+
+  <div class="monto-input">
+    <p>Ingrese el monto</p>
+    <input type="number" [(ngModel)]="saldo" class="form-control w-50 mx-auto" placeholder="$0.00" />
+  </div>
+
+  <button class="btn btn-success mt-3" (click)="confirmarOperacion()">✔️ Confirmar</button>
+</div>

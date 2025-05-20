@@ -67,7 +67,7 @@ export class HttpService {
   }
 
   public cargarGiftCards(storeID : String, reqDescargarGiftCardDTO : ReqGiftCardDatosDTO) : Observable<any> {
-    return this.http.post(this.BASE_URL + "/stores/" + storeID + "/giftcards/" + "/charge",reqDescargarGiftCardDTO);
+    return this.http.post(this.BASE_URL + "/stores/" + storeID + "/giftcards/" + "charge",reqDescargarGiftCardDTO);
   }
 
   public cancelarTransaccionByIdRequest(storeID : String, transactionID : String , reqCancelarTransaccionByID : ReqCancelarTransaccionByID) : Observable<any> {

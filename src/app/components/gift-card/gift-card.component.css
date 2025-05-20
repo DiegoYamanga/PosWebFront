@@ -1,0 +1,32 @@
+.botonera {
+  width: 90%;
+  max-width: 400px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.btn-opcion {
+  padding: 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  color: white;
+  border-radius: 8px;
+}
+
+.compra {
+  background-color: #f39c12; /* naranja */
+}
+
+.cargar-saldo {
+  background-color: #3498db; /* azul */
+}
+
+.anulacion {
+  background-color: #27ae60; /* verde */
+}
+
+.consultar-saldo {
+  background-color: #8e44ad; /* violeta */
+}

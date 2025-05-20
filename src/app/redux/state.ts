@@ -12,5 +12,16 @@ export interface AppState {
 
     reslotsDTO: LotsDTO[] | undefined;
 
+    tipoCanje: 'IMPORTE' | 'PUNTOS' | null;
+
+    origenOperacion: 'CANJE' | 'COMPRA' | null;
+
+    giftCardOperacion: 'COMPRA' | 'CARGAR_SALDO' | 'ANULACION' | 'CONSULTAR_SALDO' | null;
+
+    montoGiftCard: number | null;
+
+
+
+
 
 }

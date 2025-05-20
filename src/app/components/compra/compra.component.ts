@@ -7,6 +7,7 @@ import { NavigationService } from '../../../logic/navigationService';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { IdentificacionUsuarioComponent } from '../pop-ups/identificacion-usuario/identificacion-usuario.component';
 import { HeaderComponent } from "../header/header.component";
+import { StateOrigenOperacionAction } from '../../redux/action';
 
 @Component({
   standalone: true,
@@ -47,6 +48,7 @@ export class CompraComponent {
 
       dialogRef.afterClosed().subscribe(result => {
         if (result?.exitoso) {
+          this.store.dispatch(StateOrigenOperacionAction.setOrigenOperacion({ origen: 'COMPRA' }));
           this.navigationService.goToDNIDetallesOperacion();
         }
       });

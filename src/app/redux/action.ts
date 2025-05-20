@@ -25,4 +25,35 @@ export const StateResLotsDTOAction = createActionGroup({
   },
 });
 
+export const StateTipoCanjeAction = createActionGroup({
+  source: 'TipoCanjeState',
+  events: {
+    'setTipoCanje': props<{ tipoCanje: 'IMPORTE' | 'PUNTOS' }>(),
+  },
+});
+
+export const StateOrigenOperacionAction = createActionGroup({
+  source: 'OrigenOperacionState',
+  events: {
+    'setOrigenOperacion': props<{ origen: 'CANJE' | 'COMPRA' }>()
+  }
+});
+
+export const StateGiftCardOperacionAction = createActionGroup({
+  source: 'GiftCardOperacionState',
+  events: {
+    'setGiftCardOperacion': props<{ operacion: 'COMPRA' | 'CARGAR_SALDO' | 'ANULACION' | 'CONSULTAR_SALDO' }>()
+  }
+});
+
+export const StateMontoGiftCardAction = createActionGroup({
+  source: 'MontoGiftCardState',
+  events: {
+    'setMontoGiftCard': props<{ monto: number | null}>()
+  }
+});
+
+
+
+
 

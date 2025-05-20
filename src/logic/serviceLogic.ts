@@ -6,13 +6,9 @@ import { ReqLogicDTO } from "../DTOs/ReqLoginDTO";
 import { EndpointAdapterLogic } from "./endpointAdapterLogic";
 import { ResClienteDTO } from "../DTOs/resClienteDTO";
 
-@NgModule({
-    declarations: [],
-    imports: [StoreModule.forRoot({ _STATE_: reduxReducer })],
-    providers: [],
-    bootstrap: [],
-    exports: []
-  })
+@Injectable({
+  providedIn: 'root'
+})
   export class ServiceLogic {
 
 

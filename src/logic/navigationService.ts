@@ -38,4 +38,9 @@ export class NavigationService{
     this.router.navigate(['/notificacion']);
   }
 
+  goToGiftCard() {
+  this.router.navigate(['giftcard']);
+  }
+
+
 }

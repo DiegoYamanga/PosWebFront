@@ -9,6 +9,7 @@ import { IdentificacionUsuarioComponent } from './components/pop-ups/identificac
 import { DniDetallesOperacionComponent } from './components/dni-detalles-operacion/dni-detalles-operacion.component';
 import { CanjeComponent } from './components/canje/canje.component';
 import { NotificacionComponent } from './components/notificacion/notificacion.component';
+import { GiftCardComponent } from './components/gift-card/gift-card.component';
 
 
 export const routes: Routes = [
@@ -22,6 +23,7 @@ export const routes: Routes = [
     { path: 'dniDetallesOperacion', component: DniDetallesOperacionComponent },
     { path: 'canje', component: CanjeComponent },
     { path: 'notificacion', component: NotificacionComponent },
-    { path: '', component: LoginComponent}
+    { path: '', component: LoginComponent},
+    { path: 'giftcard', component: GiftCardComponent}
 
 ];

@@ -10,6 +10,7 @@ import { DniDetallesOperacionComponent } from './components/dni-detalles-operaci
 import { CanjeComponent } from './components/canje/canje.component';
 import { NotificacionComponent } from './components/notificacion/notificacion.component';
 import { GiftCardComponent } from './components/gift-card/gift-card.component';
+import { InicioComponent } from './components/inicio/inicio.component';
 
 
 export const routes: Routes = [
@@ -24,6 +25,7 @@ export const routes: Routes = [
     { path: 'canje', component: CanjeComponent },
     { path: 'notificacion', component: NotificacionComponent },
     { path: '', component: LoginComponent},
-    { path: 'giftcard', component: GiftCardComponent}
+    { path: 'giftcard', component: GiftCardComponent},
+    { path: 'inicio', component:InicioComponent }
 
 ];

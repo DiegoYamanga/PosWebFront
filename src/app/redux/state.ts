@@ -10,8 +10,6 @@ export interface AppState {
 
     resClienteDTO : ResClienteDTO | undefined;
 
-    reslotsDTO: LotsDTO[] | undefined;
-
     tipoCanje: 'IMPORTE' | 'PUNTOS' | null;
 
     origenOperacion: 'CANJE' | 'COMPRA' | null;
@@ -19,6 +17,9 @@ export interface AppState {
     giftCardOperacion: 'COMPRA' | 'CARGAR_SALDO' | 'ANULACION' | 'CONSULTAR_SALDO' | null;
 
     montoGiftCard: number | null;
+
+    reslotsDTO: LotsDTO[] | undefined;
+
 
 
 

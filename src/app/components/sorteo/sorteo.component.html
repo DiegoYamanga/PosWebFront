@@ -1,15 +1,26 @@
-<div *ngIf="lots.length > 0; else noData">
-  <ul>
-    <li *ngFor="let lot of lots">
-      <h3>{{ lot.title }}</h3>
-      <img *ngIf="lot.logo_url" [src]="lot.logo_url" width="100" />
-      <p>Desde: {{ lot.date_from }}</p>
-      <p>Hasta: {{ lot.date_to }}</p>
-      <p>Monto mínimo: {{ lot.min_amount }}</p>
-    </li>
-  </ul>
+<!-- sorteo.component.html -->
+
+<!-- Etapa 1: Selección de método -->
+<div *ngIf="etapa === 'inicio'">
+  <app-header [headerTitle]="'Sorteo'"></app-header>
+  <div class="d-flex flex-column justify-content-center align-items-center mt-5">
+    <button class="btn btn-warning m-2" (click)="abrirPopTarjeta()">TARJETAS</button>
+    <button class="btn btn-secondary m-2" (click)="escanearQR()">QR</button>
+    <button class="btn btn-primary m-2" (click)="abrirPopDocumento()">DOCUMENTO</button>
+  </div>
 </div>
 
-<ng-template #noData>
-  <p>No hay sorteos disponibles.</p>
-</ng-template>
+<!-- Etapa 2: Mostrar sorteos -->
+<div *ngIf="etapa === 'sorteos'">
+  <app-header [headerTitle]="'Sorteos Disponibles'"></app-header>
+  <div class="container mt-3">
+    <div *ngFor="let sorteo of sorteos" class="card mb-3">
+      <div class="card-body">
+        <h5 class="card-title">{{ sorteo.title }}</h5>
+        <p class="card-text">Desde: {{ sorteo.date_from }} - Hasta: {{ sorteo.date_to }}</p>
+        <p class="card-text">Participaciones máximas: {{ sorteo.max_user_participations }}</p>
+        <button (click)="participarEnSorteo(sorteo)">Participar</button> 
+      </div>
+    </div>
+  </div>
+</div>

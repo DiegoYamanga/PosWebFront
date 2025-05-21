@@ -18,10 +18,6 @@ const selectResClienteDTO = createSelector(
   (state) => state.resClienteDTO
 )
 
-const selectResLotsDTO = createSelector(
-  selectStateModule,
-  (state) => state.reslotsDTO
-);
 
 const selectTipoCanje = createSelector(
   selectStateModule,
@@ -43,14 +39,19 @@ const selectMontoGiftCard = createSelector(
   (state) => state.montoGiftCard
 );
 
+const selectResLotsDTO = createSelector(
+  selectStateModule,
+  (state) => state.reslotsDTO
+);
+
 
 export const AppSelectors = {
   selectState,
   selectResLoginDTO,
   selectResClienteDTO,
-  selectResLotsDTO,
   selectTipoCanje,
   selectOrigenOperacion,
   selectGiftCardOperacion,
-  selectMontoGiftCard
+  selectMontoGiftCard,
+  selectResLotsDTO
 }

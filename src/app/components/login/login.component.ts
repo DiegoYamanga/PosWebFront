@@ -57,7 +57,7 @@ export class LoginComponent {
         next: (res: { token: string; }) => {
           if (res && res.token) {
             this.sessionLogic.setLoginData(res.token, res);
-            this.navigation.irAFidelidad();
+            this.navigation.goToInicio();
             this.loginSpinner = false;
           } else {
             this.error = 'Credenciales incorrectas.';

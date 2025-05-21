@@ -48,14 +48,13 @@ export class HttpService {
     return this.http.get(this.BASE_URL + "/stores/" + storeID + "/branches/" + branchesID + "/lots",{});
   }
 
-  public getParcipante(storeID : String, branchesID: String, lotsID : String, lookup : String) : Observable<any> {
+  public getParcipante(storeID : number, branchesID: number, lotsID : number, lookup : String) : Observable<any> {
     return this.http.get(this.BASE_URL + "/stores/" + storeID + "/branches/" + branchesID + "/lots/" + lotsID + "/participate/" + lookup,{});
   }
 
 
-  //TODO CUESTIONAR ENDPOINT
-  public generarParticipante(storeID : String, branchesID: String, lotsID : String, lookup : String , ReqParticipacionSorteoDTO : ReqParticipacionSorteoDTO) : Observable<any> {
-    return this.http.post(this.BASE_URL + "/stores/" + storeID + "/branches/" + branchesID + "/lots/" + lotsID + "/participate/" + lookup,ReqParticipacionSorteoDTO);
+  public generarParticipante(storeID : number, branchesID: number, lotsID : number, lookup : String , ReqParticipacionSorteoDTO : ReqParticipacionSorteoDTO) : Observable<any> {
+    return this.http.post(this.BASE_URL + "/stores/" + storeID + "/branches/" + branchesID + "/lots/" + lotsID + "/participants/" + lookup,ReqParticipacionSorteoDTO);
   }
 
   public getGiftCard(storeID : String, lookup : String) : Observable<any> {
@@ -67,7 +66,7 @@ export class HttpService {
   }
 
   public cargarGiftCards(storeID : String, reqDescargarGiftCardDTO : ReqGiftCardDatosDTO) : Observable<any> {
-    return this.http.post(this.BASE_URL + "/stores/" + storeID + "/giftcards/" + "charge",reqDescargarGiftCardDTO);
+    return this.http.post(this.BASE_URL + "/stores/" + storeID + "/giftcards" + "/charge",reqDescargarGiftCardDTO);
   }
 
   public cancelarTransaccionByIdRequest(storeID : String, transactionID : String , reqCancelarTransaccionByID : ReqCancelarTransaccionByID) : Observable<any> {

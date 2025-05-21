@@ -18,12 +18,6 @@ export const StateResClienteDTOAction = createActionGroup({
   },
 });
 
-export const StateResLotsDTOAction = createActionGroup({
-  source: 'ResLotsDTOState',
-  events: {
-    'setLotsDTO': props<{ resLotsDTO : LotsDTO[] | undefined }>(),
-  },
-});
 
 export const StateTipoCanjeAction = createActionGroup({
   source: 'TipoCanjeState',
@@ -52,6 +46,14 @@ export const StateMontoGiftCardAction = createActionGroup({
     'setMontoGiftCard': props<{ monto: number | null}>()
   }
 });
+
+export const StateResLotsDTOAction = createActionGroup({
+  source: 'ResLotsDTOState',
+  events: {
+    'setLotsDTO': props<{ reslotsDTO: LotsDTO[] | undefined }>(),
+  },
+});
+
 
 
 

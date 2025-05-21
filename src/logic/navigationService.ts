@@ -42,5 +42,10 @@ export class NavigationService{
   this.router.navigate(['giftcard']);
   }
 
+  goToInicio() {
+  this.router.navigate(['inicio']);
+}
+
+
 
 }

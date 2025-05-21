@@ -1,0 +1,69 @@
+.inicio-wrapper {
+  padding: 20px;
+  text-align: center;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.icons i {
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.logo-container {
+  margin: 30px 0;
+}
+
+.logo-container img {
+  max-width: 180px;
+}
+
+.subtitulo {
+  font-weight: 500;
+  margin-top: 10px;
+}
+
+.botonera {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  padding: 0 20px;
+}
+
+.btn {
+  padding: 20px;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  border: none;
+  border-radius: 10px;
+}
+
+.fidelidad {
+  background-color: #79318c;
+}
+
+.giftcard {
+  background-color: #d82323;
+}
+
+.sorteo {
+  background-color: #f8961e;
+}
+
+.encuestas {
+  background-color: #3f88c5;
+}
+
+.gestion {
+  background-color: #3b8d61;
+}
+
+.pagos {
+  background-color: #f9c74f;
+}

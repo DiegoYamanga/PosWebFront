@@ -8,6 +8,7 @@ import { firstValueFrom, map, Observable } from "rxjs";
 import { ResClienteDTO } from "../DTOs/resClienteDTO";
 import { LotsDTO } from "../DTOs/lotsDTO";
 import { ReqGiftCardDatosDTO } from "../DTOs/reqGiftCardDatosDTO";
+import { ReqParticipacionSorteoDTO } from "../DTOs/reqParticipacionSorteo";
 
 
 // @NgModule({
@@ -52,13 +53,16 @@ export class EndpointAdapterLogic {
   }
 
   async obtenerSortosStore(storeID: number, branchID: number): Promise<LotsDTO[]> {
+    console.log("store: ",storeID,"branchid: ",branchID);
+    branchID = 43;
     const lots = await firstValueFrom(
-      this.httpService.getStoreSorteos(storeID,branchID )
+      this.httpService.getStoreSorteos(storeID, branchID)
     );
     console.log("Sorteos recibidos:", lots);
 
     return lots as LotsDTO[];
   }
+
 
   async cargarSaldoGiftCard(storeID: string, branchID: string, cardNumber: string, amount: number ): Promise<any> {
     const now = new Date().toISOString();
@@ -75,6 +79,39 @@ export class EndpointAdapterLogic {
 
     return await firstValueFrom(this.httpService.cargarGiftCards(storeID, payload));
   }
+
+  // Verificar si puede participar
+async verificarParticipacion(storeID: number, branchID: number, lotID: number, lookup: string): Promise<boolean> {
+  branchID = 43;    
+  console.log("store: ",storeID,"branchid: ",branchID, "idLots",lotID, "DNI:",lookup);
+
+  
+  try {
+    const response = await firstValueFrom(
+      this.httpService.getParcipante(storeID, branchID, lotID, lookup)
+    );
+    return !!response?.can_participate;  // asumimos que el back devuelve algo así
+  } catch (error) {
+    console.error("Error en verificarParticipacion:", error);
+    return false;
+  }
+}
+
+// Generar la participación
+async generarParticipacion(storeID: number, branchID: number, lotID: number, lookup: string, body: ReqParticipacionSorteoDTO): Promise<any> {
+  console.log("store: ",storeID,"branchid: ",branchID, "idLots",lotID, "DNI:",lookup);
+  console.log("reqParcipante-->",body)
+  try {
+    const response = await firstValueFrom(
+      this.httpService.generarParticipante(storeID, branchID, lotID, lookup, body)
+    );
+    return response;
+  } catch (error) {
+    console.error("Error en generarParticipacion:", error);
+    throw error;
+  }
+}
+
 
 
 

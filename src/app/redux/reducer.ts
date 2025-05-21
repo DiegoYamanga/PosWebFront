@@ -7,11 +7,11 @@ import { AppState } from './state';
 export const initialState: AppState = {
   resLoginDTO: undefined,
   resClienteDTO : undefined,
-  reslotsDTO : undefined,
   tipoCanje: null,
   origenOperacion: null,
   giftCardOperacion: null,
   montoGiftCard: null,
+  reslotsDTO: undefined,
 
 
 
@@ -30,10 +30,6 @@ export const reduxReducer = createReducer(
     ...state,
     resClienteDTO: resClienteDTO
   })),
-  on(StateResLotsDTOAction.setLotsDTO, (state, { resLotsDTO }) => ({
-    ...state,
-    reslotsDTO: resLotsDTO
-  })),
   on(StateTipoCanjeAction.setTipoCanje, (state, { tipoCanje }) => ({
   ...state,
   tipoCanje: tipoCanje
@@ -49,7 +45,12 @@ export const reduxReducer = createReducer(
   on(StateMontoGiftCardAction.setMontoGiftCard, (state, { monto }) => ({
   ...state,
   montoGiftCard: monto
-}))
+  })),
+  on(StateResLotsDTOAction.setLotsDTO, (state, { reslotsDTO }) => ({
+  ...state,
+  reslotsDTO: reslotsDTO
+  }))
+
 
 
 );

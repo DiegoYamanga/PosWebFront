@@ -100,6 +100,7 @@ async verificarParticipacion(storeID: number, branchID: number, lotID: number, l
 // Generar la participación
 async generarParticipacion(storeID: number, branchID: number, lotID: number, lookup: string, body: ReqParticipacionSorteoDTO): Promise<any> {
   console.log("store: ",storeID,"branchid: ",branchID, "idLots",lotID, "DNI:",lookup);
+  branchID = 43;
   console.log("reqParcipante-->",body)
   try {
     const response = await firstValueFrom(

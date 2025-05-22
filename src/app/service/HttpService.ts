@@ -54,7 +54,7 @@ export class HttpService {
 
 
   public generarParticipante(storeID : number, branchesID: number, lotsID : number, lookup : String , ReqParticipacionSorteoDTO : ReqParticipacionSorteoDTO) : Observable<any> {
-    return this.http.post(this.BASE_URL + "/stores/" + storeID + "/branches/" + branchesID + "/lots/" + lotsID + "/participants/" + lookup,ReqParticipacionSorteoDTO);
+    return this.http.post(this.BASE_URL + "/stores/" + storeID + "/branches/" + branchesID + "/lots/" + lotsID + "/participants",ReqParticipacionSorteoDTO);
   }
 
   public getGiftCard(storeID : String, lookup : String) : Observable<any> {

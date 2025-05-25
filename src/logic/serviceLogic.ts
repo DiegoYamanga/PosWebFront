@@ -1,49 +1,63 @@
-import { Store, StoreModule } from "@ngrx/store";
+// ✅ 1. MODIFICACIÓN COMPLETA PARA SERVICELOGIC
+
+import { Injectable } from "@angular/core";
+import { Store } from "@ngrx/store";
 import { HttpService } from "../app/service/HttpService";
-import { Injectable, NgModule } from "@angular/core";
-import { reduxReducer } from "../app/redux/reducer";
-import { ReqLogicDTO } from "../DTOs/ReqLoginDTO";
 import { EndpointAdapterLogic } from "./endpointAdapterLogic";
 import { ResClienteDTO } from "../DTOs/resClienteDTO";
+import { GiftcardDTO } from "../DTOs/giftCardsDTO";
 
 @Injectable({
   providedIn: 'root'
 })
-  export class ServiceLogic {
+export class ServiceLogic {
 
+  private cliente: ResClienteDTO | null = null;
+  private giftCardInfo: GiftcardDTO | null = null;
+  private ultimaOperacion: any = null;
 
-    private cliente: ResClienteDTO | null = null;
-  
-    constructor(private store: Store,
-      private httpService: HttpService,
-      private endPointAdapterLogic : EndpointAdapterLogic
-    ) { }
+  constructor(private store: Store,
+              private httpService: HttpService,
+              private endPointAdapterLogic : EndpointAdapterLogic
+  ) {}
 
+  public setCliente(cliente: ResClienteDTO) {
+    this.cliente = cliente;
+  }
 
-    public async buttonLogin(reqLogin : ReqLogicDTO): Promise<any> {
-      // Login
-      let loginSucces = await this.endPointAdapterLogic.loginFinal(reqLogin);
-      console.log("LoginSucces: ", );
-      if (!loginSucces) {
-        return false;
-      }
-    }
+  public getCliente(): ResClienteDTO | null {
+    return this.cliente;
+  }
 
+  public setGiftCardInfo(giftCard: GiftcardDTO) {
+    this.giftCardInfo = giftCard;
+  }
 
-    public setCliente(cliente: ResClienteDTO) {
-      this.cliente = cliente;
-    }
-  
-    public getCliente(): ResClienteDTO | null {
-      return this.cliente;
-    }
-  
-    public clear() {
-      this.cliente = null;
-    }
+  public getGiftCardInfo(): GiftcardDTO | null {
+    return this.giftCardInfo;
+  }
 
+  public clear(): void {
+    this.cliente = null;
+    this.giftCardInfo = null;
+  }
 
+  private giftcardInfo: GiftcardDTO | null = null;
 
+  public setGiftcardInfo(info: GiftcardDTO) {
+    this.giftcardInfo = info;
+  }
 
+  public getGiftcardInfo(): GiftcardDTO | null {
+    return this.giftcardInfo;
+  }
+
+  public setUltimaOperacionGiftCard(respuesta: any) {
+  this.ultimaOperacion = respuesta;
+}
+
+public getUltimaOperacionGiftCard(): any {
+  return this.ultimaOperacion;
+}
 
 }

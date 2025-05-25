@@ -9,6 +9,8 @@ import { ResClienteDTO } from "../DTOs/resClienteDTO";
 import { LotsDTO } from "../DTOs/lotsDTO";
 import { ReqGiftCardDatosDTO } from "../DTOs/reqGiftCardDatosDTO";
 import { ReqParticipacionSorteoDTO } from "../DTOs/reqParticipacionSorteo";
+import { ReqCancelarTransaccionByID } from "../DTOs/reqCancelarTransaccionByID";
+import { GiftcardDTO } from "../DTOs/giftCardsDTO";
 
 
 // @NgModule({
@@ -113,7 +115,36 @@ async generarParticipacion(storeID: number, branchID: number, lotID: number, loo
   }
 }
 
+async anularTransaccion(storeID: string, transactionID: string, body: ReqCancelarTransaccionByID): Promise<any> {
+  return await firstValueFrom(
+    this.httpService.cancelarTransaccionByIdRequest(storeID, transactionID, body)
+  );
+}
 
+async consultarSaldoGiftCard(storeID: string, numeroTarjeta: string): Promise<GiftcardDTO> {
+  const response = await firstValueFrom(
+    this.httpService.getGiftCard(storeID, numeroTarjeta)
+  );
+
+  const giftCard: GiftcardDTO = {
+    id: response.id,
+    identification: response.identification,
+    points: response.points,
+    cash: response.cash,
+    card_number: response.card_number,
+    store_id: response.store_id
+  };
+
+  return giftCard;
+}
+
+
+async descargarSaldoGiftCard(storeID: string, body: ReqGiftCardDatosDTO): Promise<any> {
+  console.log("ReqGIFTCARDDATOSDESCA-->",body)
+  return await firstValueFrom(
+    this.httpService.descargarGiftCards(storeID, body)
+  );
+}
 
 
 }

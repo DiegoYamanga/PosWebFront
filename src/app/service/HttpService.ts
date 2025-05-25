@@ -62,7 +62,7 @@ export class HttpService {
   }
 
   public descargarGiftCards(storeID : String, reqDescargarGiftCardDTO : ReqGiftCardDatosDTO) : Observable<any> {
-    return this.http.post(this.BASE_URL + "/stores/" + storeID + "/giftcards/" + "/discharge",reqDescargarGiftCardDTO);
+    return this.http.post(this.BASE_URL + "/stores/" + storeID + "/giftcards" + "/discharge",reqDescargarGiftCardDTO);
   }
 
   public cargarGiftCards(storeID : String, reqDescargarGiftCardDTO : ReqGiftCardDatosDTO) : Observable<any> {
@@ -70,7 +70,7 @@ export class HttpService {
   }
 
   public cancelarTransaccionByIdRequest(storeID : String, transactionID : String , reqCancelarTransaccionByID : ReqCancelarTransaccionByID) : Observable<any> {
-    return this.http.post(this.BASE_URL + "/stores/" + storeID + "/transactionID/" + transactionID , reqCancelarTransaccionByID);
+    return this.http.post(this.BASE_URL + "/stores/" + storeID + "/transactions/" + transactionID + "/cancel" , reqCancelarTransaccionByID);
   }
 
 

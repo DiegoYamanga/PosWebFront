@@ -1,0 +1,19 @@
+<h2>Datos del cliente</h2>
+
+<div *ngIf="data.tipo === 'FIDELIDAD'">
+  <p><strong>ID Cliente:</strong> {{ data.cliente.datosCliente.id }}</p>
+  <p><strong>Nombre:</strong> {{ data.cliente.datosCliente.name }}, {{ data.cliente.datosCliente.last_name }}</p>
+  <p><strong>Tipo Cliente:</strong> {{ data.cliente.tipoCliente.name }}</p>
+  <p><strong>PUNTOS ACUMULADOS:</strong> {{ data.cliente.datosCliente.points | number:'1.1-1' }}</p>
+  <p><strong>CREDITO ACUMULADO:</strong> $ {{ data.cliente.datosCliente.cash | number:'1.2-2' }}</p>
+</div>
+
+<div *ngIf="data.tipo === 'GIFTCARD'">
+  <p><strong>Tarjeta:</strong> {{ data.tarjeta }}</p>
+  <p><strong>Saldo disponible:</strong> $ {{ data.saldo | number:'1.2-2' }}</p>
+</div>
+
+<div class="popup-actions">
+  <button mat-button color="primary" (click)="salir()">SALIR</button>
+  <button mat-button color="accent" (click)="imprimir()">IMPRIMIR</button>
+</div>

@@ -14,7 +14,7 @@ import { StateOrigenOperacionAction } from '../../redux/action';
   styleUrl: './canje.component.css'
 })
 export class CanjeComponent implements OnInit {
-  
+
 
     tipoCanje: 'PUNTOS' | 'IMPORTE' | null = null;
     cliente: ResClienteDTO | undefined;
@@ -23,7 +23,7 @@ export class CanjeComponent implements OnInit {
               private dialog: MatDialog,
               private navigation: NavigationService
   ) {}
-  
+
   ngOnInit(): void {
 
     // Obtener el tipo de canje

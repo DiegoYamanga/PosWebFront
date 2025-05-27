@@ -1,6 +1,10 @@
 .inicio-wrapper {
-  padding: 20px;
+  padding: 2rem;
   text-align: center;
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .header {
@@ -46,24 +50,53 @@
 
 .fidelidad {
   background-color: #79318c;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 7rem;
 }
 
 .giftcard {
   background-color: #d82323;
+    display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 7rem;
 }
 
 .sorteo {
   background-color: #f8961e;
+    display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 7rem;
 }
 
 .encuestas {
   background-color: #3f88c5;
+    display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 7rem;
 }
 
 .gestion {
   background-color: #3b8d61;
+    display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 7rem;
 }
 
 .pagos {
   background-color: #f9c74f;
+    display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 7rem;
+}
+
+.ico{
+  margin-right: .5rem;
+  font-size: 2rem;
 }

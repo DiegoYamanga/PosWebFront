@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { NavigationService } from '../../../logic/navigationService';
+import { HeaderComponent } from "../header/header.component";
 
 @Component({
   standalone : true,
   selector: 'app-inicio',
-  imports: [],
+  imports: [HeaderComponent],
   templateUrl: './inicio.component.html',
   styleUrl: './inicio.component.css'
 })

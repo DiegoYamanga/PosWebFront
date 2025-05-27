@@ -11,6 +11,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { TarjetaUsuarioComponent } from '../pop-ups/tarjeta-usuario/tarjeta-usuario.component';
 import { HeaderComponent } from '../header/header.component';
 import { ReqParticipacionSorteoDTO } from '../../../DTOs/reqParticipacionSorteo';
+import { NotificacionComponent } from '../notificacion/notificacion.component';
+
+
 
 @Component({
   standalone: true,
@@ -23,6 +26,8 @@ export class SorteoComponent implements OnInit {
   sorteos: LotsDTO[] = [];
   clienteInfo: ResClienteDTO | undefined;
   etapa: 'inicio' | 'sorteos' = 'inicio';
+  storeID!: number;
+  branchID!: number;
 
   constructor(
     private store: Store,
@@ -39,6 +44,17 @@ export class SorteoComponent implements OnInit {
       if (lots && lots.length > 0) {
         this.sorteos = lots;
         this.etapa = 'sorteos';
+      }
+    });
+
+    this.store.select(AppSelectors.selectResLoginDTO).subscribe(loginData => {
+      if (loginData) {
+        this.storeID = loginData.store.id;
+        this.branchID = loginData.branch.id;
+        console.log("ID de sucursal:", loginData.branch.id);
+        console.log("ID de Store:", loginData.store.id);
+        console.log("Token:", loginData.token);
+        console.log("LOGIN DATA",loginData)
       }
     });
   }
@@ -65,47 +81,106 @@ export class SorteoComponent implements OnInit {
     dialogRef.afterClosed().subscribe(async data => {
       if (data?.exitoso && this.clienteInfo) {
         try {
-          const storeID = Number(this.clienteInfo.tipoCliente.store_id);
-          const branchID = Number(this.clienteInfo.tipoCliente.branch_id);
-          const sorteos = await this.endpointLogic.obtenerSortosStore(storeID, branchID);
+          //Validamos storeID y branchID ANTES de continuar
+          if (!this.storeID || !this.branchID) {
+            this.dialog.open(NotificacionComponent, {
+              width: '400px',
+              data: {
+                success: false,
+                titulo: 'Error de autenticación',
+                descripcion: 'No se pudo obtener la información del login. Vuelva a iniciar sesión.',
+                origen: 'SORTEO'
+              }
+            });
+            return;
+          }
+
+          const sorteos = await this.endpointLogic.obtenerSortosStore(this.storeID, this.branchID);
           this.store.dispatch(StateResLotsDTOAction.setLotsDTO({ reslotsDTO: sorteos }));
         } catch (error) {
-          console.error("Error al obtener sorteos:", error);
+          console.error("❌ Error al obtener sorteos:", error);
+
+          this.dialog.open(NotificacionComponent, {
+            width: '400px',
+            data: {
+              success: false,
+              titulo: 'Error',
+              descripcion: 'No se pudieron obtener los sorteos. Intente más tarde.',
+              origen: 'SORTEO'
+            }
+          });
         }
       }
     });
   }
 
+
   escanearQR() {
     console.log("Lógica escanear QR todavía no implementada");
   }
 
-    async participarEnSorteo(sorteo: LotsDTO) {
+  async participarEnSorteo(sorteo: LotsDTO) {
     if (!this.clienteInfo) return;
 
-    const storeID = this.clienteInfo.tipoCliente.store_id;
-    const branchID = this.clienteInfo.tipoCliente.branch_id;
     const lookup = this.clienteInfo.datosCliente.identification;
 
     try {
-      const puedeParticipar = await this.endpointLogic.verificarParticipacion(storeID, branchID, sorteo.id, lookup);
-      console.log("Puede participar:", puedeParticipar);
+      const puedeParticipar = await this.endpointLogic.verificarParticipacion(
+        this.storeID,
+        this.branchID,
+        sorteo.id,
+        lookup
+      );
 
       if (!puedeParticipar) {
-        console.log("No puede participar en el sorteo");
+        this.dialog.open(NotificacionComponent, {
+          width: '400px',
+          data: {
+            success: false,
+            titulo: 'No puede participar',
+            descripcion: 'El cliente no puede participar en este sorteo.',
+            origen: 'SORTEO'
+          }
+        });
         return;
       }
 
       const req: ReqParticipacionSorteoDTO = {
-        identification: this.clienteInfo.datosCliente.identification,
-        card_number: this.clienteInfo.datosCliente.identification
+        identification: lookup,
+        card_number: lookup
       };
 
-      const response = await this.endpointLogic.generarParticipacion(storeID, branchID, sorteo.id, lookup, req);
-      console.log("Participación generada exitosamente:", response);
+      const response = await this.endpointLogic.generarParticipacion(
+        this.storeID,
+        this.branchID,
+        sorteo.id,
+        lookup,
+        req
+      );
+
+      this.dialog.open(NotificacionComponent, {
+        width: '400px',
+        data: {
+          success: true,
+          titulo: 'Participación exitosa',
+          descripcion: 'Estás suscripto al sorteo.',
+          origen: 'SORTEO'
+        }
+      });
 
     } catch (error) {
-      console.error("Error al procesar participación:", error);
+      console.error("Error al generar participación:", error);
+
+      this.dialog.open(NotificacionComponent, {
+        width: '400px',
+        data: {
+          success: false,
+          titulo: 'Error',
+          descripcion: 'Error al generar participación. Intente más tarde.',
+          origen: 'SORTEO'
+        }
+      });
     }
   }
+
 }

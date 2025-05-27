@@ -18,23 +18,22 @@ export class NotificacionComponent implements OnInit {
   origen: string = '';
 
   constructor(
-    private navigation: NavigationService,
-    private dialogRef: MatDialogRef<NotificacionComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    private navigation : NavigationService,
+    public dialogRef: MatDialogRef<NotificacionComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: {
+      success: boolean;
+      titulo: string;
+      descripcion: string;
+      origen: string;
+    }
   ) {}
 
   ngOnInit() {
-    if (this.data) {
-      this.success = this.data.success ?? true;
-      this.titulo = this.data.titulo || this.titulo;
-      this.descripcion = this.data.descripcion || this.descripcion;
-      this.origen = this.data.origen || '';
-    }
-
     setTimeout(() => {
-      this.cerrarPopupYRedirigir();
+      this.dialogRef.close(); // cerrar popup
     }, 4000);
   }
+
 
   cerrarPopupYRedirigir() {
     this.dialogRef.close();

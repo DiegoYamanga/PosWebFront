@@ -8,6 +8,7 @@ import { BranchDTO } from '../DTOs/brachDTO';
 export class SessionLogic {
   private token: string | null = null;
   private userData: any = null;
+  resLoginDTO: any;
 
   setLoginData(token: string, userData: any): void {
     this.token = token;
@@ -27,6 +28,14 @@ export class SessionLogic {
 
   getBranch(): BranchDTO | undefined {
     return this.userData?.branch
+  }
+
+  getStoreId(): number {
+  return this.resLoginDTO?.store?.id ?? 0;
+}
+
+  getBranchId(): number {
+    return this.resLoginDTO?.branch?.id ?? 0;
   }
 
 

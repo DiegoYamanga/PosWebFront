@@ -8,6 +8,7 @@ import { StateTipoCanjeAction } from '../../redux/action';
 import { IdentificacionUsuarioComponent } from '../pop-ups/identificacion-usuario/identificacion-usuario.component';
 import { ConsultarSaldoComponent } from '../pop-ups/consultar-saldo/consultar-saldo.component';
 import { EndpointAdapterLogic } from '../../../logic/endpointAdapterLogic';
+import { AppSelectors } from '../../redux/selectors';
 
 @Component({
   selector: 'app-fidelidad',
@@ -17,12 +18,30 @@ import { EndpointAdapterLogic } from '../../../logic/endpointAdapterLogic';
 })
 export class FidelidadComponent {
 
+  storeID!: string;
+  branchID!: string;
+
+
   constructor(
     private navigation: NavigationService,
     private dialog: MatDialog,
     private store: Store,
     private endpointLogic: EndpointAdapterLogic
   ) {}
+
+
+  ngOnInit(): void {
+    this.store.select(AppSelectors.selectResLoginDTO).subscribe(loginData => {
+      if (loginData) {
+          this.storeID = loginData.store.id.toString();
+          this.branchID = loginData.branch.id.toString();
+        console.log("ID de sucursal:", loginData.branch.id);
+        console.log("ID de Store:", loginData.store.id);
+        console.log("Token:", loginData.token);
+        console.log("LOGIN DATA",loginData)
+    }
+    });
+  }
 
   goToCompras() {
     this.navigation.goToCompras();
@@ -59,7 +78,7 @@ export class FidelidadComponent {
 
     dialogRef.afterClosed().subscribe(async (result) => {
       if (result?.exitoso && result?.documento) {
-        const cliente = await this.endpointLogic.buscarCliente("32", "43", result.documento);
+        const cliente = await this.endpointLogic.buscarCliente(this.storeID, this.branchID, result.documento);
         if (cliente) {
           this.dialog.open(ConsultarSaldoComponent, {
             width: '400px',

@@ -10,6 +10,9 @@ import { NavigationService } from '../../../logic/navigationService';
 import { MatDialog } from '@angular/material/dialog';
 import { TipoCanjeDialogoComponent } from '../tipo-canje-dialogo/tipo-canje-dialogo.component';
 import { StateTipoCanjeAction } from '../../redux/action';
+import { reqTransactionsFidelidad } from '../../../DTOs/reqTransactionsFidelidad';
+import { NotificacionComponent } from '../notificacion/notificacion.component';
+
 @Component({
   selector: 'app-dni-detalles-operacion',
   imports: [CommonModule, FormsModule, HeaderComponent],
@@ -23,44 +26,37 @@ export class DniDetallesOperacionComponent {
   nombreFirmado: string = '';
   tipoCanje$: any;
   origenOperacion: 'CANJE' | 'COMPRA' | null = null;
-
+  storeID: string = '';
+  branchID: string = '';
 
   constructor(private store: Store,
               private endpointAdapterlogic : EndpointAdapterLogic,
               private navigation: NavigationService,
               private dialog : MatDialog
   ) {
-
     this.tipoCanje$ = this.store.select(AppSelectors.selectTipoCanje);
-
   }
 
-  
-
   ngOnInit(): void {
-
     this.store.select(AppSelectors.selectOrigenOperacion).subscribe(origen => {
-    this.origenOperacion = origen;
+      this.origenOperacion = origen;
     });
 
     this.store.select(AppSelectors.selectResClienteDTO).subscribe(cliente => {
       this.cliente = cliente;
-      console.log("Cliente desde Redux:", cliente);
     });
 
     this.tipoCanje$.subscribe((tipo: any) => {
-    console.log('Tipo de canje seleccionado:', tipo);
+      console.log('Tipo de canje seleccionado:', tipo);
     });
-    }
-  
 
-  // agregarNumero(valor: string) {
-  //   this.monto += valor;
-  // }
-
-  // borrarUltimo() {
-  //   this.monto = this.monto.slice(0, -1);
-  // }
+    this.store.select(AppSelectors.selectResLoginDTO).subscribe(loginData => {
+      if (loginData) {
+        this.storeID = loginData.store.id.toString();
+        this.branchID = loginData.branch.id.toString();
+      }
+    });
+  }
 
   confirmarMonto() {
     if (!this.monto) return;
@@ -82,19 +78,52 @@ export class DniDetallesOperacionComponent {
     }
   }
 
+  // continuarAFirma() {
+  //   this.confirmarOperacion()
+  // }
 
-  continuarAFirma() {
-    // this.etapa = 'firma';
-    this.navigation.goToNotificacion();
-  }
+  async confirmarOperacion() {
+    if (!this.cliente || !this.monto) return;
 
-  confirmarOperacion() {
-    console.log("Nombre firmado:", this.nombreFirmado);
+    const payload: reqTransactionsFidelidad = {
+      serial_number: 'MOBILE',
+      identification: this.cliente.datosCliente.identification,
+      amount: parseFloat(this.monto),
+      local_datetime: new Date().toISOString(),
+      branch_id: this.branchID
+    };
+
+    try {
+      const result = await this.endpointAdapterlogic.crearTransaccionFidelidad(this.storeID, payload);
+      console.log("✔️ Transacción Fidelidad registrada:", result);
+
+      this.dialog.open(NotificacionComponent, {
+        width: '400px',
+        data: {
+          success: true,
+          titulo: 'Operación Exitosa',
+          descripcion: 'La transacción fue realizada correctamente.',
+          origen: 'FIDELIDAD'
+        }
+      });
+    } catch (e) {
+      console.error("❌ Error al registrar transacción Fidelidad:", e);
+
+      this.dialog.open(NotificacionComponent, {
+        width: '400px',
+        data: {
+          success: false,
+          titulo: 'Error',
+          descripcion: 'No se pudo registrar la transacción. Intente más tarde.',
+          origen: 'FIDELIDAD'
+        }
+      });
+    }
   }
 
   calcularPuntos(monto: string): number {
-  const valor = parseFloat(monto.replace(',', '.'));
-  return valor * 0.1;
+    const valor = parseFloat(monto.replace(',', '.'));
+    return valor * 0.1;
   }
 
   onConfirmar() {
@@ -115,8 +144,5 @@ export class DniDetallesOperacionComponent {
       console.log("Flujo alternativo sin popup");
     }
   }
-
-
-
 
 }

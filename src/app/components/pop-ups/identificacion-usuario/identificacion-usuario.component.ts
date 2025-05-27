@@ -45,7 +45,7 @@ export class IdentificacionUsuarioComponent {
     try {
       const cliente = await this.logic.buscarCliente("32", "45", this.documento);
       if(!cliente){
-        this.error= "No se encontró cliente";
+        this.error= "No existe un cliente con los datos ingresados";
         this.loading = false;
         return;
       }
@@ -57,7 +57,7 @@ export class IdentificacionUsuarioComponent {
       this.close();
     } catch (e) {
       console.log("Error: ",e)
-      this.error = "Error al buscar cliente"
+      this.error = "No existe un cliente con los datos ingresados"
       this.loading = false;
 
     }

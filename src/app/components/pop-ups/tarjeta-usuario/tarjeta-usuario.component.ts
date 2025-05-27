@@ -13,6 +13,8 @@ import { MatDialogRef } from '@angular/material/dialog';
 export class TarjetaUsuarioComponent {
 
   numeroTarjeta: string = '';
+  error: string | null = null;
+  loading: boolean = false;
 
   constructor(private dialogRef: MatDialogRef<TarjetaUsuarioComponent>) {}
 

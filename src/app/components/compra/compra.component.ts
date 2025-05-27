@@ -50,6 +50,8 @@ export class CompraComponent {
         if (result?.exitoso) {
           this.store.dispatch(StateOrigenOperacionAction.setOrigenOperacion({ origen: 'COMPRA' }));
           this.navigationService.goToDNIDetallesOperacion();
+        } else{
+          
         }
       });
   }

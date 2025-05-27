@@ -1,6 +1,30 @@
-<h2>Ingrese el número de tarjeta</h2>
+<!-- <h2>Ingrese el número de tarjeta</h2>
 <input type="text" [(ngModel)]="numeroTarjeta" placeholder="N° tarjeta" />
 <br />
 <button (click)="confirmar()">CONFIRMAR</button>
 <button (click)="cancelar()">CANCELAR</button>
+ -->
 
+  <div class="popup">
+  <h3 class="titulo">Número de tarjeta</h3>
+  <p class="subtitulo">Ingresa el número de tarjeta del cliente.</p>
+
+  <input
+    type="text"
+    [(ngModel)]="numeroTarjeta"
+    placeholder="Número de tarjeta"
+    class="input"
+  />
+
+  <div class="acciones">
+    <!-- <button class="boton texto-secundario" (click)="cambiarTeclado()">CAMBIAR TECLADO</button> -->
+     @if (!loading) {
+       <button class="boton texto-primario right" (click)="confirmar()">ACEPTAR</button>
+     }
+    @if (loading) {
+      <button class="boton texto-primario right" disabled><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></button>
+    }
+  </div>
+
+  <div *ngIf="error" class="error">{{ error }}</div>
+</div>

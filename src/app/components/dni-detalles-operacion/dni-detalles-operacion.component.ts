@@ -98,7 +98,7 @@ export class DniDetallesOperacionComponent {
       console.log("✔️ Transacción Fidelidad registrada:", result);
 
       this.dialog.open(NotificacionComponent, {
-        width: '400px',
+        width: '800px',
         data: {
           success: true,
           titulo: 'Operación Exitosa',
@@ -110,7 +110,7 @@ export class DniDetallesOperacionComponent {
       console.error("❌ Error al registrar transacción Fidelidad:", e);
 
       this.dialog.open(NotificacionComponent, {
-        width: '400px',
+        width: '800px',
         data: {
           success: false,
           titulo: 'Error',

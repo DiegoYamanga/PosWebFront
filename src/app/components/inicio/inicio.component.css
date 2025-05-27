@@ -53,7 +53,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 7rem;
+  height: 5rem;
 }
 
 .giftcard {
@@ -61,7 +61,7 @@
     display: flex;
   justify-content: center;
   align-items: center;
-  height: 7rem;
+  height: 5rem;
 }
 
 .sorteo {
@@ -69,7 +69,7 @@
     display: flex;
   justify-content: center;
   align-items: center;
-  height: 7rem;
+  height: 5rem;
 }
 
 .encuestas {
@@ -77,7 +77,7 @@
     display: flex;
   justify-content: center;
   align-items: center;
-  height: 7rem;
+  height: 5rem;
 }
 
 .gestion {
@@ -85,7 +85,7 @@
     display: flex;
   justify-content: center;
   align-items: center;
-  height: 7rem;
+  height: 5rem;
 }
 
 .pagos {
@@ -93,7 +93,7 @@
     display: flex;
   justify-content: center;
   align-items: center;
-  height: 7rem;
+  height: 5rem;
 }
 
 .ico{

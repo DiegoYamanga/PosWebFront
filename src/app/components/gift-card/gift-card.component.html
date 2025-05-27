@@ -1,13 +1,26 @@
-<!-- Encabezado -->
-<app-header [headerTitle]="titulo || 'GiftCard'"></app-header>
 
-<!-- Etapa 1: selección de operación -->
-<div *ngIf="etapa === 'seleccion'" class="giftcard-container d-flex flex-column justify-content-center align-items-center text-center">
-  <div class="botonera d-flex flex-wrap justify-content-center mt-5">
-    <button class="btn-opcion compra" (click)="irACompra()">COMPRA</button>
-    <button class="btn-opcion cargar-saldo" (click)="irACargarSaldo()">CARGAR SALDO</button>
-    <button class="btn-opcion anulacion" (click)="irAAnulacion()">ANULACIÓN</button>
-    <button class="btn-opcion consultar-saldo" (click)="irAConsultarSaldo()">CONSULTAR SALDO</button>
+<div *ngIf="etapa === 'seleccion'" class="giftcard-container">
+  <!-- Encabezado -->
+  <app-header [headerTitle]="titulo || 'GiftCard'"></app-header>
+  <div class="main-content"></div>
+  <!-- Etapa 1: selección de operación -->
+  <div class="botonera">
+    <button class="btn-opcion compra" (click)="irACompra()">
+      <i class="material-icons">shopping_bag</i>
+      COMPRA
+    </button>
+    <button class="btn-opcion cargar-saldo" (click)="irACargarSaldo()">
+      <i class="material-icons">add_card</i>
+      CARGAR SALDO
+    </button>
+    <button class="btn-opcion anulacion" (click)="irAAnulacion()">
+      <i class="material-icons">cancel_presentation</i>
+      ANULACIÓN
+    </button>
+    <button class="btn-opcion consultar-saldo" (click)="irAConsultarSaldo()">
+      <i class="material-icons">price_change</i>
+      CONSULTAR SALDO
+    </button>
   </div>
 </div>
 

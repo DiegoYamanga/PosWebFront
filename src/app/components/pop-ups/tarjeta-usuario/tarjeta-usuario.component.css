@@ -1,0 +1,64 @@
+.popup {
+  padding: 2rem 1rem;
+  width: 95%;
+  margin: auto;
+  background-color: white;
+  font-family: Roboto, sans-serif;
+}
+
+.titulo {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 500;
+  color: #212121;
+}
+
+.subtitulo {
+  margin-top: 8px;
+  margin-bottom: 16px;
+  color: #666;
+  font-size: 14px;
+}
+
+.input {
+  width: 100%;
+  padding: 6px 0;
+  font-size: 16px;
+  border: none;
+  border-bottom: 2px solid hotpink;
+  outline: none;
+  color: #212121;
+}
+
+.input::placeholder {
+  color: #aaa;
+}
+
+.acciones {
+  display: flex;
+  justify-content: right;
+  margin-top: 24px;
+}
+
+.boton {
+  background: none;
+  border: none;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 8px;
+}
+
+.texto-secundario {
+  color: hotpink;
+}
+
+.texto-primario {
+  color: hotpink;
+}
+
+.error {
+  color: red;
+  margin-top: 16px;
+  font-size: 14px;
+}

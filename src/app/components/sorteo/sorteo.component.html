@@ -1,12 +1,21 @@
-<!-- sorteo.component.html -->
-
 <!-- Etapa 1: Selección de método -->
-<div *ngIf="etapa === 'inicio'">
+<div *ngIf="etapa === 'inicio'" class="container">
   <app-header [headerTitle]="'Sorteo'"></app-header>
-  <div class="d-flex flex-column justify-content-center align-items-center mt-5">
-    <button class="btn btn-warning m-2" (click)="abrirPopTarjeta()">TARJETAS</button>
-    <button class="btn btn-secondary m-2" (click)="escanearQR()">QR</button>
-    <button class="btn btn-primary m-2" (click)="abrirPopDocumento()">DOCUMENTO</button>
+    <div class="main-content"></div>
+
+  <div class="grid-buttons">
+    <button class="tarjetas" (click)="abrirPopTarjeta()">
+      <i class="material-icons">credit_card</i>
+      TARJETAS
+    </button>
+    <button class="qr" (click)="escanearQR()">
+      <i class="material-icons">qr_code_scanner</i>
+      QR
+    </button>
+    <button class="documento" (click)="abrirPopDocumento()">
+      <i class="material-icons">contact_mail</i>
+      DOCUMENTO
+    </button>
   </div>
 </div>
 

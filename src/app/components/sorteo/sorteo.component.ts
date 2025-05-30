@@ -121,7 +121,7 @@ export class SorteoComponent implements OnInit {
 
   async participarEnSorteo(sorteo: LotsDTO) {
     if (!this.clienteInfo) return;
-
+    
     const lookup = this.clienteInfo.datosCliente.identification;
 
     try {
@@ -131,6 +131,8 @@ export class SorteoComponent implements OnInit {
         sorteo.id,
         lookup
       );
+
+      console.log("Puede participar?",puedeParticipar)
 
       if (!puedeParticipar) {
         this.dialog.open(NotificacionComponent, {

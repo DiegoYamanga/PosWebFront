@@ -1,4 +1,5 @@
 export interface ClienteDTO{
+    branch_id: any;
     
     user_id: number;
     user_subscription_id: number;

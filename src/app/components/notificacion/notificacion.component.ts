@@ -28,11 +28,20 @@ export class NotificacionComponent implements OnInit {
     }
   ) {}
 
-  ngOnInit() {
-    setTimeout(() => {
-      this.dialogRef.close(); // cerrar popup
-    }, 4000);
+ngOnInit() {
+  // Tomar los valores inyectados correctamente
+  if (this.data) {
+    this.titulo = this.data.titulo;
+    this.descripcion = this.data.descripcion;
+    this.success = this.data.success;
+    this.origen = this.data.origen;
   }
+
+  setTimeout(() => {
+    this.dialogRef.close(); // cerrar popup
+  }, 4000);
+}
+
 
 
   cerrarPopupYRedirigir() {

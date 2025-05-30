@@ -3,7 +3,7 @@ export interface ReqSwapDTO {
     card_number?: string;
     identification?: string;
     amount: number;
-    type: string;
+    type: 'PUNTOS' | 'IMPORTE';
     local_datetime: string;
     branch_id: string;
   }

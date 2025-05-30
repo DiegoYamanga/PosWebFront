@@ -13,6 +13,8 @@ import { ReqCancelarTransaccionByID } from "../DTOs/reqCancelarTransaccionByID";
 import { GiftcardDTO } from "../DTOs/giftCardsDTO";
 import { StateResLoginDTOAction } from "../app/redux/action";
 import { reqTransactionsFidelidad } from "../DTOs/reqTransactionsFidelidad";
+import { ResTransactionCanheDTO } from "../DTOs/resTransactionCanjeDTO";
+import { ReqSwapDTO } from "../DTOs/reqSwapDTO";
 
 
 // @NgModule({
@@ -69,20 +71,21 @@ export class EndpointAdapterLogic {
   }
 
 
-  async cargarSaldoGiftCard(storeID: string, branchID: string, cardNumber: string, amount: number ): Promise<any> {
-    const now = new Date().toISOString();
-
+  async cargarSaldoGiftCard(storeID: string, branchID: string, cardNumber: string, amount: number): Promise<any> {
     const payload: ReqGiftCardDatosDTO = {
-      serial_number: "MOBILE",            // si no tenés serial, podés usar el card_number
+      serial_number: "MOBILE",
       card_number: cardNumber,
-      identification :"",
+      identification: "",
       amount: amount,
       local_datetime: new Date().toISOString(),
       branch_id: branchID
     };
-    console.log("A ver como qeudo el req-->",payload)
 
-    return await firstValueFrom(this.httpService.cargarGiftCards(storeID, payload));
+    try {
+      return await firstValueFrom(this.httpService.cargarGiftCards(storeID, payload));
+    } catch (error: any) {
+      throw new Error(this.procesarError(error));
+    }
   }
 
   // Verificar si puede participar
@@ -94,6 +97,7 @@ export class EndpointAdapterLogic {
     const response = await firstValueFrom(
       this.httpService.getParcipante(storeID, branchID, lotID, lookup)
     );
+    console.log("a ver como llega",response)
     return !!response?.can_participate;  // asumimos que el back devuelve algo así
   } catch (error) {
     console.error("Error en verificarParticipacion:", error);
@@ -117,39 +121,80 @@ export class EndpointAdapterLogic {
   }
 
   async anularTransaccion(storeID: string, transactionID: string, body: ReqCancelarTransaccionByID): Promise<any> {
-    return await firstValueFrom(
-      this.httpService.cancelarTransaccionByIdRequest(storeID, transactionID, body)
-    );
+    try {
+      return await firstValueFrom(this.httpService.cancelarTransaccionByIdRequest(storeID, transactionID, body));
+    } catch (error: any) {
+      throw new Error(this.procesarError(error));
+    }
   }
 
-  async consultarSaldoGiftCard(storeID: string, numeroTarjeta: string): Promise<GiftcardDTO> {
-    const response = await firstValueFrom(
-      this.httpService.getGiftCard(storeID, numeroTarjeta)
-    );
+  public async consultarSaldoGiftCard(storeID: string, cardNumber: string): Promise<GiftcardDTO> {
+    try {
+      const response = await firstValueFrom(
+        this.httpService.getGiftCard(storeID, cardNumber)
+      );
 
-    const giftCard: GiftcardDTO = {
-      id: response.id,
-      identification: response.identification,
-      points: response.points,
-      cash: response.cash,
-      card_number: response.card_number,
-      store_id: response.store_id
-    };
+      // Validamos que la respuesta tenga los campos esperados
+      if (!response || !response.card_number) {
+        throw { status: 404, error: 'Giftcard no encontrada' };
+      }
 
-    return giftCard;
+      return response;
+    } catch (error: any) {
+      if (error?.status === 0) {
+        throw { status: 0, error: 'Error de conexión con el servidor' };
+      }
+
+      if (typeof error?.error === 'string') {
+        throw { status: error.status, error: error.error };
+      }
+
+      if (error?.error?.message) {
+        throw { status: error.status, error: error.error.message };
+      }
+
+      throw { status: 500, error: 'Error inesperado al consultar la giftcard' };
+    }
   }
 
 
   async descargarSaldoGiftCard(storeID: string, body: ReqGiftCardDatosDTO): Promise<any> {
-    console.log("ReqGIFTCARDDATOSDESCA-->",body)
-    return await firstValueFrom(
-      this.httpService.descargarGiftCards(storeID, body)
-    );
+    try {
+      return await firstValueFrom(this.httpService.descargarGiftCards(storeID, body));
+    } catch (error: any) {
+      throw new Error(this.procesarError(error));
+    }
   }
 
   async crearTransaccionFidelidad(storeID: string, body: reqTransactionsFidelidad): Promise<any> {
-  return await firstValueFrom(this.httpService.nuevaTransaccionFidelidad(storeID, body));
+    try {
+      return await firstValueFrom(this.httpService.nuevaTransaccionFidelidad(storeID, body));
+    } catch (error: any) {
+      throw new Error(this.procesarError(error));
+    }
+  }
+
+  private procesarError(error: any): string {
+    if (error?.status === 0 || error?.status >= 500) {
+      return "Error de conectividad. Intente nuevamente más tarde.";
+    }
+    if (typeof error?.error === 'string') {
+      return error.error;
+    }
+    return "Ocurrió un error inesperado.";
+  }
+
+async crearTransaccionSwap(storeID: string, body: ReqSwapDTO): Promise<ResTransactionCanheDTO> {
+  try {
+    const response = await firstValueFrom(this.httpService.transaccionConCanjeDePuntos(storeID, body));
+    return response as ResTransactionCanheDTO;
+  } catch (error: any) {
+    console.error("❌ Error en crearTransaccionSwap:", error);
+    throw new Error(this.procesarError(error));
+  }
 }
+
+
 
 
 

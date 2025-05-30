@@ -8,7 +8,7 @@ import { BranchDTO } from '../DTOs/brachDTO';
 export class SessionLogic {
   private token: string | null = null;
   private userData: any = null;
-  resLoginDTO: any;
+  private resLoginDTO: any;
 
   setLoginData(token: string, userData: any): void {
     this.token = token;

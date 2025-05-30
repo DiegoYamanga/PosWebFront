@@ -58,25 +58,39 @@ export class GiftCardComponent {
 
 
 
-abrirPopupYGuardar(operacion: 'COMPRA' | 'CARGAR_SALDO' | 'ANULACION' | 'CONSULTAR_SALDO') {
-  this.store.dispatch(StateGiftCardOperacionAction.setGiftCardOperacion({ operacion }));
+  abrirPopupYGuardar(operacion: 'COMPRA' | 'CARGAR_SALDO' | 'ANULACION' | 'CONSULTAR_SALDO') {
+    console.log("Abrir popUp y guardar")
+    if (!this.storeID || !this.branchID) {
+      console.log("No tengo datos del store o branch al consultar saldo")
+      this.dialog.open(NotificacionComponent, {
+        width: '400px',
+        data: {
+          success: false,
+          titulo: 'Datos incompletos',
+          descripcion: 'No se pudo obtener el store o branch. Intente nuevamente.',
+          origen: 'GIFTCARD'
+        }
+      });
+      return;
+    }
 
-  const dialogRef = this.dialog.open(TarjetaUsuarioComponent, {
-    width: '400px',
-    disableClose: true
-  });
+    this.store.dispatch(StateGiftCardOperacionAction.setGiftCardOperacion({ operacion }));
 
-  dialogRef.afterClosed().subscribe((numeroTarjeta: string | null) => {
-    if (!numeroTarjeta) return;
+    const dialogRef = this.dialog.open(TarjetaUsuarioComponent, {
+      width: '400px',
+      disableClose: true
+    });
 
-    this.numeroTarjeta = numeroTarjeta;
+    dialogRef.afterClosed().subscribe(async (numeroTarjeta: string | null) => {
+      if (!numeroTarjeta) return;
 
-    this.endpointAdapterLogic.consultarSaldoGiftCard(this.storeID, numeroTarjeta)
-      .then((respuesta: GiftcardDTO) => {
-        // Guardar respuesta
+      this.numeroTarjeta = numeroTarjeta;
+
+      try {
+        const respuesta: GiftcardDTO = await this.endpointAdapterLogic.consultarSaldoGiftCard(this.storeID, numeroTarjeta);
+        console.log("la respuesta del consultar saldo",respuesta)
         this.serviceLogic.setGiftCardInfo(respuesta);
 
-        // Si es CONSULTAR_SALDO, mostrar popup directamente
         if (operacion === 'CONSULTAR_SALDO') {
           this.dialog.open(ConsultarSaldoComponent, {
             width: '400px',
@@ -88,17 +102,20 @@ abrirPopupYGuardar(operacion: 'COMPRA' | 'CARGAR_SALDO' | 'ANULACION' | 'CONSULT
             }
           });
         } else {
-          // Continuar con etapa de monto para COMPRA, CARGAR_SALDO, ANULACION
           this.etapa = 'monto';
-          if (operacion === 'COMPRA') this.titulo = 'Monto de compra';
-          else if (operacion === 'CARGAR_SALDO') this.titulo = 'Cargar saldo';
-          else if (operacion === 'ANULACION') this.titulo = 'Anulación';
+          this.titulo = this.obtenerTituloOperacion(operacion);
         }
-      })
-      .catch(error => {
-        const mensajeError = error?.error === "Giftcard no encontrada"
-          ? "Giftcard no encontrada"
-          : "Error. Vuelva a intentarlo más tarde.";
+
+      } catch (error: any) {
+        console.error("❌ Error al consultar saldo:", error);
+
+        let mensajeError = 'Error desconocido. Intente nuevamente.';
+
+        if (error?.status === 0) {
+          mensajeError = 'Error de conexión con el servidor. Intente más tarde.';
+        } else if (typeof error?.error === 'string') {
+          mensajeError = error.error;
+        }
 
         this.dialog.open(NotificacionComponent, {
           width: '400px',
@@ -109,9 +126,10 @@ abrirPopupYGuardar(operacion: 'COMPRA' | 'CARGAR_SALDO' | 'ANULACION' | 'CONSULT
             origen: 'GIFTCARD'
           }
         });
-      });
-  });
-}
+      }
+    });
+  }
+
 
 
 
@@ -160,54 +178,51 @@ abrirPopupYGuardar(operacion: 'COMPRA' | 'CARGAR_SALDO' | 'ANULACION' | 'CONSULT
     this.abrirPopupYGuardar('CONSULTAR_SALDO');
   }
 
-async confirmarOperacion() {
-  const operacion = this.titulo;
-  const tarjeta = this.numeroTarjeta;
-  const monto = this.saldo;
+  async confirmarOperacion() {
+    const operacion = this.titulo;
+    const tarjeta = this.numeroTarjeta;
+    const monto = this.saldo;
 
-  console.log("Estoy en el CONFIRMAROPERACION");
-  console.log("Operacion--->", operacion);
+    this.store.dispatch(StateMontoGiftCardAction.setMontoGiftCard({ monto }));
 
-  this.store.dispatch(StateMontoGiftCardAction.setMontoGiftCard({ monto }));
+    try {
+      let result: any;
 
-  try {
-    if (operacion === 'Cargar saldo') {
-      const result = await this.endpointAdapterLogic.cargarSaldoGiftCard(this.storeID, this.branchID, tarjeta, monto!);
-      console.log("✔️ Carga exitosa:", result);
+      if (operacion === 'Cargar saldo') {
+        result = await this.endpointAdapterLogic.cargarSaldoGiftCard(this.storeID, this.branchID, tarjeta, monto!);
 
-      this.dialog.open(NotificacionComponent, {
-        width: '400px',
-        data: {
-          success: true,
-          titulo: 'Carga Exitosa',
-          descripcion: 'El saldo fue cargado correctamente.',
-          origen: 'GIFTCARD'
-        }
-      });
+        this.dialog.open(NotificacionComponent, {
+          width: '400px',
+          data: {
+            success: true,
+            titulo: 'Carga Exitosa',
+            descripcion: 'El saldo fue cargado correctamente.',
+            origen: 'GIFTCARD'
+          }
+        });
 
-    } else if (operacion === 'Anulación') {
-      const cancelBody: ReqCancelarTransaccionByID = {
-        serial_number: 'MOBILE',
-        local_datetime: new Date().toISOString(),
-        branch_id: this.branchID,
-        card_number: tarjeta,
-        identification: ''
-      };
-      const response = await this.endpointAdapterLogic.anularTransaccion(this.storeID, tarjeta, cancelBody);
-      console.log("✔️ Anulación exitosa:", response);
+      } else if (operacion === 'Anulación') {
+        const cancelBody: ReqCancelarTransaccionByID = {
+          serial_number: 'MOBILE',
+          local_datetime: new Date().toISOString(),
+          branch_id: this.branchID,
+          card_number: tarjeta,
+          identification: ''
+        };
 
-      this.dialog.open(NotificacionComponent, {
-        width: '400px',
-        data: {
-          success: true,
-          titulo: 'Anulación Exitosa',
-          descripcion: 'La transacción fue anulada correctamente.',
-          origen: 'GIFTCARD'
-        }
-      });
+        result = await this.endpointAdapterLogic.anularTransaccion(this.storeID, tarjeta, cancelBody);
 
-    } else if (operacion === 'Monto de compra') {
-      try {
+        this.dialog.open(NotificacionComponent, {
+          width: '400px',
+          data: {
+            success: true,
+            titulo: 'Anulación Exitosa',
+            descripcion: 'La transacción fue anulada correctamente.',
+            origen: 'GIFTCARD'
+          }
+        });
+
+      } else if (operacion === 'Monto de compra') {
         const body: ReqGiftCardDatosDTO = {
           serial_number: 'MOBILE',
           card_number: tarjeta,
@@ -216,10 +231,8 @@ async confirmarOperacion() {
           branch_id: this.branchID
         };
 
-        const response = await this.endpointAdapterLogic.descargarSaldoGiftCard(this.storeID, body);
-        console.log("✔️ Compra descargada:", response);
-
-        this.serviceLogic.setUltimaOperacionGiftCard(response);
+        result = await this.endpointAdapterLogic.descargarSaldoGiftCard(this.storeID, body);
+        this.serviceLogic.setUltimaOperacionGiftCard(result);
 
         this.dialog.open(NotificacionComponent, {
           width: '400px',
@@ -230,35 +243,33 @@ async confirmarOperacion() {
             origen: 'GIFTCARD'
           }
         });
-
-      } catch (e) {
-        console.error("❌ Error al realizar la compra:", e);
-
-        this.dialog.open(NotificacionComponent, {
-          width: '400px',
-          data: {
-            success: false,
-            titulo: 'Error en la operación',
-            descripcion: 'No se pudo realizar la compra. Intente nuevamente.',
-            origen: 'GIFTCARD'
-          }
-        });
       }
+
+    } catch (error: any) {
+      console.error("❌ Error en operación GiftCard:", error);
+
+      let mensaje = "Ocurrió un problema al procesar la operación.";
+
+      if (error?.status === 0) {
+        mensaje = "Error de conexión con el servidor. Intente nuevamente.";
+      } else if (typeof error?.error === 'string') {
+        mensaje = error.error;
+      } else if (error?.message) {
+        mensaje = error.message;
+      }
+
+      this.dialog.open(NotificacionComponent, {
+        width: '400px',
+        data: {
+          success: false,
+          titulo: 'Error en la operación',
+          descripcion: mensaje,
+          origen: 'GIFTCARD'
+        }
+      });
     }
-
-  } catch (e) {
-    console.error("❌ Error en operación GiftCard:", e);
-    this.dialog.open(NotificacionComponent, {
-      width: '400px',
-      data: {
-        success: false,
-        titulo: 'Error',
-        descripcion: 'Ocurrió un problema al procesar la operación.',
-        origen: 'GIFTCARD'
-      }
-    });
   }
-}
+
 
 
 }

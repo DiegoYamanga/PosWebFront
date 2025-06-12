@@ -7,7 +7,8 @@ import { NavigationService } from '../../../logic/navigationService';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { IdentificacionUsuarioComponent } from '../pop-ups/identificacion-usuario/identificacion-usuario.component';
 import { HeaderComponent } from "../header/header.component";
-import { StateOrigenOperacionAction } from '../../redux/action';
+import { StateOrigenOperacionAction, StateResClienteDTOAction } from '../../redux/action';
+import { TarjetaUsuarioComponent } from '../pop-ups/tarjeta-usuario/tarjeta-usuario.component';
 
 @Component({
   standalone: true,
@@ -18,6 +19,8 @@ import { StateOrigenOperacionAction } from '../../redux/action';
 })
 export class CompraComponent {
   cliente: ResClienteDTO | undefined;
+  storeID!: string;
+  branchID!: string;
 
   constructor(private store: Store,
               private navigationService : NavigationService,
@@ -29,11 +32,33 @@ export class CompraComponent {
       this.cliente = value;
 
     });
+    this.store.select(AppSelectors.selectResLoginDTO).subscribe(loginData => {
+      if (loginData) {
+          this.storeID = loginData.store.id.toString();
+          this.branchID = loginData.branch.id.toString();
+        console.log("ID de sucursal:", loginData.branch.id);
+        console.log("ID de Store:", loginData.store.id);
+    }
+    });
+
+
   }
 
   accionTarjeta(): void {
-    console.log("TARJETA presionado");
+    const dialogRef = this.dialog.open(TarjetaUsuarioComponent, {
+      data: {},
+      width: '400px',
+      height: 'auto'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result?.exitoso) {
+        this.store.dispatch(StateOrigenOperacionAction.setOrigenOperacion({ origen: 'COMPRA' }));
+        this.navigationService.goToTarjetaDetallesOperacion(); // 🔁 NUEVO
+      }
+    });
   }
+
 
   accionQR(): void {
     console.log("QR presionado");

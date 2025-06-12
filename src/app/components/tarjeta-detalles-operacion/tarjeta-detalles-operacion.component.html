@@ -1,0 +1,14 @@
+<h2>Compra con Tarjeta</h2>
+
+<div *ngIf="etapa === 'monto'">
+  <label>Ingrese monto</label>
+  <input [(ngModel)]="monto" placeholder="Ej: 100.00" />
+  <button (click)="confirmarMonto()">Continuar</button>
+</div>
+
+<div *ngIf="etapa === 'detalle'">
+  <p><strong>Cliente:</strong> {{ cliente.datosCliente.name }} {{ cliente.datosCliente.last_name }}</p>
+  <p><strong>Tarjeta:</strong> {{ cliente.datosCliente.name }}</p>
+  <p><strong>Monto:</strong> {{ monto }}</p>
+  <button (click)="confirmarOperacion()">Confirmar</button>
+</div>

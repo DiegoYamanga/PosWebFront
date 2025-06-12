@@ -51,28 +51,34 @@ export class LoginComponent {
     if (this.loginForm.invalid) return;
     this.loginSpinner = true;
 
-    if(this.loginForm.value.user && this.loginForm.value.password){
+    const user = this.loginForm.value.user?.trim();
+    const password = this.loginForm.value.password?.trim();
 
-      const credentials = {user:this.loginForm.value.user, password:this.loginForm.value.password};
-  
-      this.endPointAdapterLogic.loginFinal(credentials).subscribe({
-        next: (res: { token: string; }) => {
-          if (res && res.token) {
-            this.sessionLogic.setLoginData(res.token, res);
-            this.navigation.goToInicio();
-            this.loginSpinner = false;
-          } else {
-            this.error = 'Credenciales incorrectas.';
-            this.loginSpinner = false;
-          }
-        },
-        error: () => {
-          this.router.navigate(['/error-login']);
-          this.loginSpinner = false;
-        }
-      });
-      }
+    if (!user || !password) {
+      this.error = "Usuario y contraseña son requeridos.";
+      this.loginSpinner = false;
+      return;
     }
+
+    const credentials = { user, password };
+
+    this.endPointAdapterLogic.loginFinal(credentials).subscribe({
+      next: (res: { token: string; }) => {
+        if (res?.token) {
+          this.sessionLogic.setLoginData(res.token, res);
+          this.navigation.goToInicio();
+        } else {
+          this.error = 'Credenciales incorrectas.';
+        }
+        this.loginSpinner = false;
+      },
+      error: () => {
+        this.error = 'Error al intentar ingresar.';
+        this.router.navigate(['/error-login']);
+        this.loginSpinner = false;
+      }
+    });
+  }
 }
 
 

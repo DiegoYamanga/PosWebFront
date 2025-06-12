@@ -11,6 +11,9 @@ import { CanjeComponent } from './components/canje/canje.component';
 import { NotificacionComponent } from './components/notificacion/notificacion.component';
 import { GiftCardComponent } from './components/gift-card/gift-card.component';
 import { InicioComponent } from './components/inicio/inicio.component';
+import { TarjetaDetallesOperacionComponent } from './components/tarjeta-detalles-operacion/tarjeta-detalles-operacion.component';
+import { EncuestaComponent } from './components/encuesta/encuesta.component';
+import { EncuestaPreguntasComponent } from './components/encuesta-preguntas/encuesta-preguntas.component';
 
 
 export const routes: Routes = [
@@ -26,6 +29,9 @@ export const routes: Routes = [
     { path: 'notificacion', component: NotificacionComponent },
     { path: '', component: LoginComponent},
     { path: 'giftcard', component: GiftCardComponent},
-    { path: 'inicio', component:InicioComponent }
-
+    { path: 'inicio', component:InicioComponent },
+    { path: 'tarjetaDetalleOperacion', component:TarjetaDetallesOperacionComponent },
+    { path: 'encuesta', component: EncuestaComponent },
+    { path: 'encuestaPreguntas', component: EncuestaPreguntasComponent }
 ];
+

@@ -1,2 +1,23 @@
-<button (click)="abrirPopupIdentificacion()">DOCUMENTO</button>
+<div class="container">
+  <app-header [headerTitle]="'Sorteo'"></app-header>
+    <div class="main-content"></div>
+
+  <div class="grid-buttons">
+    <button class="tarjetas" >
+      <i class="material-icons">credit_card</i>
+      TARJETAS
+    </button>
+    <button class="qr" >
+      <i class="material-icons">qr_code_scanner</i>
+      QR
+    </button>
+    <button class="documento" (click)="abrirPopupIdentificacion()">
+      <i class="material-icons">contact_mail</i>
+      DOCUMENTO
+    </button>
+  </div>
+</div>
+
+
+
 

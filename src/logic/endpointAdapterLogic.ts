@@ -15,6 +15,10 @@ import { StateResLoginDTOAction } from "../app/redux/action";
 import { reqTransactionsFidelidad } from "../DTOs/reqTransactionsFidelidad";
 import { ResTransactionCanheDTO } from "../DTOs/resTransactionCanjeDTO";
 import { ReqSwapDTO } from "../DTOs/reqSwapDTO";
+import { EncuestaDTO } from "../DTOs/encuestaDTO";
+import { RespuestaEncuestaDTO } from "../DTOs/RespuestaEncuestaDTO";
+import { ResEncuestaRespuesta } from "../DTOs/resEncuestaRespuesta";
+import { EncuestaPreguntas } from "../DTOs/encuestaPreguntas";
 
 
 // @NgModule({
@@ -129,11 +133,12 @@ export class EndpointAdapterLogic {
   }
 
   public async consultarSaldoGiftCard(storeID: string, cardNumber: string): Promise<GiftcardDTO> {
+    console.log("tarjeta: ",cardNumber)
     try {
       const response = await firstValueFrom(
         this.httpService.getGiftCard(storeID, cardNumber)
       );
-
+      console.log("responseee--->",response)
       // Validamos que la respuesta tenga los campos esperados
       if (!response || !response.card_number) {
         throw { status: 404, error: 'Giftcard no encontrada' };
@@ -184,15 +189,47 @@ export class EndpointAdapterLogic {
     return "Ocurrió un error inesperado.";
   }
 
-async crearTransaccionSwap(storeID: string, body: ReqSwapDTO): Promise<ResTransactionCanheDTO> {
-  try {
-    const response = await firstValueFrom(this.httpService.transaccionConCanjeDePuntos(storeID, body));
-    return response as ResTransactionCanheDTO;
-  } catch (error: any) {
-    console.error("❌ Error en crearTransaccionSwap:", error);
-    throw new Error(this.procesarError(error));
+  async crearTransaccionSwap(storeID: string, body: ReqSwapDTO): Promise<ResTransactionCanheDTO> {
+    try {
+      const response = await firstValueFrom(this.httpService.transaccionConCanjeDePuntos(storeID, body));
+      return response as ResTransactionCanheDTO;
+    } catch (error: any) {
+      console.error("❌ Error en crearTransaccionSwap:", error);
+      throw new Error(this.procesarError(error));
+    }
   }
-}
+
+  public getEncuestasSucursal(storeID: number, branchID: number): Observable<EncuestaDTO[]> {
+    return this.httpService.getEncuestasSucursal(storeID, branchID);
+  }
+
+
+
+  public obtenerPreguntasEncuesta(
+    storeID: string,
+    branchID: string,
+    pollID: string
+  ): Observable<EncuestaPreguntas[]> {
+    return this.httpService.obtenerPreguntasEncuesta(storeID, branchID, pollID);
+  }
+
+
+    
+  public responderEncuesta(
+    storeID: number,
+    branchID: number,
+    pollID: number,
+    preguntaID: number,
+    respuesta: RespuestaEncuestaDTO
+  ): Observable<ResEncuestaRespuesta> {
+    return this.httpService.responderPreguntaEncuesta(
+      storeID.toString(),
+      branchID.toString(),
+      pollID.toString(),
+      preguntaID.toString(),
+      respuesta
+    );
+  }
 
 
 

@@ -59,6 +59,9 @@ export class FidelidadComponent {
     this.navigation.goToGiftCard();
   }
 
+
+
+
   abrirTipoCanjePopup() {
     const dialogRef = this.dialog.open(TipoCanjeDialogoComponent);
 
@@ -76,10 +79,15 @@ export class FidelidadComponent {
       disableClose: true
     });
 
+    console.log("LEGO ACA POR LO MENOS:"); // ✅ DEBUG
+
     dialogRef.afterClosed().subscribe(async (result) => {
       if (result?.exitoso && result?.documento) {
         const cliente = await this.endpointLogic.buscarCliente(this.storeID, this.branchID, result.documento);
+          console.log("Cliente datos:", cliente); // ✅ DEBUG
+
         if (cliente) {
+            console.log("Cliente recuperado:", cliente); // ✅ DEBUG
           this.dialog.open(ConsultarSaldoComponent, {
             width: '400px',
             data: { tipo: 'FIDELIDAD', cliente }

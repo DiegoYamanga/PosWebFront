@@ -1,7 +1,7 @@
 // gift-card.component.ts (refactorizado y optimizado)
 
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HeaderComponent } from '../header/header.component';
 import { NavigationService } from '../../../logic/navigationService';
@@ -27,7 +27,7 @@ import { AppSelectors } from '../../redux/selectors';
 })
 export class GiftCardComponent {
 
-  numeroTarjeta: string = '';
+  numeroTarjeta!: string;
   saldo: number | null = 0;
   etapa: 'seleccion' | 'monto' = 'seleccion';
   titulo: string | undefined;
@@ -43,17 +43,18 @@ export class GiftCardComponent {
   ) {}
 
   ngOnInit(): void {
+    console.log("Por lo menos estoy entrando a ngOnInit del gift card?")
     this.store.select(AppSelectors.selectResLoginDTO).subscribe(loginData => {
+      console.log("Loginda data--->",loginData)
       if (loginData) {
           this.storeID = loginData.store.id.toString();
           this.branchID = loginData.branch.id.toString();
         console.log("ID de sucursal:", loginData.branch.id);
         console.log("ID de Store:", loginData.store.id);
-        console.log("Token:", loginData.token);
-        console.log("LOGIN DATA",loginData)
+
     }
     });
-}
+  }
 
 
 
@@ -80,14 +81,15 @@ export class GiftCardComponent {
       width: '400px',
       disableClose: true
     });
+    console.log("LLEGO ACA?")
+    dialogRef.afterClosed().subscribe(async (resultado: { exitoso: boolean, nroTarjeta?: string } | null) => {
+    if (!resultado?.exitoso || !resultado.nroTarjeta) return;
 
-    dialogRef.afterClosed().subscribe(async (numeroTarjeta: string | null) => {
-      if (!numeroTarjeta) return;
+    this.numeroTarjeta = resultado.nroTarjeta;
 
-      this.numeroTarjeta = numeroTarjeta;
 
       try {
-        const respuesta: GiftcardDTO = await this.endpointAdapterLogic.consultarSaldoGiftCard(this.storeID, numeroTarjeta);
+        const respuesta: GiftcardDTO = await this.endpointAdapterLogic.consultarSaldoGiftCard(this.storeID, this.numeroTarjeta);
         console.log("la respuesta del consultar saldo",respuesta)
         this.serviceLogic.setGiftCardInfo(respuesta);
 

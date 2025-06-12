@@ -26,7 +26,7 @@ constructor(private navigation: NavigationService) {}
   }
 
   irAEncuesta() {
-    // this.navigation.goToEncuesta();
+    this.navigation.goToEncuesta();
   }
 
   irAGestion() {

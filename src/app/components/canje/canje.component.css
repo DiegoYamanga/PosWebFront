@@ -1,0 +1,73 @@
+/* .sorteo-wrapper {
+  text-align: center;
+  padding: 20px;
+} */
+
+  .container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+  padding: 0;
+  }
+
+  .main-content {
+    flex-grow: 1;
+    background-color: white;
+  }
+  .grid-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    height: 20%;
+  }
+
+button {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+    i {
+      font-size: 3rem;
+      margin-bottom: 0.5rem;
+    }
+}
+/* .logo-box {
+  margin: 60px auto;
+  background-color: #eee;
+  width: 150px;
+  height: 150px;
+  line-height: 150px;
+  font-weight: bold;
+} */
+
+/* .botonera {
+  display: flex;
+  justify-content: space-around;
+  padding: 0 10px;
+} */
+
+/* .btn {
+  flex: 1;
+  margin: 0 5px;
+  padding: 15px;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 10px;
+} */
+
+.tarjetas {
+  background-color: #f7941e;
+  border: 1px solid white;
+}
+.qr {
+  background-color: #5e2a84;
+  border: 1px solid white;
+}
+.documento {
+  background-color: #007bff;
+  border: 1px solid white;
+}

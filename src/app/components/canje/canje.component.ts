@@ -6,22 +6,28 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { IdentificacionUsuarioComponent } from '../pop-ups/identificacion-usuario/identificacion-usuario.component';
 import { NavigationService } from '../../../logic/navigationService';
 import { StateOrigenOperacionAction } from '../../redux/action';
+import { CommonModule } from '@angular/common';
+import { HeaderComponent } from '../header/header.component';
+import { DatosGlobalService } from '../../../logic/datosGlobalService';
 
 @Component({
   selector: 'app-canje',
-  imports: [MatDialogModule],
+  imports: [MatDialogModule,CommonModule, HeaderComponent],
   templateUrl: './canje.component.html',
   styleUrl: './canje.component.css'
 })
 export class CanjeComponent implements OnInit {
 
 
-    tipoCanje: 'PUNTOS' | 'IMPORTE' | null = null;
-    cliente: ResClienteDTO | undefined;
+  tipoCanje: 'PUNTOS' | 'IMPORTE' | null = null;
+  cliente: ResClienteDTO | undefined;
+  storeID!: string;
+  branchID!: string;
 
   constructor(private store: Store,
               private dialog: MatDialog,
-              private navigation: NavigationService
+              private navigation: NavigationService,
+              private datosGlobalesService: DatosGlobalService
   ) {}
 
   ngOnInit(): void {
@@ -36,6 +42,15 @@ export class CanjeComponent implements OnInit {
     this.store.select(AppSelectors.selectResClienteDTO).subscribe(cliente => {
       this.cliente = cliente;
       console.log("Cliente logueado:", cliente);
+    });
+
+    this.store.select(AppSelectors.selectResLoginDTO).subscribe(loginData => {
+      if (loginData) {
+          this.storeID = loginData.store.id.toString();
+          this.branchID = loginData.branch.id.toString();
+        console.log("ID de sucursal:", loginData.branch.id);
+        console.log("ID de Store:", loginData.store.id);
+    }
     });
 
   }

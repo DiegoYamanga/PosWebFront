@@ -43,7 +43,7 @@ export class IdentificacionUsuarioComponent {
 
     this.loading = true;
     try {
-      const cliente = await this.logic.buscarCliente("32", "45", this.documento);
+      const cliente = await this.logic.buscarCliente("32", "43", this.documento);
       if(!cliente){
         this.error= "No existe un cliente con los datos ingresados";
         this.loading = false;
@@ -64,9 +64,13 @@ export class IdentificacionUsuarioComponent {
   }
 
   close(): void {
-    if(this.dialogRef){
+    if (this.dialogRef) {
       this.loading = false;
-      this.dialogRef.close({exitoso:true})
+      this.dialogRef.close({
+        exitoso: true,
+        documento: this.documento // <-- ¡esto es fundamental!
+      });
     }
   }
+
 }

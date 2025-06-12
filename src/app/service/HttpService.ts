@@ -85,7 +85,7 @@ export class HttpService {
 
   }
 
-  public getEncuentaSucursal(storeID : String, branchesID: String) : Observable<any> {
+  public getEncuestasSucursal(storeID : number, branchesID: number) : Observable<any> {
     return this.http.get(this.BASE_URL + "/stores/" + storeID + "/branches/" + branchesID + "/polls",{});
   }
 

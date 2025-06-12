@@ -46,6 +46,16 @@ export class NavigationService{
   this.router.navigate(['inicio']);
 }
 
+  goToTarjetaDetallesOperacion() {
+    this.router.navigate(['/tarjetaDetalleOperacion']);
+  }
 
+  goToEncuesta() {
+    this.router.navigate(['/encuesta']);
+  }
+
+  goToEncuestaPreguntas() {
+    this.router.navigate(['/encuestaPreguntas']);
+  }
 
 }

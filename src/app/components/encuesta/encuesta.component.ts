@@ -9,12 +9,13 @@ import { NotificacionComponent } from '../notificacion/notificacion.component';
 import { IdentificacionUsuarioComponent } from '../pop-ups/identificacion-usuario/identificacion-usuario.component';
 import { TarjetaUsuarioComponent } from '../pop-ups/tarjeta-usuario/tarjeta-usuario.component';
 import { CommonModule } from '@angular/common';
+import { HeaderComponent } from "../header/header.component";
 
 @Component({
   selector: 'app-encuesta',
   standalone: true,
   templateUrl: './encuesta.component.html',
-  imports: [CommonModule],
+  imports: [CommonModule, HeaderComponent],
     styleUrl: './encuesta.component.css'
 })
 export class EncuestaComponent {
@@ -23,6 +24,7 @@ export class EncuestaComponent {
   documento: string | undefined;
   numeroTarjeta: string | undefined;
   encuestas: EncuestaDTO[] = [];
+  encuestasObtenidas: boolean = false;
 
   constructor(
     private store: Store,
@@ -68,9 +70,10 @@ onSeleccionar(tipo: 'tarjeta' | 'documento' | 'qr') {
     this.cargarEncuestas();
   } else {
     if (tipo === 'documento') {
-      this.dialog.open(IdentificacionUsuarioComponent, {
-        disableClose: true,
-        data: {}
+      const dialogRef = this.dialog.open(IdentificacionUsuarioComponent, {
+        data: {} ,
+        width: '400px',
+        height: 'auto'
       }).afterClosed().subscribe((resultado) => {
         if (resultado?.exitoso && resultado.documento) {
           this.documento = resultado.documento;
@@ -80,9 +83,10 @@ onSeleccionar(tipo: 'tarjeta' | 'documento' | 'qr') {
     }
 
     if (tipo === 'tarjeta') {
-      this.dialog.open(TarjetaUsuarioComponent, {
-        disableClose: true,
-        data: {}
+      const dialogRef = this.dialog.open(TarjetaUsuarioComponent, {
+        data: {} ,
+        width: '400px',
+        height: 'auto'
       }).afterClosed().subscribe((resultado) => {
         if (resultado?.exitoso && resultado.nroTarjeta) {
           this.numeroTarjeta = resultado.nroTarjeta;
@@ -104,6 +108,7 @@ cargarEncuestas() {
 
   this.serviceLogic.getEncuestas(this.storeID, this.branchID).subscribe({
     next: (respuesta: EncuestaDTO[]) => {
+      this.encuestasObtenidas = true;
       this.encuestas = respuesta;
     },
     error: () => {

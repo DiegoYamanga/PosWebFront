@@ -1,4 +1,13 @@
-.seleccion-tipo {
+  .container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+  padding: 0;
+  }
+
+
+/* .seleccion-tipo {
   display: flex;
   justify-content: space-around;
   margin: 20px 0;
@@ -22,17 +31,72 @@
     background-color: deepskyblue;
     color: white;
   }
+} */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+  padding: 0;
 }
+
+.main-content {
+  flex-grow: 1;
+  background-color: white;
+}
+.grid-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  height: 20%;
+}
+
+  
+button {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+    i {
+      font-size: 3rem;
+      margin-bottom: 0.5rem;
+    }
+}
+.tarjetas {
+  background-color: #f7941e;
+  border: 1px solid white;
+}
+.qr {
+  background-color: #5e2a84;
+  border: 1px solid white;
+}
+.documento {
+  background-color: #007bff;
+  border: 1px solid white;
+}
+
 
 .lista-encuestas {
   margin-top: 30px;
+  padding: 1rem;
 
   .card-encuesta {
     border: 1px solid #ccc;
-    padding: 10px;
+    padding: .5rem;
     margin-bottom: 15px;
     border-radius: 10px;
     background: #f5f5f5;
+
+    button{
+      color: black;
+      font-weight: 400;
+      border: 1px solid gray;
+      border-radius: 5px;
+      background-color: white;
+    }
   }
 }
 

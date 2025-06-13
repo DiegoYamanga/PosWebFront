@@ -16,11 +16,10 @@ import { StateResLoginDTOAction } from './redux/action';
   imports: [StoreModule.forRoot({_STATE_: reduxReducer})],
   providers: [
     HttpService,
-    importProvidersFrom(),
+    importProvidersFrom(HttpClientModule),
     ServiceLogic
   ],
   bootstrap: []
-  
 })
 export class AppModule {}
 
@@ -56,4 +55,3 @@ export class AppComponent implements OnInit {
   }
 }
 
-  

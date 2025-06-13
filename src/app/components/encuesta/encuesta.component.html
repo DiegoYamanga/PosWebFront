@@ -1,18 +1,52 @@
-<div class="seleccion-tipo">
-  <button (click)="onSeleccionar('tarjeta')" class="btn-tarjeta">TARJETAS</button>
-  <button (click)="onSeleccionar('qr')" class="btn-qr">QR</button>
-  <button (click)="onSeleccionar('documento')" class="btn-documento">DOCUMENTO</button>
-</div>
+<div class="container">
 
-<div *ngIf="encuestas.length > 0" class="lista-encuestas">
-  <h2>Encuestas disponibles</h2>
-  <div *ngFor="let encuesta of encuestas" class="card-encuesta">
-    <h3>{{ encuesta.title }}</h3>
-    <p>Desde: {{ encuesta.date_from }} - Hasta: {{ encuesta.date_to }}</p>
-    <button (click)="seleccionarEncuesta(encuesta)">Seleccionar</button>
+  <!-- VERRRRRRR -->
+
+  <!-- <div *ngIf="encuestas.length > 0" class="lista-encuestas">
+      <h2>Encuestas disponibles</h2>
+      <div *ngFor="let encuesta of encuestas" class="card-encuesta">
+        <h3>{{ encuesta.title }}</h3>
+        <p>Desde: {{ encuesta.date_from }} - Hasta: {{ encuesta.date_to }}</p>
+        <button (click)="seleccionarEncuesta(encuesta)">Seleccionar</button>
+      </div>
+    </div>
+
+    <div *ngIf="encuestas.length === 0" class="mensaje-vacio">
+      <p>No se encontraron encuestas disponibles.</p>
+    </div>
+  </div> -->
+
+  <app-header [headerTitle]="'Encuestas'"></app-header>
+    <div class="main-content"></div>
+
+    <div *ngIf="encuestasObtenidas && encuestas.length > 0" class="lista-encuestas">
+      <h2>Encuestas disponibles</h2>
+      <div *ngFor="let encuesta of encuestas" class="card-encuesta">
+        <h3>{{ encuesta.title }}</h3>
+        <p>Desde: {{ encuesta.date_from }} - Hasta: {{ encuesta.date_to }}</p>
+        <button (click)="seleccionarEncuesta(encuesta)">Seleccionar</button>
+      </div>
+    </div>
+
+    <div *ngIf="encuestasObtenidas && encuestas.length === 0" class="mensaje-vacio">
+      <p>No se encontraron encuestas disponibles.</p>
+    </div>
+
+  <div class="grid-buttons">
+    <button class="tarjetas" (click)="onSeleccionar('tarjeta')">
+      <i class="material-icons">credit_card</i>
+      TARJETAS
+    </button>
+    <button class="qr" (click)="onSeleccionar('qr')">
+      <i class="material-icons">qr_code_scanner</i>
+      QR
+    </button>
+    <button class="documento" (click)="onSeleccionar('documento')">
+      <i class="material-icons">contact_mail</i>
+      DOCUMENTO
+    </button>
   </div>
 </div>
+  
+ 
 
-<div *ngIf="encuestas.length === 0" class="mensaje-vacio">
-  <p>No se encontraron encuestas disponibles.</p>
-</div>

@@ -16,7 +16,7 @@ import { AppSelectors } from '../../../redux/selectors';
   imports:[CommonModule,FormsModule],
   selector: 'app-tarjeta-usuario',
   templateUrl: './tarjeta-usuario.component.html',
-  styleUrls: ['./tarjeta-usuario.component.css']
+  styleUrl: './tarjeta-usuario.component.css'
 })
 export class TarjetaUsuarioComponent {
   numeroTarjeta: string = '';
@@ -55,7 +55,7 @@ export class TarjetaUsuarioComponent {
     }
   
 
-  confirmarTarjeta(): void {
+confirmarTarjeta(): void {
   this.serviceLogic.setCardNumberCompraInfo(this.numeroTarjeta);
   if (!this.numeroTarjeta) {
     this.error = 'Debe ingresar un número de tarjeta.';

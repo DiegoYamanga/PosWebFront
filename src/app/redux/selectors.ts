@@ -44,6 +44,11 @@ const selectResLotsDTO = createSelector(
   (state) => state.reslotsDTO
 );
 
+const selectEncuestasDisponibles = createSelector(
+  selectStateModule,
+  (state) => state.encuestasDisponibles
+);
+
 
 export const AppSelectors = {
   selectState,
@@ -53,5 +58,7 @@ export const AppSelectors = {
   selectOrigenOperacion,
   selectGiftCardOperacion,
   selectMontoGiftCard,
-  selectResLotsDTO
+  selectResLotsDTO,
+  selectEncuestasDisponibles
+  
 }

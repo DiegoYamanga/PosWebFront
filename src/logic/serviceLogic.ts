@@ -21,6 +21,7 @@ export class ServiceLogic {
   private giftCardInfo: GiftcardDTO | null = null;
   private ultimaOperacion: any = null;
   private cardNumberCompra!: string | null;
+  private documetoUsuario!: string | undefined;
 
   constructor(private store: Store,
               private httpService: HttpService,
@@ -83,8 +84,8 @@ public obtenerPreguntasEncuesta(
     storeID.toString(),
     branchID.toString(),
     pollID.toString()
-  );
-}
+    );
+  }
 
   public responderEncuesta(
   storeID: number,
@@ -93,6 +94,7 @@ public obtenerPreguntasEncuesta(
   preguntaID: number,
   respuesta: RespuestaEncuestaDTO
     ): Observable<ResEncuestaRespuesta> {
+      console.log("respuesta para la encuesta:",respuesta)
   return this.endPointAdapterLogic.responderEncuesta(storeID, branchID, pollID, preguntaID, respuesta);
   }
 
@@ -100,5 +102,23 @@ public obtenerPreguntasEncuesta(
     cardNumberCompra = cardNumberCompra;
   }
 
+  public setDocumentoUsuario(documentoUsuario: string | undefined) {
+    this.documetoUsuario = documentoUsuario;
+    if (documentoUsuario) {
+      localStorage.setItem('documentoUsuario', documentoUsuario);
+    } else {
+      localStorage.removeItem('documentoUsuario');
+    }
+  }
+
+  public getDocumentoUsuario(): string | undefined {
+    if (!this.documetoUsuario) {
+      const almacenado = localStorage.getItem('documentoUsuario');
+      if (almacenado) {
+        this.documetoUsuario = almacenado;
+      }
+    }
+    return this.documetoUsuario;
+  }
 
 }

@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Navigation, Router } from '@angular/router';
 import { EncuestaPreguntas } from '../../../DTOs/encuestaPreguntas';
 import { RespuestaEncuestaDTO } from '../../../DTOs/RespuestaEncuestaDTO';
 import { ServiceLogic } from '../../../logic/serviceLogic';
 import { MatDialog } from '@angular/material/dialog';
 import { NotificacionComponent } from '../notificacion/notificacion.component';
 import { CommonModule } from '@angular/common';
+import { NavigationService } from '../../../logic/navigationService';
 
 @Component({
   selector: 'app-encuesta-preguntas',
@@ -30,7 +31,8 @@ export class EncuestaPreguntasComponent {
     private route: ActivatedRoute,
     private router: Router,
     private serviceLogic: ServiceLogic,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private navigationLogic: NavigationService
   ) {
     const nav = this.router.getCurrentNavigation();
     const state = nav?.extras.state as any;
@@ -42,6 +44,7 @@ export class EncuestaPreguntasComponent {
       this.documento = state.documento;
       this.nroTarjeta = state.nroTarjeta;
     }
+    console.log("EncuestasPreguntas - State: ",state)
 
     this.cargarPreguntas();
   }
@@ -64,8 +67,9 @@ export class EncuestaPreguntasComponent {
   }
 
   enviarRespuesta() {
-  const pregunta = this.preguntas?.[this.preguntaActualIndex];
-  if (!pregunta) return;
+    const pregunta = this.preguntas?.[this.preguntaActualIndex];
+    if (!pregunta) return;
+
     const payload: RespuestaEncuestaDTO = {
       terminal: 'MOBILE',
       card_number: this.nroTarjeta ?? null,
@@ -74,14 +78,19 @@ export class EncuestaPreguntasComponent {
     };
 
     this.cargando = true;
+
+    console.log("📤 Enviando respuesta:", payload);
+
     this.serviceLogic.responderEncuesta(this.storeID, this.branchID, this.pollID, pregunta.id, payload)
       .subscribe({
-        next: () => {
+        next: (respuesta) => {
+          console.log("Respuesta exitosa del backend:", respuesta);
           this.cargando = false;
           this.respuestaSeleccionada = '';
           this.irASiguiente();
         },
-        error: () => {
+        error: (err) => {
+          console.error("Error al enviar respuesta:", err);
           this.cargando = false;
           this.dialog.open(NotificacionComponent, {
             data: { mensaje: 'Error al enviar la respuesta.', tipo: 'error' }
@@ -90,19 +99,31 @@ export class EncuestaPreguntasComponent {
       });
   }
 
+
   irASiguiente() {
     if (this.preguntas && this.preguntaActualIndex < this.preguntas.length - 1) {
       this.preguntaActualIndex++;
     } else {
       this.dialog.open(NotificacionComponent, {
-        data: { mensaje: '¡Gracias por responder la encuesta!', tipo: 'success' }
+        data: {
+          success: true,
+          titulo: '¡Encuesta enviada!',
+          descripcion: 'Gracias por su participación.',
+          origen: 'Encuesta-Preguntas'
+        }
       });
-      this.router.navigate(['/fidelidad']);
+
+
+      // Espera 2 segundos antes de redirigir
+      setTimeout(() => {
+        this.navigationLogic.goToInicio();
+      }, 2000);
     }
   }
 
+
   saltearEncuesta() {
-    this.router.navigate(['/fidelidad']);
+    this.navigationLogic.goToEncuesta();
   }
 
   get rango(): number[] {

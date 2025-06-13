@@ -1,0 +1,114 @@
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 1rem;
+  background-color: #f5f7fa;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+.container {
+  background: white;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 500px;
+  text-align: center;
+}
+
+.titulo {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 0.5rem;
+}
+
+.subtitulo {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: #444;
+  margin-bottom: 1.5rem;
+}
+
+.opcion {
+  width: 100%;
+  max-width: 300px;
+  margin: 0.4rem auto;
+  padding: 0.75rem 1rem;
+  font-size: 1.1rem;
+  border: 2px solid #ccc;
+  border-radius: 12px;
+  background-color: #fff;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.opcion:hover {
+  background-color: #f0f0f0;
+}
+
+.opcion.selected {
+  border-color: #007bff;
+  background-color: #e0f0ff;
+  font-weight: 600;
+}
+
+.botones {
+  margin-top: 2rem;
+}
+
+.saltear {
+  background: none;
+  border: none;
+  color: #888;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.saltear:hover {
+  color: #555;
+}
+
+.acciones {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.btn-rojo,
+.btn-verde {
+  width: 55px;
+  height: 55px;
+  border: none;
+  font-size: 1.5rem;
+  border-radius: 50%;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-rojo {
+  background-color: #e74c3c;
+}
+
+.btn-rojo:hover {
+  background-color: #c0392b;
+}
+
+.btn-verde {
+  background-color: #2ecc71;
+}
+
+.btn-verde:disabled {
+  background-color: #a3e4c3;
+  cursor: not-allowed;
+}
+
+.btn-verde:hover:not(:disabled) {
+  background-color: #27ae60;
+}

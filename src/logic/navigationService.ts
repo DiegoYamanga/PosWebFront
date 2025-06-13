@@ -54,8 +54,8 @@ export class NavigationService{
     this.router.navigate(['/encuesta']);
   }
 
-  goToEncuestaPreguntas() {
-    this.router.navigate(['/encuestaPreguntas']);
+  goToEncuestaPreguntas(reqObtenerPregunstasEncuestas : any) {
+    this.router.navigate(['/encuestaPreguntas'], reqObtenerPregunstasEncuestas);
   }
 
 }

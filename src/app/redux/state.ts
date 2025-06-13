@@ -1,3 +1,4 @@
+import { EncuestaDTO } from "../../DTOs/encuestaDTO";
 import { LotsDTO } from "../../DTOs/lotsDTO";
 import { ResClienteDTO } from "../../DTOs/resClienteDTO";
 import { resLoginDTO } from "../../DTOs/resLoginDTO";
@@ -20,6 +21,7 @@ export interface AppState {
 
     reslotsDTO: LotsDTO[] | undefined;
 
+    encuestasDisponibles: EncuestaDTO[] | null;
 
 
 

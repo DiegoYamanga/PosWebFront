@@ -2,6 +2,7 @@ import { createAction, createActionGroup, props } from '@ngrx/store';
 import { resLoginDTO } from '../../DTOs/resLoginDTO';
 import { ResClienteDTO } from '../../DTOs/resClienteDTO';
 import { LotsDTO } from '../../DTOs/lotsDTO';
+import { EncuestaDTO } from '../../DTOs/encuestaDTO';
 
 
 export const StateResLoginDTOAction = createActionGroup({
@@ -51,6 +52,13 @@ export const StateResLotsDTOAction = createActionGroup({
   source: 'ResLotsDTOState',
   events: {
     'setLotsDTO': props<{ reslotsDTO: LotsDTO[] | undefined }>(),
+  },
+});
+
+export const StateEncuestasAction = createActionGroup({
+  source: 'EncuestasState',
+  events: {
+    'setEncuestasDisponibles': props<{ encuestas: EncuestaDTO[] | null }>(),
   },
 });
 

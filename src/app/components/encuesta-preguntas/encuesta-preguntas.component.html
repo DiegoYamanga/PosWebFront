@@ -1,38 +1,40 @@
-<ng-container *ngIf="preguntas.length > 0 && preguntaActualIndex < preguntas.length">
-  <ng-container *ngIf="preguntas[preguntaActualIndex] as actual">
-    <h2 class="titulo">Contanos tu experiencia</h2>
-    <h4 class="subtitulo">{{ actual?.title }}</h4>
+<div class="container">
+  <ng-container *ngIf="preguntas.length > 0 && preguntaActualIndex < preguntas.length">
+    <ng-container *ngIf="preguntas[preguntaActualIndex] as actual">
+      <h2 class="titulo">Contanos tu experiencia</h2>
+      <h4 class="subtitulo">{{ actual?.title }}</h4>
 
-    <!-- Opciones desde values[] -->
-    <div *ngIf="esPreguntaConOpciones(actual)">
-      <div *ngFor="let opcion of actual.values">
-        <button
-          class="opcion"
-          [class.selected]="respuestaSeleccionada === opcion"
-          (click)="seleccionarValor(opcion)">
-          {{ opcion }}
-        </button>
+      <!-- Opciones desde values[] -->
+      <div *ngIf="esPreguntaConOpciones(actual)">
+        <div *ngFor="let opcion of actual.values">
+          <button
+            class="opcion"
+            [class.selected]="respuestaSeleccionada === opcion"
+            (click)="seleccionarValor(opcion)">
+            {{ opcion }}
+          </button>
+        </div>
       </div>
-    </div>
 
-    <!-- Rango numérico -->
-    <div *ngIf="!esPreguntaConOpciones(actual) && actual?.min_value !== null && actual?.max_value !== null">
-      <div *ngFor="let num of rango">
-        <button
-          class="opcion"
-          [class.selected]="respuestaSeleccionada === num.toString()"
-          (click)="seleccionarValor(num.toString())">
-          {{ num }}
-        </button>
+      <!-- Rango numérico -->
+      <div *ngIf="!esPreguntaConOpciones(actual) && actual?.min_value !== null && actual?.max_value !== null">
+        <div *ngFor="let num of rango">
+          <button
+            class="opcion"
+            [class.selected]="respuestaSeleccionada === num.toString()"
+            (click)="seleccionarValor(num.toString())">
+            {{ num }}
+          </button>
+        </div>
       </div>
-    </div>
 
-    <div class="botones">
-      <button (click)="saltearEncuesta()" class="saltear">SALTEAR ENCUESTA</button>
-      <div class="acciones">
-        <button class="btn-rojo" (click)="saltearEncuesta()">✕</button>
-        <button class="btn-verde" [disabled]="!respuestaSeleccionada || cargando" (click)="enviarRespuesta()">✔</button>
+      <div class="botones">
+        <button (click)="saltearEncuesta()" class="saltear">SALTEAR ENCUESTA</button>
+        <div class="acciones">
+          <button class="btn-rojo" (click)="saltearEncuesta()">✕</button>
+          <button class="btn-verde" [disabled]="!respuestaSeleccionada || cargando" (click)="enviarRespuesta()">✔</button>
+        </div>
       </div>
-    </div>
+    </ng-container>
   </ng-container>
-</ng-container>
+</div>

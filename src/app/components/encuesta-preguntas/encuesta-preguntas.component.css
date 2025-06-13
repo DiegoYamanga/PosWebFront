@@ -10,19 +10,21 @@
 
 .container {
   background: white;
-  padding: 2rem;
+  padding: 1.5rem;
   border-radius: 16px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 500px;
   text-align: center;
+  height: 90vh;
+  overflow-y: scroll;
 }
 
 .titulo {
-  font-size: 1.8rem;
+  font-size: 1.4rem;
   font-weight: 700;
   color: #222;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
 }
 
 .subtitulo {
@@ -37,7 +39,7 @@
   max-width: 300px;
   margin: 0.4rem auto;
   padding: 0.75rem 1rem;
-  font-size: 1.1rem;
+  font-size: 1rem;
   border: 2px solid #ccc;
   border-radius: 12px;
   background-color: #fff;
@@ -56,7 +58,7 @@
 }
 
 .botones {
-  margin-top: 2rem;
+  margin-top: 1.5rem;
 }
 
 .saltear {

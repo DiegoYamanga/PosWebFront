@@ -11,13 +11,16 @@ import { reduxReducer } from './redux/reducer';
 import { CommonModule } from '@angular/common';
 import { SessionLogic } from '../logic/sessionLogic';
 import { StateResLoginDTOAction } from './redux/action';
+import { ZXingScannerModule } from '@zxing/ngx-scanner';
+
 
 @NgModule({
   imports: [StoreModule.forRoot({_STATE_: reduxReducer})],
   providers: [
     HttpService,
     importProvidersFrom(HttpClientModule),
-    ServiceLogic
+    ServiceLogic,
+    ZXingScannerModule
   ],
   bootstrap: []
 })

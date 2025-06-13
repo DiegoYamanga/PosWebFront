@@ -62,6 +62,7 @@ export class CompraComponent {
 
   accionQR(): void {
     console.log("QR presionado");
+    this.navigationService.goToQRScanner();
   }
 
   goToIdentificacionUsuario(): void {

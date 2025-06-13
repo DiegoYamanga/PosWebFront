@@ -54,6 +54,10 @@ export class NavigationService{
     this.router.navigate(['/encuesta']);
   }
 
+  goToQRScanner() {
+    this.router.navigate(['/qrScanner']);
+  }
+
   goToEncuestaPreguntas(reqObtenerPregunstasEncuestas : any) {
     this.router.navigate(['/encuestaPreguntas'], reqObtenerPregunstasEncuestas);
   }

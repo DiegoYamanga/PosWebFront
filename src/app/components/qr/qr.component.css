@@ -1,0 +1,23 @@
+/*SCANNER*/
+.textScan{
+  color: #000;
+  padding-top: 1rem;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+.qrScanner{
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  padding: 1rem;
+  margin: auto 0;
+}
+.btnCancel{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto 0;
+}

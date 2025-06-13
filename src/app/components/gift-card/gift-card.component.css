@@ -67,3 +67,34 @@ button {
   background-color: #8e44ad; /* violeta */
   border: 1px solid white;
 }
+
+
+.inputAmount{
+    margin: 2rem auto;
+}
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.prefix{
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+}
+.nroTarjeta{
+  font-size: 1.2rem;
+  text-align: center;
+  padding-top: 3rem;
+}
+.btn-confirmar {
+    display: flex;
+    justify-content: center;
+    margin: auto;
+    /* width: 100%; */
+
+    i{
+        font-size: 4rem;
+        color: green;
+    }
+}

@@ -25,13 +25,16 @@
 </div>
 
 <!-- Etapa 2: ingreso de monto -->
-<div *ngIf="etapa === 'monto'" class="giftcard-etapa-monto text-center mt-4">
-  <p>Número de tarjeta: <strong>{{ numeroTarjeta }}</strong></p>
+<div *ngIf="etapa === 'monto'" class="giftcard-etapa-monto">
+  <app-header [headerTitle]="'Monto de compra'"></app-header>
 
-  <div class="monto-input">
-    <p>Ingrese el monto</p>
-    <input type="number" [(ngModel)]="saldo" class="form-control w-50 mx-auto" placeholder="$0.00" />
-  </div>
 
-  <button class="btn btn-success mt-3" (click)="confirmarOperacion()">✔️ Confirmar</button>
+  <p class="nroTarjeta">Número de tarjeta: <strong>{{ numeroTarjeta }}</strong></p>
+
+  <div class="input-group inputAmount w-75">
+      <span class="input-group-text prefix">$</span>
+      <input type="number" class="form-control" inputmode="numeric" min="0" placeholder='Monto de compra' required [(ngModel)]="saldo">
+    </div>
+    <button class="btn btn-confirmar" > <i class="material-icons" (click)="confirmarOperacion()">check_box</i></button>
 </div>
+

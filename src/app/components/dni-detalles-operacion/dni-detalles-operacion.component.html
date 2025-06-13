@@ -79,8 +79,11 @@
     </div>
 
   </div>
-
-  <button class="btn-continuar btnContinuar btn" (click)="confirmarOperacion()">CONTINUAR</button>
+  @if (!loginSpinner) {
+    <button class="btn-continuar btnContinuar btn" (click)="confirmarOperacion()">CONTINUAR</button>
+  }@else {
+      <button class="btn-continuar btnContinuar btn" disabled><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></button>
+  }
 
 </div>
 

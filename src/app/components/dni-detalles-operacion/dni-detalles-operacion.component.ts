@@ -31,6 +31,7 @@ export class DniDetallesOperacionComponent {
   branchID: string = '';
   nroTarjeta: string = '';
   tipoCanje: 'PUNTOS' | 'IMPORTE' | null = null;
+  loginSpinner: boolean = false;
 
 
   constructor(private store: Store,
@@ -87,7 +88,9 @@ export class DniDetallesOperacionComponent {
 
 
   async confirmarOperacion() {
+
     if (!this.cliente || !this.monto) return;
+    this.loginSpinner = true;
 
     const payload: reqTransactionsFidelidad = {
       serial_number: 'MOBILE',
@@ -102,6 +105,7 @@ export class DniDetallesOperacionComponent {
       if(this.origenOperacion === "CANJE"){
         this.confirmarCanje(this.tipoCanje$);
         console.log("Salgo de aca")
+        this.loginSpinner = false;
         return;
       }
 
@@ -109,6 +113,7 @@ export class DniDetallesOperacionComponent {
       console.log("Obtuve la transaccion por fidelidad?")
       console.log("✔️ Transacción Fidelidad registrada:", result);
 
+      this.loginSpinner = false;
       this.dialog.open(NotificacionComponent, {
         width: '800px',
         data: {
@@ -118,9 +123,10 @@ export class DniDetallesOperacionComponent {
           origen: 'FIDELIDAD'
         }
       });
+      this.navigation.goToInicio();
     } catch (e) {
       console.error("❌ Error al registrar transacción Fidelidad:", e);
-
+      this.loginSpinner = false;
       this.dialog.open(NotificacionComponent, {
         width: '800px',
         data: {

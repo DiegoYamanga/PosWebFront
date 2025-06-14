@@ -1,9 +1,20 @@
-<h2>Compra con Tarjeta</h2>
+<!-- <h2>Compra con Tarjeta</h2>
 
 <div *ngIf="etapa === 'monto'">
   <label>Ingrese monto</label>
   <input [(ngModel)]="monto" placeholder="Ej: 100.00" />
   <button (click)="confirmarMonto()">Continuar</button>
+</div> -->
+
+<div *ngIf="etapa === 'monto'">
+  <app-header [headerTitle]="'Monto de Compra'"></app-header>
+
+  <div class="input-group inputAmount w-75">
+    <span class="input-group-text prefix">$</span>
+    <input type="number" class="form-control" inputmode="numeric" min="0" placeholder='Monto de compra' required [(ngModel)]="monto">
+  </div>
+  <button class="btn btn-confirmar" > <i class="material-icons" (click)="confirmarMonto()">check_box</i></button>
+
 </div>
 
 <div *ngIf="etapa === 'detalle'">

@@ -14,7 +14,7 @@ import { ServiceLogic } from '../../../logic/serviceLogic';
 @Component({
   standalone: true,
   selector: 'app-tarjeta-detalles-operacion',
-  imports: [CommonModule,FormsModule],
+  imports: [CommonModule, FormsModule, HeaderComponent],
   templateUrl: './tarjeta-detalles-operacion.component.html',
   styleUrl: './tarjeta-detalles-operacion.component.css'
 })
@@ -25,6 +25,7 @@ export class TarjetaDetallesOperacionComponent {
   branchID: string = '';
   monto: string = '';
   etapa: 'monto' | 'detalle' = 'monto';
+  loginSpinner: boolean = false;
 
   constructor(
     private store: Store,

@@ -1,0 +1,71 @@
+.inputAmount{
+    margin: 2rem auto;
+}
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.prefix{
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+}
+.btn-confirmar {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+
+    i{
+        font-size: 4rem;
+        color: green;
+    }
+}
+
+
+
+.btnContinuar{
+    width: 100%;
+    height: 3rem;
+    background-color: #3F51B5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 0;
+}
+.btn-continuar{
+    color: white;
+    font-size: .9rem;
+}
+.detalle-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Toda la altura de la pantalla */
+}
+
+.flex-grow {
+    flex: 1; /* Ocupa el espacio restante */
+}
+.cliente-info{
+    padding: 2rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    height: 30vh;
+}
+.cliente-nombre{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.clientName{
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin: 0;
+}
+.clientType{
+    margin: 0;
+    color: gray;
+}

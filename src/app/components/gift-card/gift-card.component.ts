@@ -30,7 +30,7 @@ export class GiftCardComponent {
   numeroTarjeta!: string;
   saldo: number | null = 0;
   etapa: 'seleccion' | 'monto' = 'seleccion';
-  titulo: string | undefined;
+  titulo: string = "";
   storeID!: string;
   branchID!: string;
 
@@ -83,15 +83,18 @@ export class GiftCardComponent {
     });
     console.log("LLEGO ACA?")
     dialogRef.afterClosed().subscribe(async (resultado: { exitoso: boolean, nroTarjeta?: string } | null) => {
-    if (!resultado?.exitoso || !resultado.nroTarjeta) return;
+      
+      if (!resultado?.exitoso || !resultado.nroTarjeta) return;
 
-    this.numeroTarjeta = resultado.nroTarjeta;
+      this.numeroTarjeta = resultado.nroTarjeta;
 
 
       try {
         const respuesta: GiftcardDTO = await this.endpointAdapterLogic.consultarSaldoGiftCard(this.storeID, this.numeroTarjeta);
         console.log("la respuesta del consultar saldo",respuesta)
         this.serviceLogic.setGiftCardInfo(respuesta);
+        this.titulo = this.obtenerTituloOperacion(operacion);
+
 
         if (operacion === 'CONSULTAR_SALDO') {
           this.dialog.open(ConsultarSaldoComponent, {
@@ -136,6 +139,7 @@ export class GiftCardComponent {
 
 
   obtenerTituloOperacion(operacion: string): string {
+    console.log("SETEO TITULO: ", operacion)
     switch (operacion) {
       case 'COMPRA': return 'Monto de compra';
       case 'CARGAR_SALDO': return 'Cargar saldo';

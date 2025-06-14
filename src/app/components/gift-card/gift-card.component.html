@@ -26,7 +26,7 @@
 
 <!-- Etapa 2: ingreso de monto -->
 <div *ngIf="etapa === 'monto'" class="giftcard-etapa-monto">
-  <app-header [headerTitle]="'Monto de compra'"></app-header>
+  <app-header [headerTitle]="titulo || 'GiftCard'"></app-header>
 
 
   <p class="nroTarjeta">Número de tarjeta: <strong>{{ numeroTarjeta }}</strong></p>

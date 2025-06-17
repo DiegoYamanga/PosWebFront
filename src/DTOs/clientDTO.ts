@@ -1,6 +1,6 @@
 export interface ClienteDTO{
     branch_id: any;
-    
+    card_number: string;
     user_id: number;
     user_subscription_id: number;
     client_type_id: number;

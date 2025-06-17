@@ -61,6 +61,7 @@ confirmarTarjeta(): void {
     this.error = 'Debe ingresar un número de tarjeta.';
     return;
   }
+  this.buscarTarjeta();
 
   this.dialogRef.close({
     exitoso: true,
@@ -72,7 +73,9 @@ confirmarTarjeta(): void {
     this.loading = true;
 
     try {
+      console.log("TarjetaUsuario - Voy a buscar cliente")
       const cliente = await this.logic.buscarCliente(this.storeID, this.branchID, this.numeroTarjeta);
+      console.log("TarjetaUsuario - Cliente:",cliente)
 
       if (!cliente) {
         this.error = "No existe un cliente con los datos ingresados";

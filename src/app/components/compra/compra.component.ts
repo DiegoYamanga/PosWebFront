@@ -9,6 +9,7 @@ import { IdentificacionUsuarioComponent } from '../pop-ups/identificacion-usuari
 import { HeaderComponent } from "../header/header.component";
 import { StateOrigenOperacionAction, StateResClienteDTOAction } from '../../redux/action';
 import { TarjetaUsuarioComponent } from '../pop-ups/tarjeta-usuario/tarjeta-usuario.component';
+import { ServiceLogic } from '../../../logic/serviceLogic';
 
 @Component({
   standalone: true,
@@ -25,6 +26,7 @@ export class CompraComponent {
   constructor(private store: Store,
               private navigationService : NavigationService,
               private dialog: MatDialog,
+              private serviceLogic: ServiceLogic
   ) {
     this.store.select(AppSelectors.selectResClienteDTO)
     .subscribe(value => {
@@ -54,7 +56,8 @@ export class CompraComponent {
     dialogRef.afterClosed().subscribe(result => {
       if (result?.exitoso) {
         this.store.dispatch(StateOrigenOperacionAction.setOrigenOperacion({ origen: 'COMPRA' }));
-        this.navigationService.goToTarjetaDetallesOperacion(); // 🔁 NUEVO
+        this.serviceLogic.setOrigenOperacionTarjeta('COMPRA');
+        this.navigationService.goToTarjetaDetallesOperacion();
       }
     });
   }

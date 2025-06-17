@@ -172,11 +172,7 @@ export class EndpointAdapterLogic {
   }
 
   async crearTransaccionFidelidad(storeID: string, body: reqTransactionsFidelidad): Promise<any> {
-    try {
-      return await firstValueFrom(this.httpService.nuevaTransaccionFidelidad(storeID, body));
-    } catch (error: any) {
-      throw new Error(this.procesarError(error));
-    }
+    return await firstValueFrom(this.httpService.nuevaTransaccionFidelidad(storeID, body));
   }
 
   private procesarError(error: any): string {

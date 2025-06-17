@@ -22,6 +22,9 @@ export class ServiceLogic {
   private ultimaOperacion: any = null;
   private cardNumberCompra!: string | null;
   private documetoUsuario!: string | undefined;
+  private origenOperacionTarjeta: 'COMPRA' | 'GIFTCARD' | null = null;
+
+
 
   constructor(private store: Store,
               private httpService: HttpService,
@@ -119,6 +122,14 @@ public obtenerPreguntasEncuesta(
       }
     }
     return this.documetoUsuario;
+  }
+
+  setOrigenOperacionTarjeta(origen: 'COMPRA' | 'GIFTCARD') {
+  this.origenOperacionTarjeta = origen;
+  }
+
+  getOrigenOperacionTarjeta(): 'COMPRA' | 'GIFTCARD' | null {
+    return this.origenOperacionTarjeta;
   }
 
 }

@@ -10,6 +10,8 @@ import { EndpointAdapterLogic } from '../../../logic/endpointAdapterLogic';
 import { MatDialog } from '@angular/material/dialog';
 import { ResClienteDTO } from '../../../DTOs/resClienteDTO';
 import { ServiceLogic } from '../../../logic/serviceLogic';
+import { reqTransactionsFidelidad } from '../../../DTOs/reqTransactionsFidelidad';
+import { NavigationService } from '../../../logic/navigationService';
 
 @Component({
   standalone: true,
@@ -31,7 +33,8 @@ export class TarjetaDetallesOperacionComponent {
     private store: Store,
     private endpointLogic: EndpointAdapterLogic,
     private dialog: MatDialog,
-    private serviceLogic: ServiceLogic
+    public serviceLogic: ServiceLogic,
+    private navigation : NavigationService
   ) {}
 
   ngOnInit(): void {
@@ -49,9 +52,23 @@ export class TarjetaDetallesOperacionComponent {
 
   confirmarMonto() {
     if (this.monto) {
-      this.etapa = 'detalle';
+    this.etapa = 'detalle';
+    console.log("DETALLE")
     }
   }
+
+  confirmarTipoOperacion() {
+      const origen = this.serviceLogic.getOrigenOperacionTarjeta();
+      console.log("Origen de operación:", origen);
+
+      if (origen === 'COMPRA') {
+        this.confirmarOperacionTarjeta();
+      } else if (origen === 'GIFTCARD') {
+        this.confirmarOperacion();
+      }
+    
+  }
+
 
   async confirmarOperacion() {
     const tarjetaInfo = this.serviceLogic.getGiftCardInfo();
@@ -110,6 +127,59 @@ export class TarjetaDetallesOperacionComponent {
           titulo: 'Error en la operación',
           descripcion: 'No se pudo registrar la compra. Intente más tarde.',
           origen: 'GIFTCARD'
+        }
+      });
+    }
+  }
+
+  async confirmarOperacionTarjeta() {
+    console.log("Confirmar con Tarjeta")
+
+    if (!this.cliente || !this.monto) return;
+    this.loginSpinner = true;
+
+    const payload: reqTransactionsFidelidad = {
+      serial_number: 'MOBILE',
+      identification: this.cliente.datosCliente.identification,
+      amount: parseFloat(this.monto),
+      local_datetime: new Date().toISOString(),
+      branch_id: this.branchID
+    };
+
+    try {
+      const result = await this.endpointLogic.crearTransaccionFidelidad(this.storeID, payload);
+      console.log("Obtuve la transaccion por fidelidad?")
+      console.log("✔️ Transacción Fidelidad registrada:", result);
+
+      this.loginSpinner = false;
+      this.dialog.open(NotificacionComponent, {
+        panelClass: 'full-screen-dialog',
+        maxWidth: '100vw',
+        maxHeight: '100vh',
+        height: '100vh',
+        width: '100vw',
+        data: {
+          success: true,
+          titulo: 'Operación Exitosa',
+          descripcion: 'La transacción fue realizada correctamente.',
+          origen: 'FIDELIDAD'
+        }
+      });
+      this.navigation.goToInicio();
+    } catch (e) {
+      console.error("❌ Error al registrar transacción Fidelidad:", e);
+      this.loginSpinner = false;
+      this.dialog.open(NotificacionComponent, {
+        panelClass: 'full-screen-dialog',
+        maxWidth: '100vw',
+        maxHeight: '100vh',
+        height: '100vh',
+        width: '100vw',
+        data: {
+          success: false,
+          titulo: 'Error',
+          descripcion: 'No se pudo registrar la transacción. Intente más tarde.',
+          origen: 'FIDELIDAD'
         }
       });
     }

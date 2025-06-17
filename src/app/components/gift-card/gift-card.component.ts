@@ -111,12 +111,13 @@ export class GiftCardComponent {
             }
           });
         } else {
+          this.serviceLogic.setOrigenOperacionTarjeta('GIFTCARD');
           this.etapa = 'monto';
           this.titulo = this.obtenerTituloOperacion(operacion);
         }
 
       } catch (error: any) {
-        console.error("❌ Error al consultar saldo:", error);
+        console.error("Error al consultar saldo:", error);
 
         let mensajeError = 'Error desconocido. Intente nuevamente.';
 

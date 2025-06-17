@@ -1,11 +1,3 @@
-<!-- <h2>Compra con Tarjeta</h2>
-
-<div *ngIf="etapa === 'monto'">
-  <label>Ingrese monto</label>
-  <input [(ngModel)]="monto" placeholder="Ej: 100.00" />
-  <button (click)="confirmarMonto()">Continuar</button>
-</div> -->
-
 <div *ngIf="etapa === 'monto'">
   <app-header [headerTitle]="'Monto de Compra'"></app-header>
 
@@ -17,9 +9,11 @@
 
 </div>
 
-<div *ngIf="etapa === 'detalle'">
+<div *ngIf="etapa === 'detalle'" class="detalle-info">
+    <app-header [headerTitle]="'Transaccion Fidelidad Tarjeta'"></app-header>
   <p><strong>Cliente:</strong> {{ cliente.datosCliente.name }} {{ cliente.datosCliente.last_name }}</p>
-  <p><strong>Tarjeta:</strong> {{ cliente.datosCliente.name }}</p>
-  <p><strong>Monto:</strong> {{ monto }}</p>
-  <button (click)="confirmarOperacion()">Confirmar</button>
+  <p><strong>Numero Tarjeta:</strong> {{ cliente.datosCliente.card_number }}</p>
+  <p><strong>Monto:</strong>$ {{ monto }}</p>
+  <button (click)="confirmarTipoOperacion()">Confirmar</button>
 </div>
+

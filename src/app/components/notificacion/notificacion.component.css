@@ -22,7 +22,7 @@
   font-weight: 400;
   line-height: normal;
 }
-.succesIcon{
+.succesIcon, .errorIcon{
   font-size: 7rem;
   padding-bottom: 1rem;
 }

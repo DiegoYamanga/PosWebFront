@@ -3,7 +3,7 @@ import { AppSelectors } from '../../redux/selectors';
 import { ResClienteDTO } from '../../../DTOs/resClienteDTO';
 import { Store } from '@ngrx/store';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms'; 
+import { FormsModule } from '@angular/forms';
 import { EndpointAdapterLogic } from '../../../logic/endpointAdapterLogic';
 import { HeaderComponent } from "../header/header.component";
 import { NavigationService } from '../../../logic/navigationService';
@@ -115,7 +115,11 @@ export class DniDetallesOperacionComponent {
 
       this.loginSpinner = false;
       this.dialog.open(NotificacionComponent, {
-        width: '800px',
+        panelClass: 'full-screen-dialog',
+        maxWidth: '100vw',
+        maxHeight: '100vh',
+        height: '100vh',
+        width: '100vw',
         data: {
           success: true,
           titulo: 'Operación Exitosa',
@@ -128,7 +132,11 @@ export class DniDetallesOperacionComponent {
       console.error("❌ Error al registrar transacción Fidelidad:", e);
       this.loginSpinner = false;
       this.dialog.open(NotificacionComponent, {
-        width: '800px',
+        panelClass: 'full-screen-dialog',
+        maxWidth: '100vw',
+        maxHeight: '100vh',
+        height: '100vh',
+        width: '100vw',
         data: {
           success: false,
           titulo: 'Error',
@@ -173,8 +181,12 @@ export class DniDetallesOperacionComponent {
 
   if (!cliente || !tipo || !monto || !this.storeID || !this.branchID) {
     this.dialog.open(NotificacionComponent, {
-      width: '400px',
-      data: {
+        panelClass: 'full-screen-dialog',
+        maxWidth: '100vw',
+        maxHeight: '100vh',
+        height: '100vh',
+        width: '100vw',
+        data: {
         success: false,
         titulo: 'Datos incompletos',
         descripcion: 'Faltan datos para realizar el canje.',
@@ -199,7 +211,11 @@ const reqSwapDTO: ReqSwapDTO = {
     const respuesta = await this.endpointAdapterlogic.crearTransaccionSwap(this.storeID, reqSwapDTO);
 
     this.dialog.open(NotificacionComponent, {
-      width: '400px',
+        panelClass: 'full-screen-dialog',
+        maxWidth: '100vw',
+        maxHeight: '100vh',
+        height: '100vh',
+        width: '100vw',
       data: {
         success: true,
         titulo: 'Canje exitoso',
@@ -211,7 +227,11 @@ const reqSwapDTO: ReqSwapDTO = {
     console.error("Error al realizar canje:", error);
 
     this.dialog.open(NotificacionComponent, {
-      width: '400px',
+        panelClass: 'full-screen-dialog',
+        maxWidth: '100vw',
+        maxHeight: '100vh',
+        height: '100vh',
+        width: '100vw',
       data: {
         success: false,
         titulo: 'Error en el canje',
@@ -224,6 +244,6 @@ const reqSwapDTO: ReqSwapDTO = {
   }
 
 
-  
+
 
 }

@@ -64,7 +64,11 @@ export class GiftCardComponent {
     if (!this.storeID || !this.branchID) {
       console.log("No tengo datos del store o branch al consultar saldo")
       this.dialog.open(NotificacionComponent, {
-        width: '400px',
+        panelClass: 'full-screen-dialog',
+        maxWidth: '100vw',
+        maxHeight: '100vh',
+        height: '100vh',
+        width: '100vw',
         data: {
           success: false,
           titulo: 'Datos incompletos',
@@ -83,7 +87,7 @@ export class GiftCardComponent {
     });
     console.log("LLEGO ACA?")
     dialogRef.afterClosed().subscribe(async (resultado: { exitoso: boolean, nroTarjeta?: string } | null) => {
-      
+
       if (!resultado?.exitoso || !resultado.nroTarjeta) return;
 
       this.numeroTarjeta = resultado.nroTarjeta;
@@ -123,7 +127,11 @@ export class GiftCardComponent {
         }
 
         this.dialog.open(NotificacionComponent, {
-          width: '400px',
+          panelClass: 'full-screen-dialog',
+          maxWidth: '100vw',
+          maxHeight: '100vh',
+          height: '100vh',
+          width: '100vw',
           data: {
             success: false,
             titulo: 'Error al verificar tarjeta',
@@ -198,7 +206,11 @@ export class GiftCardComponent {
         result = await this.endpointAdapterLogic.cargarSaldoGiftCard(this.storeID, this.branchID, tarjeta, monto!);
 
         this.dialog.open(NotificacionComponent, {
-          width: '400px',
+          panelClass: 'full-screen-dialog',
+          maxWidth: '100vw',
+          maxHeight: '100vh',
+          height: '100vh',
+          width: '100vw',
           data: {
             success: true,
             titulo: 'Carga Exitosa',
@@ -219,7 +231,11 @@ export class GiftCardComponent {
         result = await this.endpointAdapterLogic.anularTransaccion(this.storeID, tarjeta, cancelBody);
 
         this.dialog.open(NotificacionComponent, {
-          width: '400px',
+          panelClass: 'full-screen-dialog',
+          maxWidth: '100vw',
+          maxHeight: '100vh',
+          height: '100vh',
+          width: '100vw',
           data: {
             success: true,
             titulo: 'Anulación Exitosa',
@@ -241,7 +257,11 @@ export class GiftCardComponent {
         this.serviceLogic.setUltimaOperacionGiftCard(result);
 
         this.dialog.open(NotificacionComponent, {
-          width: '400px',
+          panelClass: 'full-screen-dialog',
+          maxWidth: '100vw',
+          maxHeight: '100vh',
+          height: '100vh',
+          width: '100vw',
           data: {
             success: true,
             titulo: 'Operación Exitosa',
@@ -265,7 +285,11 @@ export class GiftCardComponent {
       }
 
       this.dialog.open(NotificacionComponent, {
-        width: '400px',
+        panelClass: 'full-screen-dialog',
+        maxWidth: '100vw',
+        maxHeight: '100vh',
+        height: '100vh',
+        width: '100vw',
         data: {
           success: false,
           titulo: 'Error en la operación',
@@ -279,4 +303,3 @@ export class GiftCardComponent {
 
 
 }
- 

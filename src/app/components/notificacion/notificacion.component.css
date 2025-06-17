@@ -1,6 +1,10 @@
 *{
   font-family: 'RedHatDisplay', sans-serif;
 }
+.notif{
+  width: 100vw;
+  max-width: 100%;
+}
 .failIcon{
   font-size: 7rem;
   padding-bottom: 1rem;

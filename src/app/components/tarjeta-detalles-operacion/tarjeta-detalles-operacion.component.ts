@@ -58,7 +58,11 @@ export class TarjetaDetallesOperacionComponent {
 
     if (!tarjetaInfo?.card_number || !this.monto) {
       this.dialog.open(NotificacionComponent, {
-        width: '800px',
+        panelClass: 'full-screen-dialog',
+        maxWidth: '100vw',
+        maxHeight: '100vh',
+        height: '100vh',
+        width: '100vw',
         data: {
           success: false,
           titulo: 'Datos incompletos',
@@ -81,7 +85,11 @@ export class TarjetaDetallesOperacionComponent {
       const result = await this.endpointLogic.descargarSaldoGiftCard(this.storeID, body);
 
       this.dialog.open(NotificacionComponent, {
-        width: '800px',
+        panelClass: 'full-screen-dialog',
+        maxWidth: '100vw',
+        maxHeight: '100vh',
+        height: '100vh',
+        width: '100vw',
         data: {
           success: true,
           titulo: 'Compra exitosa',
@@ -92,7 +100,11 @@ export class TarjetaDetallesOperacionComponent {
 
     } catch (error: any) {
       this.dialog.open(NotificacionComponent, {
-        width: '800px',
+        panelClass: 'full-screen-dialog',
+        maxWidth: '100vw',
+        maxHeight: '100vh',
+        height: '100vh',
+        width: '100vw',
         data: {
           success: false,
           titulo: 'Error en la operación',

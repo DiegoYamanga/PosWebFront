@@ -63,7 +63,7 @@ export class EncuestaComponent {
       console.log("Encuesta Component -> Documento: ",this.documento)
 
 
-      
+
     // Obtener  /// ES LA TARJETA DE GIFT CARD? ----> O PUEDE SER OTRO NUMERO DE TARJETA ----> PARA MI NO TIENE SENTIDO PEDIR ESTO  ---> GUARDAR NUMERO DE TARJETA EN GLOBAL DE SER NECESARIO
     // this.store.select(AppSelectors)
     //   .subscribe((giftcard) => {
@@ -78,6 +78,11 @@ export class EncuestaComponent {
 
   if (tipo === 'qr') {
     this.dialog.open(NotificacionComponent, {
+        panelClass: 'full-screen-dialog',
+        maxWidth: '100vw',
+        maxHeight: '100vh',
+        height: '100vh',
+        width: '100vw',
       data: { mensaje: 'Funcionalidad de QR no disponible aún.', tipo: 'info' }
     });
     return;
@@ -122,6 +127,11 @@ export class EncuestaComponent {
     console.log("Encuesta - cargarEncuesta")
     if (this.storeID === undefined || this.branchID === undefined) {
       this.dialog.open(NotificacionComponent, {
+        panelClass: 'full-screen-dialog',
+        maxWidth: '100vw',
+        maxHeight: '100vh',
+        height: '100vh',
+        width: '100vw',
         data: { mensaje: 'Datos de sesión incompletos (storeID o branchID no encontrados)', tipo: 'error' }
       });
       return;
@@ -140,6 +150,11 @@ export class EncuestaComponent {
       },
       error: () => {
         this.dialog.open(NotificacionComponent, {
+          panelClass: 'full-screen-dialog',
+          maxWidth: '100vw',
+          maxHeight: '100vh',
+          height: '100vh',
+          width: '100vw',
           data: { mensaje: 'Error al obtener las encuestas.', tipo: 'error' }
         });
       }
@@ -149,7 +164,7 @@ export class EncuestaComponent {
 
   seleccionarEncuesta(encuesta: EncuestaDTO) {
     console.log("Encuesta - EncuestaSeleccionada:", encuesta.id);
-    
+
     this.navigationService.goToEncuestaPreguntas({
       state: {
         storeID: this.storeID,

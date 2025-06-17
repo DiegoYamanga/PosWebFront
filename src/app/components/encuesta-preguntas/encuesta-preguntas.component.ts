@@ -56,6 +56,11 @@ export class EncuestaPreguntasComponent {
       },
       error: () => {
         this.dialog.open(NotificacionComponent, {
+          panelClass: 'full-screen-dialog',
+          maxWidth: '100vw',
+          maxHeight: '100vh',
+          height: '100vh',
+          width: '100vw',
           data: { mensaje: 'Error al obtener preguntas de la encuesta.', tipo: 'error' }
         });
       }
@@ -93,6 +98,11 @@ export class EncuestaPreguntasComponent {
           console.error("Error al enviar respuesta:", err);
           this.cargando = false;
           this.dialog.open(NotificacionComponent, {
+            panelClass: 'full-screen-dialog',
+            maxWidth: '100vw',
+            maxHeight: '100vh',
+            height: '100vh',
+            width: '100vw',
             data: { mensaje: 'Error al enviar la respuesta.', tipo: 'error' }
           });
         }
@@ -105,6 +115,11 @@ export class EncuestaPreguntasComponent {
       this.preguntaActualIndex++;
     } else {
       this.dialog.open(NotificacionComponent, {
+        panelClass: 'full-screen-dialog',
+        maxWidth: '100vw',
+        maxHeight: '100vh',
+        height: '100vh',
+        width: '100vw',
         data: {
           success: true,
           titulo: '¡Encuesta enviada!',

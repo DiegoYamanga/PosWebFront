@@ -84,7 +84,11 @@ export class SorteoComponent implements OnInit {
           //Validamos storeID y branchID ANTES de continuar
           if (!this.storeID || !this.branchID) {
             this.dialog.open(NotificacionComponent, {
-              width: '400px',
+              panelClass: 'full-screen-dialog',
+              maxWidth: '100vw',
+              maxHeight: '100vh',
+              height: '100vh',
+              width: '100vw',
               data: {
                 success: false,
                 titulo: 'Error de autenticación',
@@ -101,7 +105,11 @@ export class SorteoComponent implements OnInit {
           console.error("❌ Error al obtener sorteos:", error);
 
           this.dialog.open(NotificacionComponent, {
-            width: '400px',
+            panelClass: 'full-screen-dialog',
+            maxWidth: '100vw',
+            maxHeight: '100vh',
+            height: '100vh',
+            width: '100vw',
             data: {
               success: false,
               titulo: 'Error',
@@ -121,7 +129,7 @@ export class SorteoComponent implements OnInit {
 
   async participarEnSorteo(sorteo: LotsDTO) {
     if (!this.clienteInfo) return;
-    
+
     const lookup = this.clienteInfo.datosCliente.identification;
 
     try {
@@ -136,7 +144,11 @@ export class SorteoComponent implements OnInit {
 
       if (!puedeParticipar) {
         this.dialog.open(NotificacionComponent, {
-          width: '400px',
+          panelClass: 'full-screen-dialog',
+          maxWidth: '100vw',
+          maxHeight: '100vh',
+          height: '100vh',
+          width: '100vw',
           data: {
             success: false,
             titulo: 'No puede participar',
@@ -161,7 +173,11 @@ export class SorteoComponent implements OnInit {
       );
 
       this.dialog.open(NotificacionComponent, {
-        width: '400px',
+        panelClass: 'full-screen-dialog',
+        maxWidth: '100vw',
+        maxHeight: '100vh',
+        height: '100vh',
+        width: '100vw',
         data: {
           success: true,
           titulo: 'Participación exitosa',
@@ -174,7 +190,11 @@ export class SorteoComponent implements OnInit {
       console.error("Error al generar participación:", error);
 
       this.dialog.open(NotificacionComponent, {
-        width: '400px',
+        panelClass: 'full-screen-dialog',
+        maxWidth: '100vw',
+        maxHeight: '100vh',
+        height: '100vh',
+        width: '100vw',
         data: {
           success: false,
           titulo: 'Error',

@@ -37,9 +37,13 @@ ngOnInit() {
     this.origen = this.data.origen;
   }
 
-  setTimeout(() => {
-    this.dialogRef.close(); // cerrar popup
-  }, 4000);
+  // setTimeout(() => {
+  //   this.dialogRef.close(); // cerrar popup
+  // }, 4000);
+}
+goHome(){
+  this.navigation.goToInicio();
+  this.dialogRef.close();
 }
 
 

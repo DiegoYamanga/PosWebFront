@@ -9,11 +9,22 @@
 
 </div>
 
-<div *ngIf="etapa === 'detalle'" class="detalle-info">
+<div *ngIf="etapa === 'detalle'" class="detalle-wrapper">
     <app-header [headerTitle]="'Transaccion Fidelidad Tarjeta'"></app-header>
-  <p><strong>Cliente:</strong> {{ cliente.datosCliente.name }} {{ cliente.datosCliente.last_name }}</p>
-  <p><strong>Numero Tarjeta:</strong> {{ cliente.datosCliente.card_number }}</p>
-  <p><strong>Monto:</strong>$ {{ monto }}</p>
-  <button (click)="confirmarTipoOperacion()">Confirmar</button>
+    <div class="container flex-grow">
+      
+      <div class="detalleOp">
+        <p><strong>Cliente:</strong> {{ cliente.datosCliente.name }} {{ cliente.datosCliente.last_name }}</p>
+        <p><strong>Numero Tarjeta: </strong> {{ cliente.datosCliente.card_number }}</p>
+        <p><strong>Monto: </strong>$ {{ monto }}</p>
+      </div>
+    </div>
+
+  <!-- <button (click)="confirmarTipoOperacion()">Confirmar</button> -->
+  @if (!loginSpinner) {
+    <button class="btn-continuar btnContinuar btn" (click)="confirmarTipoOperacion()">CONFIRMAR</button>
+  }@else {
+      <button class="btn-continuar btnContinuar btn" disabled><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></button>
+  }
 </div>
 

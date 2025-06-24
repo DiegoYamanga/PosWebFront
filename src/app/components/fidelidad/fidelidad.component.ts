@@ -75,8 +75,7 @@ export class FidelidadComponent {
 
   abrirPopupConsultarSaldo() {
     const dialogRef = this.dialog.open(IdentificacionUsuarioComponent, {
-      width: '400px',
-      disableClose: true
+      width: '400px'
     });
 
     console.log("LEGO ACA POR LO MENOS:"); // ✅ DEBUG

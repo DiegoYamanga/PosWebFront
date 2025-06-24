@@ -1,6 +1,6 @@
 <!-- Etapa 1: Selección de método -->
 <div *ngIf="etapa === 'inicio'" class="container">
-  <app-header [headerTitle]="'Sorteo'"></app-header>
+  <app-header [headerTitle]="'Sorteo'" [arrowNavigation]="'inicio'"></app-header>
     <div class="main-content"></div>
 
   <div class="grid-buttons">
@@ -28,7 +28,7 @@
         <h5 class="card-title">{{ sorteo.title }}</h5>
         <p class="card-text">Desde: {{ sorteo.date_from }} - Hasta: {{ sorteo.date_to }}</p>
         <p class="card-text">Participaciones máximas: {{ sorteo.max_user_participations }}</p>
-        <button (click)="participarEnSorteo(sorteo)">Participar</button> 
+        <button (click)="participarEnSorteo(sorteo)">Participar</button>
       </div>
     </div>
   </div>

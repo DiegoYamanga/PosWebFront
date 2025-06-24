@@ -70,8 +70,7 @@ export class DniDetallesOperacionComponent {
 
     if (this.origenOperacion === 'CANJE') {
       const dialogRef = this.dialog.open(TipoCanjeDialogoComponent, {
-        width: '400px',
-        disableClose: true
+        width: '400px'
       });
 
       dialogRef.afterClosed().subscribe((opcion: 'IMPORTE' | 'PUNTOS') => {

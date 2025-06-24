@@ -61,8 +61,7 @@ export class SorteoComponent implements OnInit {
 
   abrirPopTarjeta() {
     const dialogRef = this.dialog.open(TarjetaUsuarioComponent, {
-      width: '400px',
-      disableClose: true
+      width: '400px'
     });
 
     dialogRef.afterClosed().subscribe(numeroTarjeta => {
@@ -74,8 +73,7 @@ export class SorteoComponent implements OnInit {
 
   abrirPopDocumento() {
     const dialogRef = this.dialog.open(IdentificacionUsuarioComponent, {
-      width: '400px',
-      disableClose: true
+      width: '400px'
     });
 
     dialogRef.afterClosed().subscribe(async data => {

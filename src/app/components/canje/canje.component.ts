@@ -58,8 +58,7 @@ export class CanjeComponent implements OnInit {
 
     abrirPopupIdentificacion() {
     const dialogRef = this.dialog.open(IdentificacionUsuarioComponent, {
-      width: '400px',
-      disableClose: true
+      width: '400px'
     });
 
     dialogRef.afterClosed().subscribe((documentoIngresado) => {
@@ -71,7 +70,7 @@ export class CanjeComponent implements OnInit {
     });
   }
 
-  
+
 
 
 

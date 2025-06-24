@@ -1,7 +1,7 @@
 
 <div *ngIf="etapa === 'seleccion'" class="giftcard-container">
   <!-- Encabezado -->
-  <app-header [headerTitle]="titulo || 'GiftCard'"></app-header>
+  <app-header [headerTitle]="titulo || 'GiftCard'" [arrowNavigation]="'inicio'"></app-header>
   <div class="main-content"></div>
   <!-- Etapa 1: selección de operación -->
   <div class="botonera">
@@ -26,7 +26,7 @@
 
 <!-- Etapa 2: ingreso de monto -->
 <div *ngIf="etapa === 'monto'" class="giftcard-etapa-monto">
-  <app-header [headerTitle]="titulo || 'GiftCard'"></app-header>
+  <app-header [headerTitle]="titulo || 'GiftCard'" [arrowNavigation]="'giftcard'"></app-header>
 
 
   <p class="nroTarjeta">Número de tarjeta: <strong>{{ numeroTarjeta }}</strong></p>

@@ -82,8 +82,7 @@ export class GiftCardComponent {
     this.store.dispatch(StateGiftCardOperacionAction.setGiftCardOperacion({ operacion }));
 
     const dialogRef = this.dialog.open(TarjetaUsuarioComponent, {
-      width: '400px',
-      disableClose: true
+      width: '400px'
     });
     console.log("LLEGO ACA?")
     dialogRef.afterClosed().subscribe(async (resultado: { exitoso: boolean, nroTarjeta?: string } | null) => {

@@ -1,5 +1,5 @@
 <div class="header">
-    <i class="material-icons">arrow_back</i>
+    <i  *ngIf="showArrow" class="material-icons" (click)="navigate()">arrow_back</i>
     <h4>{{headerTitle}}</h4>
     <!-- <i class="material-icons">menu</i> -->
 </div>

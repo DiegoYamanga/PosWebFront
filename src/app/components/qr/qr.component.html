@@ -1,16 +1,10 @@
 <app-header [headerTitle]="'Escanear QR'"></app-header>
   <div class="qrContainer">
 
-    <select (change)="onDeviceSelect($event)">
-  <option *ngFor="let device of availableDevices" [value]="device.deviceId">
-    {{ device.label || 'Cámara' }}
-  </option>
-</select>
-
 <!--    boton Escanear QR-->
       <h3 class="text-center textScan">Escaneá el código QR<br>ubicándolo en el recuadro</h3>
       <div class="qrScanner">
-        <zxing-scanner (scanSuccess)="handleScanSuccess($event)" (scanError)="handleScanError($event)"></zxing-scanner>
+        <zxing-scanner (scanSuccess)="handleScanSuccess($event)">></zxing-scanner>
       </div>
       <div class="btnCancel">
         <button (click)="cancelar()" class="btn btnqr">Cancelar</button>

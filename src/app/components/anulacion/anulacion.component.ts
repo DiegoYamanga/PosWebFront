@@ -9,11 +9,12 @@ import { IdentificacionUsuarioComponent } from '../pop-ups/identificacion-usuari
 import { MatDialog } from '@angular/material/dialog';
 import { ReqCancelarTransaccionByID } from '../../../DTOs/reqCancelarTransaccionByID';
 import { NotificacionComponent } from '../notificacion/notificacion.component';
+import { HeaderComponent } from '../header/header.component';
 
 @Component({
   selector: 'app-anulacion',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,HeaderComponent],
   templateUrl: './anulacion.component.html',
   styleUrl: './anulacion.component.css'
 })

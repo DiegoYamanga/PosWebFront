@@ -1,4 +1,22 @@
 <!-- ETAPA 1: SELECCIÓN -->
+ <div class="container">
+  <app-header [headerTitle]="'Fidelidad - Anulacion'" [arrowNavigation]="'fidelidad'"></app-header>
+  <div class="main-content"></div>
+  <div class="grid-buttons">
+    <button class="tarjetas" (click)="buscarPorTarjeta()">
+      <i class="material-icons">credit_score</i>
+      TARJETAS
+    </button>
+    <button class="qr" >
+      <i class="material-icons">qr_code_scanner</i>
+      QR
+    </button>
+    <button class="documento" (click)="buscarPorDNI()">
+      <i class="material-icons">contact_mail</i>
+      DOCUMENTO
+    </button>
+  </div>
+</div>
 <div *ngIf="etapaSeleccion">
   <h2>Buscar transacciones para anular</h2>
   <button mat-raised-button color="primary" (click)="buscarPorDNI()">Buscar por DNI</button>

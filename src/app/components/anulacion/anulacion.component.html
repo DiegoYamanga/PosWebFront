@@ -1,5 +1,5 @@
 <!-- ETAPA 1: SELECCIÓN -->
- <div class="container">
+ <div class="container" *ngIf="etapaSeleccion">
   <app-header [headerTitle]="'Fidelidad - Anulacion'" [arrowNavigation]="'fidelidad'"></app-header>
   <div class="main-content"></div>
   <div class="grid-buttons">
@@ -16,11 +16,6 @@
       DOCUMENTO
     </button>
   </div>
-</div>
-<div *ngIf="etapaSeleccion">
-  <h2>Buscar transacciones para anular</h2>
-  <button mat-raised-button color="primary" (click)="buscarPorDNI()">Buscar por DNI</button>
-  <button mat-raised-button color="accent" (click)="buscarPorTarjeta()">Buscar por Tarjeta</button>
 </div>
 
 <!-- ETAPA 2: RESULTADOS -->

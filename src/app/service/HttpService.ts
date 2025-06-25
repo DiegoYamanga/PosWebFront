@@ -62,10 +62,12 @@ export class HttpService {
   }
 
   public descargarGiftCards(storeID : String, reqDescargarGiftCardDTO : ReqGiftCardDatosDTO) : Observable<any> {
+    console.log(reqDescargarGiftCardDTO)
     return this.http.post(this.BASE_URL + "/stores/" + storeID + "/giftcards" + "/discharge",reqDescargarGiftCardDTO);
   }
 
   public cargarGiftCards(storeID : String, reqDescargarGiftCardDTO : ReqGiftCardDatosDTO) : Observable<any> {
+    console.log(reqDescargarGiftCardDTO)
     return this.http.post(this.BASE_URL + "/stores/" + storeID + "/giftcards" + "/charge",reqDescargarGiftCardDTO);
   }
 
@@ -73,11 +75,14 @@ export class HttpService {
     return this.http.post(this.BASE_URL + "/stores/" + storeID + "/transactions/" + transactionID + "/cancel" , reqCancelarTransaccionByID);
   }
 
+    public buscarTransaccionByDNIoTarjeta(storeID : String, id : String) : Observable<any> {
+    return this.http.get(this.BASE_URL + "/stores/" + storeID + "/clients/" + id + "/transactions" );
+  }
+
 
   public transaccionConCanjeDePuntos(storeID : String  , reqSwapDTO : ReqSwapDTO) : Observable<any> {
     return this.http.post(this.BASE_URL + "/stores/" + storeID + "/swap",reqSwapDTO);
   }
-
 
 
   public nuevaTransaccionFidelidad(storeID : String  , reqTransactionsFidelidad : reqTransactionsFidelidad) : Observable<any> {

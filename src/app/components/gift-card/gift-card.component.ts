@@ -84,7 +84,6 @@ export class GiftCardComponent {
     const dialogRef = this.dialog.open(TarjetaUsuarioComponent, {
       width: '400px'
     });
-    console.log("LLEGO ACA?")
     dialogRef.afterClosed().subscribe(async (resultado: { exitoso: boolean, nroTarjeta?: string } | null) => {
 
       if (!resultado?.exitoso || !resultado.nroTarjeta) return;
@@ -246,7 +245,6 @@ export class GiftCardComponent {
 
       } else if (operacion === 'Monto de compra') {
         const body: ReqGiftCardDatosDTO = {
-          serial_number: 'MOBILE',
           card_number: tarjeta,
           amount: monto!,
           local_datetime: new Date().toISOString(),

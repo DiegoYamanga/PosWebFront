@@ -25,6 +25,7 @@ export interface ResTransactionCanheDTO{
   card_number: string;
   points_factor: number;
   discount_factor: number;
+  client_type: string;
 
 
 }

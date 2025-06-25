@@ -1,1 +1,26 @@
-<p>anulacion works!</p>
+<!-- ETAPA 1: SELECCIÓN -->
+<div *ngIf="etapaSeleccion">
+  <h2>Buscar transacciones para anular</h2>
+  <button mat-raised-button color="primary" (click)="buscarPorDNI()">Buscar por DNI</button>
+  <button mat-raised-button color="accent" (click)="buscarPorTarjeta()">Buscar por Tarjeta</button>
+</div>
+
+<!-- ETAPA 2: RESULTADOS -->
+<div *ngIf="!etapaSeleccion && cargando">Cargando transacciones...</div>
+<div *ngIf="!etapaSeleccion && error">{{ error }}</div>
+
+<div *ngIf="!etapaSeleccion && !cargando && transacciones.length === 0">
+  No se encontraron transacciones para este usuario.
+</div>
+
+<div *ngIf="!etapaSeleccion && !cargando && transacciones.length > 0">
+  <h2>Transacciones encontradas</h2>
+  <div *ngFor="let trans of transacciones" class="transaccion-card">
+    <p><strong>ID:</strong> {{ trans.id }}</p>
+    <p><strong>Fecha:</strong> {{ trans.date }}</p>
+    <p><strong>Monto:</strong> ${{ trans.amount }}</p>
+    <p><strong>Tipo:</strong> {{ trans.branch_name }}</p>
+    <p><strong>Estado:</strong> {{ trans.status }}</p>
+    <button mat-raised-button color="warn" (click)="anularTransaccion(trans)">Anular</button>
+  </div>
+</div>

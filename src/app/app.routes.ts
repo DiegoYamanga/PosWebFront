@@ -14,7 +14,8 @@ import { InicioComponent } from './components/inicio/inicio.component';
 import { TarjetaDetallesOperacionComponent } from './components/tarjeta-detalles-operacion/tarjeta-detalles-operacion.component';
 import { EncuestaComponent } from './components/encuesta/encuesta.component';
 import { EncuestaPreguntasComponent } from './components/encuesta-preguntas/encuesta-preguntas.component';
-import { QrComponent } from './components/qr/qr.component';
+import { AnulacionComponent } from './components/anulacion/anulacion.component';
+// import { QrComponent } from './components/qr/qr.component';
 
 
 export const routes: Routes = [
@@ -34,6 +35,7 @@ export const routes: Routes = [
     { path: 'tarjetaDetalleOperacion', component:TarjetaDetallesOperacionComponent },
     { path: 'encuesta', component: EncuestaComponent },
     { path: 'encuestaPreguntas', component: EncuestaPreguntasComponent },
-    { path: 'qrScanner', component: QrComponent },
+    { path: 'anulacion', component: AnulacionComponent }
+
 ];
 

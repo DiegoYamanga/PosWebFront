@@ -91,7 +91,6 @@ export class TarjetaDetallesOperacionComponent {
     }
 
     const body: ReqGiftCardDatosDTO = {
-      serial_number: 'MOBILE',
       card_number: tarjetaInfo.card_number,
       amount: parseFloat(this.monto),
       local_datetime: new Date().toISOString(),

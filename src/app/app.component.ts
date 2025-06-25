@@ -11,7 +11,7 @@ import { reduxReducer } from './redux/reducer';
 import { CommonModule } from '@angular/common';
 import { SessionLogic } from '../logic/sessionLogic';
 import { StateResLoginDTOAction } from './redux/action';
-import { ZXingScannerModule } from '@zxing/ngx-scanner';
+// #import { ZXingScannerModule } from '@zxing/ngx-scanner';
 
 
 @NgModule({
@@ -19,8 +19,8 @@ import { ZXingScannerModule } from '@zxing/ngx-scanner';
   providers: [
     HttpService,
     importProvidersFrom(HttpClientModule),
-    ServiceLogic,
-    ZXingScannerModule
+    ServiceLogic
+    // ZXingScannerModule
   ],
   bootstrap: []
 })

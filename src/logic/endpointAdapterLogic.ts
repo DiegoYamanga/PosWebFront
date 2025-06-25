@@ -77,7 +77,6 @@ export class EndpointAdapterLogic {
 
   async cargarSaldoGiftCard(storeID: string, branchID: string, cardNumber: string, amount: number): Promise<any> {
     const payload: ReqGiftCardDatosDTO = {
-      serial_number: "MOBILE",
       card_number: cardNumber,
       identification: "",
       amount: amount,
@@ -227,7 +226,9 @@ export class EndpointAdapterLogic {
     );
   }
 
-
+  buscarTransacciones(storeID: string, id: string): Observable<ResTransactionCanheDTO[]> {
+  return this.httpService.buscarTransaccionByDNIoTarjeta(storeID, id);
+  }
 
 
 

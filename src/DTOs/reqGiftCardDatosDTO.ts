@@ -1,5 +1,4 @@
 export interface ReqGiftCardDatosDTO {
-    serial_number: string;
     card_number?: string;
     identification?: string;
     amount: number;

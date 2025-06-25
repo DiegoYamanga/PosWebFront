@@ -1,0 +1,48 @@
+/* Centrado general */
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Botones de selección (buscar por DNI o tarjeta) */
+button {
+  margin: 10px;
+  padding: 10px 20px;
+}
+
+/* Contenedor general de tarjetas */
+.transaccion-card {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 16px;
+  margin: 16px auto;
+  max-width: 600px;
+  background-color: #f9f9f9;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Detalle de cada dato */
+.transaccion-card p {
+  margin: 4px 0;
+  font-size: 14px;
+}
+
+/* Botón "Anular" */
+.transaccion-card button {
+  margin-top: 10px;
+  background-color: #e53935;
+  color: white;
+}
+
+/* Estado de error */
+.error {
+  color: red;
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* Mensajes de carga */
+.loading {
+  text-align: center;
+  font-style: italic;
+}

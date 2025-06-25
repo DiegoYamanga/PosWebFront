@@ -9,6 +9,8 @@ import { IdentificacionUsuarioComponent } from '../pop-ups/identificacion-usuari
 import { ConsultarSaldoComponent } from '../pop-ups/consultar-saldo/consultar-saldo.component';
 import { EndpointAdapterLogic } from '../../../logic/endpointAdapterLogic';
 import { AppSelectors } from '../../redux/selectors';
+import { TarjetaUsuarioComponent } from '../pop-ups/tarjeta-usuario/tarjeta-usuario.component';
+import { ServiceLogic } from '../../../logic/serviceLogic';
 
 @Component({
   selector: 'app-fidelidad',
@@ -20,13 +22,15 @@ export class FidelidadComponent {
 
   storeID!: string;
   branchID!: string;
+  result!: string;
 
 
   constructor(
     private navigation: NavigationService,
     private dialog: MatDialog,
     private store: Store,
-    private endpointLogic: EndpointAdapterLogic
+    private endpointLogic: EndpointAdapterLogic,
+    private logicService : ServiceLogic
   ) {}
 
 
@@ -57,6 +61,10 @@ export class FidelidadComponent {
 
   goToGiftCard() {
     this.navigation.goToGiftCard();
+  }
+    
+  goToAnulacion() {
+  this.navigation.goToAnulacion();
   }
 
 
@@ -96,4 +104,6 @@ export class FidelidadComponent {
     });
   }
 
+
 }
+

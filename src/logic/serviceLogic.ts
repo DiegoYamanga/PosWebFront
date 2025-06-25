@@ -6,11 +6,13 @@ import { HttpService } from "../app/service/HttpService";
 import { EndpointAdapterLogic } from "./endpointAdapterLogic";
 import { ResClienteDTO } from "../DTOs/resClienteDTO";
 import { GiftcardDTO } from "../DTOs/giftCardsDTO";
-import { Observable } from "rxjs";
+import { firstValueFrom, Observable } from "rxjs";
 import { EncuestaDTO } from "../DTOs/encuestaDTO";
 import { RespuestaEncuestaDTO } from "../DTOs/RespuestaEncuestaDTO";
 import { ResEncuestaRespuesta } from "../DTOs/resEncuestaRespuesta";
 import { EncuestaPreguntas } from "../DTOs/encuestaPreguntas";
+import { ResTransactionCanheDTO } from "../DTOs/resTransactionCanjeDTO";
+import { ReqCancelarTransaccionByID } from "../DTOs/reqCancelarTransaccionByID";
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +25,7 @@ export class ServiceLogic {
   private cardNumberCompra!: string | null;
   private documetoUsuario!: string | undefined;
   private origenOperacionTarjeta: 'COMPRA' | 'GIFTCARD' | null = null;
+  private identificadorTransaccion: string | null = null;
 
 
 
@@ -64,7 +67,7 @@ export class ServiceLogic {
 
   public setUltimaOperacionGiftCard(respuesta: any) {
   this.ultimaOperacion = respuesta;
-}
+  }
 
   public getUltimaOperacionGiftCard(): any {
     return this.ultimaOperacion;
@@ -74,13 +77,13 @@ export class ServiceLogic {
     return this.endPointAdapterLogic.getEncuestasSucursal(storeID, branchID);
   }
 
-public obtenerPreguntasEncuesta(
-  storeID: number | undefined,
-  branchID: number | undefined,
-  pollID: number | undefined
-): Observable<EncuestaPreguntas[]> {
-  if (storeID == null || branchID == null || pollID == null) {
-    throw new Error('Parámetros inválidos para obtener preguntas');
+  public obtenerPreguntasEncuesta(
+    storeID: number | undefined,
+    branchID: number | undefined,
+    pollID: number | undefined
+  ): Observable<EncuestaPreguntas[]> {
+    if (storeID == null || branchID == null || pollID == null) {
+      throw new Error('Parámetros inválidos para obtener preguntas');
   }
 
   return this.endPointAdapterLogic.obtenerPreguntasEncuesta(
@@ -131,5 +134,31 @@ public obtenerPreguntasEncuesta(
   getOrigenOperacionTarjeta(): 'COMPRA' | 'GIFTCARD' | null {
     return this.origenOperacionTarjeta;
   }
+
+  setIdentificadorTransaccion(valor: string) {
+  this.identificadorTransaccion = valor;
+  }
+
+  getIdentificadorTransaccion(): string | null {
+    return this.identificadorTransaccion;
+  }
+
+  async buscarTransaccionesParaAnulacion(storeID: string): Promise<ResTransactionCanheDTO[]> {
+  const id = this.getIdentificadorTransaccion();
+  if (!id) throw new Error("Identificador vacío");
+
+  return await firstValueFrom(this.endPointAdapterLogic.buscarTransacciones(storeID, id));
+  }
+
+  async anularTransaccion(
+  storeID: string,
+  transactionID: string,
+  body: ReqCancelarTransaccionByID
+  ): Promise<any> {
+      console.log("ReqCancelarTransaccionByID----->",body);
+    await this.endPointAdapterLogic.anularTransaccion(storeID, transactionID, body);
+  }
+
+
 
 }

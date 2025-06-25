@@ -62,4 +62,8 @@ export class NavigationService{
     this.router.navigate(['/encuestaPreguntas'], reqObtenerPregunstasEncuestas);
   }
 
+  goToAnulacion(){
+    this.router.navigate(['/anulacion']);
+  }
+
 }

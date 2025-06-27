@@ -62,6 +62,15 @@ export const StateEncuestasAction = createActionGroup({
   },
 });
 
+export const StateLoginAction = createActionGroup({
+  source: 'LoginState',
+  events: {
+    'setGenerarNumeroTicket': props<{ generarNumeroTicket: boolean }>()
+  },
+});
+
+
+
 
 
 

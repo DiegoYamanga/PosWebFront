@@ -19,6 +19,7 @@ import { EncuestaDTO } from "../DTOs/encuestaDTO";
 import { RespuestaEncuestaDTO } from "../DTOs/RespuestaEncuestaDTO";
 import { ResEncuestaRespuesta } from "../DTOs/resEncuestaRespuesta";
 import { EncuestaPreguntas } from "../DTOs/encuestaPreguntas";
+import { SessionLogic } from "./sessionLogic";
 
 
 // @NgModule({
@@ -33,7 +34,8 @@ export class EndpointAdapterLogic {
   private SESSION_DURATION = 30 * 24 * 60 * 60 * 1000  //Miliseconds (30 days)
 
   constructor(private httpService: HttpService,
-    private store: Store
+    private store: Store,
+    private sesionLogic : SessionLogic
     ) {
   }
 
@@ -45,6 +47,7 @@ export class EndpointAdapterLogic {
         if (response.status === 200) {
           console.log("RESPONSEEE-->",response)
           this.store.dispatch(StateResLoginDTOAction.setResLoginDTO({ resLoginDTO : response }));
+          console.log("Allow_ticket_number---->",this.sesionLogic.getAllowNumberTicket())
           return response as resLoginDTO;
         } else {
           throw new Error('Login incorrecto');

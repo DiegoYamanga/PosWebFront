@@ -13,6 +13,8 @@ import { StateTipoCanjeAction } from '../../redux/action';
 import { reqTransactionsFidelidad } from '../../../DTOs/reqTransactionsFidelidad';
 import { NotificacionComponent } from '../notificacion/notificacion.component';
 import { ReqSwapDTO } from '../../../DTOs/reqSwapDTO';
+import { SessionLogic } from '../../../logic/sessionLogic';
+import { NumeroTicketComponent } from '../pop-ups/numero-ticket/numero-ticket.component';
 
 @Component({
   selector: 'app-dni-detalles-operacion',
@@ -32,12 +34,14 @@ export class DniDetallesOperacionComponent {
   nroTarjeta: string = '';
   tipoCanje: 'PUNTOS' | 'IMPORTE' | null = null;
   loginSpinner: boolean = false;
+  nroTicket: string = '';
 
 
   constructor(private store: Store,
               private endpointAdapterlogic : EndpointAdapterLogic,
               private navigation: NavigationService,
-              private dialog : MatDialog
+              private dialog : MatDialog,
+              private sessionLogic : SessionLogic
   ) {
     this.tipoCanje$ = this.store.select(AppSelectors.selectTipoCanje);
   }
@@ -65,22 +69,40 @@ export class DniDetallesOperacionComponent {
     });
   }
 
-  confirmarMonto() {
-    if (!this.monto) return;
+async confirmarMonto() {
+  if (!this.monto) return;
+  console.log("Confirmo Monto --> quiero ticket?",this.sessionLogic.getAllowNumberTicket())
+  
+  if (this.sessionLogic.getAllowNumberTicket()) {
+    const dialogRef = this.dialog.open(NumeroTicketComponent, {
+      width: '300px'
+    });
 
-    if (this.origenOperacion === 'CANJE') {
-      const dialogRef = this.dialog.open(TipoCanjeDialogoComponent, {
-        width: '400px'
-      });
+    dialogRef.afterClosed().subscribe((nroTicket: number | null) => {
+      if (nroTicket) {
+        this.nroTicket = nroTicket.toString(); // O nroTicket si deseas mantenerlo como number
+        this.procederEtapa();
+      }
+    });
+  } else {
+    this.procederEtapa();
+  }
+}
 
-      dialogRef.afterClosed().subscribe((opcion: 'IMPORTE' | 'PUNTOS') => {
-        if (opcion) {
-          this.store.dispatch(StateTipoCanjeAction.setTipoCanje({ tipoCanje: opcion }));
-          this.etapa = 'detalle'; // solo pasar a etapa 2 después del popup
-        }
-      });
-    } else {
-      this.etapa = 'detalle'; // flujo directo si no viene de CANJE
+procederEtapa() {
+  if (this.origenOperacion === 'CANJE') {
+    const dialogRef = this.dialog.open(TipoCanjeDialogoComponent, {
+      width: '400px'
+    });
+
+    dialogRef.afterClosed().subscribe((opcion: 'IMPORTE' | 'PUNTOS') => {
+      if (opcion) {
+        this.store.dispatch(StateTipoCanjeAction.setTipoCanje({ tipoCanje: opcion }));
+        this.etapa = 'detalle';
+      }
+    });
+  } else {
+    this.etapa = 'detalle';
     }
   }
 

@@ -1,5 +1,5 @@
 import { createReducer, on, State } from '@ngrx/store';
-import { StateEncuestasAction, StateGiftCardOperacionAction, StateMontoGiftCardAction, StateOrigenOperacionAction, StateResClienteDTOAction, StateResLoginDTOAction, StateResLotsDTOAction, StateTipoCanjeAction } from './action';
+import { StateEncuestasAction, StateGiftCardOperacionAction, StateLoginAction, StateMontoGiftCardAction, StateOrigenOperacionAction, StateResClienteDTOAction, StateResLoginDTOAction, StateResLotsDTOAction, StateTipoCanjeAction } from './action';
 
 import { AppState } from './state';
 
@@ -12,7 +12,10 @@ export const initialState: AppState = {
   giftCardOperacion: null,
   montoGiftCard: null,
   reslotsDTO: undefined,
-  encuestasDisponibles: null
+  encuestasDisponibles: null,
+  generarNumeroTicket: false,
+
+
 
 };
 
@@ -51,6 +54,11 @@ export const reduxReducer = createReducer(
   on(StateEncuestasAction.setEncuestasDisponibles, (state, { encuestas }) => ({
     ...state,
     encuestasDisponibles: encuestas
+  })),
+  on(StateLoginAction.setGenerarNumeroTicket, (state, { generarNumeroTicket }) => ({
+  ...state,
+  generarNumeroTicket
   }))
+
 
 );

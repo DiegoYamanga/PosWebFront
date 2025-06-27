@@ -23,6 +23,9 @@ export interface AppState {
 
     encuestasDisponibles: EncuestaDTO[] | null;
 
+    generarNumeroTicket: boolean;
+
+
 
 
 

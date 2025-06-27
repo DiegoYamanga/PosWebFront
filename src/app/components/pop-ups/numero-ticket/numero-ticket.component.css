@@ -1,0 +1,62 @@
+.nro-ticket-container {
+  background-color: white;
+  border-radius: 20px;
+  padding: 24px;
+  width: 300px;
+  text-align: left;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  font-family: 'Roboto', sans-serif;
+}
+
+.nro-ticket-container h2 {
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: #212121;
+}
+
+.nro-ticket-container input.form-control {
+  width: 100%;
+  border: none;
+  border-bottom: 2px solid #ff4081; /* rosa */
+  outline: none;
+  font-size: 16px;
+  padding: 8px 4px;
+  margin-top: 16px;
+}
+
+.nro-ticket-container input.form-control::placeholder {
+  color: #aaa;
+}
+
+.nro-ticket-container input.form-control:focus {
+  border-bottom: 2px solid #f50057; /* rosa más oscuro */
+}
+
+.button-group {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 24px;
+  gap: 12px;
+}
+
+.button-group .btn {
+  border: none;
+  background: none;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.button-group .btn-success {
+  color: #ff4081; /* rosa */
+}
+
+.button-group .btn-secondary {
+  color: #757575; /* gris */
+}
+
+.button-group .btn:disabled {
+  color: #ccc;
+  cursor: not-allowed;
+}

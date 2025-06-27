@@ -1,0 +1,8 @@
+    <div class="nro-ticket-container">
+      <h2>Ingrese el número de ticket</h2>
+      <input type="number" [(ngModel)]="nroTicket" placeholder="Número de ticket" class="form-control" />
+      <div class="button-group">
+        <button class="btn btn-success" (click)="confirmar()" [disabled]="!nroTicket">Aceptar</button>
+        <button class="btn btn-secondary" (click)="cerrar()">Cancelar</button>
+      </div>
+    </div>

@@ -13,6 +13,8 @@ import { ServiceLogic } from './serviceLogic';
 export class SessionLogic {
   private token: string | null = null;
   private userData: any = null;
+  private allowNumberTicket: boolean | null = null;
+
 
   constructor(
   private navigation: NavigationService,
@@ -23,9 +25,11 @@ export class SessionLogic {
   ngOnInit(): void {
     const userData = this.getUserData();
     const token = this.getToken();
+    const allowNumberTicket = this.getAllowNumberTicket();
 
     if (userData && token) {
       this.store.dispatch(StateResLoginDTOAction.setResLoginDTO({ resLoginDTO: userData }));
+  
     }
   }
 
@@ -33,8 +37,12 @@ export class SessionLogic {
   setLoginData(token: string, userData: any): void {
     this.token = token;
     this.userData = userData;
+    this.allowNumberTicket = userData.allow_ticket_number ?? null;
+
     localStorage.setItem("TOKEN", token);
     localStorage.setItem("USER_DATA", JSON.stringify(userData));
+    localStorage.setItem("ALLOW_NUMBER_TICKET", JSON.stringify(this.allowNumberTicket));
+
   }
 
   getToken(): string | null {
@@ -62,10 +70,12 @@ export class SessionLogic {
   }
 
   clear(): void {
-    this.token = null;
-    this.userData = null;
-    localStorage.removeItem("TOKEN");
-    localStorage.removeItem("USER_DATA");
+      this.token = null;
+      this.userData = null;
+      this.allowNumberTicket = null;
+      localStorage.removeItem("TOKEN");
+      localStorage.removeItem("USER_DATA");
+      localStorage.removeItem("ALLOW_TICKET_NUMBER");
   }
 
   getStoreAndBranch(): { storeID: string, branchID: string } | null {
@@ -79,6 +89,16 @@ export class SessionLogic {
     }
     return null;
   }
+
+  getAllowNumberTicket(): boolean {
+    if (this.allowNumberTicket !== null) {
+        return this.allowNumberTicket;
+    }
+    const storedValue = localStorage.getItem("ALLOW_TICKET_NUMBER");
+    return storedValue ? JSON.parse(storedValue) : false;
+  }
+
+
 
 
 }

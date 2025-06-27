@@ -12,6 +12,8 @@ import { ResClienteDTO } from '../../../DTOs/resClienteDTO';
 import { ServiceLogic } from '../../../logic/serviceLogic';
 import { reqTransactionsFidelidad } from '../../../DTOs/reqTransactionsFidelidad';
 import { NavigationService } from '../../../logic/navigationService';
+import { SessionLogic } from '../../../logic/sessionLogic';
+import { NumeroTicketComponent } from '../pop-ups/numero-ticket/numero-ticket.component';
 
 @Component({
   standalone: true,
@@ -28,13 +30,15 @@ export class TarjetaDetallesOperacionComponent {
   monto: string = '';
   etapa: 'monto' | 'detalle' = 'monto';
   loginSpinner: boolean = false;
+  nroTicket: string = '';
 
   constructor(
     private store: Store,
     private endpointLogic: EndpointAdapterLogic,
     private dialog: MatDialog,
     public serviceLogic: ServiceLogic,
-    private navigation : NavigationService
+    private navigation : NavigationService,
+    private sessionLogic : SessionLogic
   ) {}
 
   ngOnInit(): void {
@@ -50,12 +54,29 @@ export class TarjetaDetallesOperacionComponent {
     });
   }
 
-  confirmarMonto() {
-    if (this.monto) {
-    this.etapa = 'detalle';
-    console.log("DETALLE")
+
+  async confirmarMonto() {
+  if (!this.monto) return;
+  
+  console.log("Confirmo Monto --> quiero ticket?",this.sessionLogic.getAllowNumberTicket())
+  if (this.sessionLogic.getAllowNumberTicket()) {
+    const dialogRef = this.dialog.open(NumeroTicketComponent, {
+      width: '300px'
+    });
+
+    dialogRef.afterClosed().subscribe((nroTicket: number | null) => {
+      if (nroTicket) {
+        this.nroTicket = nroTicket.toString(); // O nroTicket si deseas mantenerlo como number
+        this.etapa = 'detalle';
+      }
+    });
+    }else{
+      this.etapa = 'detalle';
     }
   }
+
+
+
 
   confirmarTipoOperacion() {
       const origen = this.serviceLogic.getOrigenOperacionTarjeta();

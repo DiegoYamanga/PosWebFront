@@ -71,16 +71,16 @@ export class DniDetallesOperacionComponent {
 
 async confirmarMonto() {
   if (!this.monto) return;
-  console.log("Confirmo Monto --> quiero ticket?",this.sessionLogic.getAllowNumberTicket())
-  
-  if (this.sessionLogic.getAllowNumberTicket()) {
+  console.log("Confirmo Monto --> quiero ticket?",this.sessionLogic.getPedirNumeroTicket())
+
+  if (this.sessionLogic.getPedirNumeroTicket() == 1) {
     const dialogRef = this.dialog.open(NumeroTicketComponent, {
       width: '300px'
     });
 
     dialogRef.afterClosed().subscribe((nroTicket: number | null) => {
       if (nroTicket) {
-        this.nroTicket = nroTicket.toString(); // O nroTicket si deseas mantenerlo como number
+        this.nroTicket = nroTicket.toString();
         this.procederEtapa();
       }
     });
@@ -132,7 +132,7 @@ procederEtapa() {
 
       const result = await this.endpointAdapterlogic.crearTransaccionFidelidad(this.storeID, payload);
       console.log("Obtuve la transaccion por fidelidad?")
-      console.log("✔️ Transacción Fidelidad registrada:", result);
+      console.log("Transacción Fidelidad registrada:", result);
 
       this.loginSpinner = false;
       this.dialog.open(NotificacionComponent, {

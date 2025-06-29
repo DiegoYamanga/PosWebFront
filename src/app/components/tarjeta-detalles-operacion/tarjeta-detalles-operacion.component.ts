@@ -58,8 +58,8 @@ export class TarjetaDetallesOperacionComponent {
   async confirmarMonto() {
   if (!this.monto) return;
   
-  console.log("Confirmo Monto --> quiero ticket?",this.sessionLogic.getAllowNumberTicket())
-  if (this.sessionLogic.getAllowNumberTicket()) {
+  console.log("Confirmo Monto --> quiero ticket?",this.sessionLogic.getPedirNumeroTicket())
+  if (this.sessionLogic.getPedirNumeroTicket() == 1) {
     const dialogRef = this.dialog.open(NumeroTicketComponent, {
       width: '300px'
     });

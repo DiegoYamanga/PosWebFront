@@ -1,5 +1,3 @@
-// ✅ 1. MODIFICACIÓN COMPLETA PARA SERVICELOGIC
-
 import { Injectable } from "@angular/core";
 import { Store } from "@ngrx/store";
 import { HttpService } from "../app/service/HttpService";
@@ -33,6 +31,11 @@ export class ServiceLogic {
               private httpService: HttpService,
               private endPointAdapterLogic : EndpointAdapterLogic
   ) {}
+
+
+  private isBrowser(): boolean {
+    return typeof window !== 'undefined' && !!window.localStorage;
+  }
 
   public setCliente(cliente: ResClienteDTO) {
     this.cliente = cliente;
@@ -109,23 +112,26 @@ export class ServiceLogic {
   }
 
   public setDocumentoUsuario(documentoUsuario: string | undefined) {
-    this.documetoUsuario = documentoUsuario;
-    if (documentoUsuario) {
-      localStorage.setItem('documentoUsuario', documentoUsuario);
-    } else {
-      localStorage.removeItem('documentoUsuario');
-    }
-  }
+      this.documetoUsuario = documentoUsuario;
+      if(this.isBrowser()) {  
+          if (documentoUsuario) {
+              localStorage.setItem('documentoUsuario', documentoUsuario);
+          } else {
+              localStorage.removeItem('documentoUsuario');
+          }
+      }
+}
 
   public getDocumentoUsuario(): string | undefined {
-    if (!this.documetoUsuario) {
-      const almacenado = localStorage.getItem('documentoUsuario');
-      if (almacenado) {
-        this.documetoUsuario = almacenado;
+      if (!this.documetoUsuario && this.isBrowser()) {
+          const almacenado = localStorage.getItem('documentoUsuario');
+          if (almacenado) {
+              this.documetoUsuario = almacenado;
+          }
       }
-    }
-    return this.documetoUsuario;
+      return this.documetoUsuario;
   }
+
 
   setOrigenOperacionTarjeta(origen: 'COMPRA' | 'GIFTCARD') {
   this.origenOperacionTarjeta = origen;

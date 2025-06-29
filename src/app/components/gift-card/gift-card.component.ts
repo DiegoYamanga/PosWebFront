@@ -17,6 +17,7 @@ import { ConsultarSaldoComponent } from '../pop-ups/consultar-saldo/consultar-sa
 import { GiftcardDTO } from '../../../DTOs/giftCardsDTO';
 import { NotificacionComponent } from '../notificacion/notificacion.component';
 import { AppSelectors } from '../../redux/selectors';
+import { SeleccionarSucursalComponent } from '../pop-ups/seleccionar-sucursal/seleccionar-sucursal.component';
 
 @Component({
   standalone: true,
@@ -42,19 +43,53 @@ export class GiftCardComponent {
     private serviceLogic: ServiceLogic
   ) {}
 
-  ngOnInit(): void {
-    console.log("Por lo menos estoy entrando a ngOnInit del gift card?")
-    this.store.select(AppSelectors.selectResLoginDTO).subscribe(loginData => {
-      console.log("Loginda data--->",loginData)
-      if (loginData) {
-          this.storeID = loginData.store.id.toString();
-          this.branchID = loginData.branch.id.toString();
-        console.log("ID de sucursal:", loginData.branch.id);
-        console.log("ID de Store:", loginData.store.id);
+ngOnInit(): void {
+  console.log("Entrando a ngOnInit del GiftCardComponent");
 
+  this.store.select(AppSelectors.selectResLoginDTO).subscribe(async loginData => {
+    console.log("Login data:", loginData);
+
+    if (loginData) {
+      this.storeID = loginData.store.id.toString();
+
+      const branchData = loginData.branch;
+
+      //Caso 1: branch único
+      if (branchData && !Array.isArray(branchData) && Object.keys(branchData).length > 0) {
+        this.branchID = branchData.id.toString();
+        console.log("Branch de sistema - branchID:", this.branchID);
+      }
+
+      //Caso 2: varias branches
+      else if (Array.isArray(branchData) && branchData.length > 0) {
+        const branchesArray = branchData.map(b => ({ id: b.id, name: b.name }));
+        console.log("Varias branches encontradas:", branchesArray);
+
+        const dialogRef = this.dialog.open(SeleccionarSucursalComponent, {
+          width: '400px',
+          data: { branches: branchesArray },
+          disableClose: true
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+          if (result) {
+            this.branchID = result.id.toString();
+            console.log("Branch seleccionada: ", this.branchID);
+          } else {
+            console.warn("");
+          }
+        });
+      }
+
+      //Caso 3: branch vacío, para desarrollar mas adelante
+      else if (branchData && Object.keys(branchData).length === 0) {
+        console.log("Branch vacío, implementacion pendiente para consultar al backend y seleccionar sucursal.");
+        // Desarrolar si Mati nos hace pegarle a otro endpoint
+      }
     }
-    });
-  }
+  });
+}
+
 
 
 

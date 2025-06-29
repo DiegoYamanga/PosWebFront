@@ -1,0 +1,11 @@
+.branch-item {
+      padding: 12px;
+      border: 1px solid #ccc;
+      margin-bottom: 8px;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: background 0.2s;
+    }
+.branch-item:hover {
+      background: #f0f0f0;
+    }

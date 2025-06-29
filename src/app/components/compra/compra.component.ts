@@ -10,6 +10,7 @@ import { HeaderComponent } from "../header/header.component";
 import { StateOrigenOperacionAction, StateResClienteDTOAction } from '../../redux/action';
 import { TarjetaUsuarioComponent } from '../pop-ups/tarjeta-usuario/tarjeta-usuario.component';
 import { ServiceLogic } from '../../../logic/serviceLogic';
+import { SeleccionarSucursalComponent } from '../pop-ups/seleccionar-sucursal/seleccionar-sucursal.component';
 
 @Component({
   standalone: true,
@@ -34,14 +35,48 @@ export class CompraComponent {
       this.cliente = value;
 
     });
-    this.store.select(AppSelectors.selectResLoginDTO).subscribe(loginData => {
-      if (loginData) {
-          this.storeID = loginData.store.id.toString();
-          this.branchID = loginData.branch.id.toString();
-        console.log("ID de sucursal:", loginData.branch.id);
-        console.log("ID de Store:", loginData.store.id);
+this.store.select(AppSelectors.selectResLoginDTO).subscribe(async loginData => {
+    console.log("Login data:", loginData);
+
+    if (loginData) {
+      this.storeID = loginData.store.id.toString();
+
+      const branchData = loginData.branch;
+
+      //Caso 1: branch único
+      if (branchData && !Array.isArray(branchData) && Object.keys(branchData).length > 0) {
+        this.branchID = branchData.id.toString();
+        console.log("Una sola branch: ", this.branchID);
+      }
+
+      //Caso 2: varias branches
+      else if (Array.isArray(branchData) && branchData.length > 0) {
+        const branchesArray = branchData.map(b => ({ id: b.id, name: b.name }));
+        console.log("Varias branches encontradas:", branchesArray);
+
+        const dialogRef = this.dialog.open(SeleccionarSucursalComponent, {
+          width: '400px',
+          data: { branches: branchesArray },
+          disableClose: true
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+          if (result) {
+            this.branchID = result.id.toString();
+            console.log("Branch seleccionada, branchID:", this.branchID);
+          } else {
+            console.warn("No se seleccionó ninguna sucursal, el flujo no continuará hasta que seleccione.");
+          }
+        });
+      }
+
+      //Caso 3: branch vacío, para desarrollar mas adelante
+      else if (branchData && Object.keys(branchData).length === 0) {
+        console.log("Branch vacío, implementacion pendiente para consultar al backend y seleccionar sucursal.");
+        // Por si Mati nos hace pegarle a otro endpoint
+      }
     }
-    });
+  });
 
 
   }
@@ -80,7 +115,7 @@ export class CompraComponent {
           this.store.dispatch(StateOrigenOperacionAction.setOrigenOperacion({ origen: 'COMPRA' }));
           this.navigationService.goToDNIDetallesOperacion();
         } else{
-          
+
         }
       });
   }

@@ -1,4 +1,4 @@
-<app-header [headerTitle]="'Escanear QR'"></app-header>
+<!-- <app-header [headerTitle]="'Escanear QR'"></app-header>
   <div class="qrContainer">
 
     <select (change)="onDeviceSelect($event)">
@@ -7,7 +7,7 @@
   </option>
 </select>
 
-<!--    boton Escanear QR-->
+   boton Escanear QR
       <h3 class="text-center textScan">Escaneá el código QR<br>ubicándolo en el recuadro</h3>
       <div class="qrScanner">
         <zxing-scanner (scanSuccess)="handleScanSuccess($event)" (scanError)="handleScanError($event)"></zxing-scanner>
@@ -18,3 +18,22 @@
 
 
   </div>
+
+ -->
+
+<app-header [headerTitle]="'Escanear QR'"></app-header>
+
+  <div class="qrContainer">
+    
+    <h3 class="text-center textScan">
+      Escaneá el código QR<br>ubicándolo en el recuadro
+    </h3>
+
+    <div id="reader" class="qrScanner"></div>
+
+    <div class="btnCancel">
+      <button (click)="cancelar()" class="btn btnqr">Cancelar</button>
+    </div>
+
+  </div>
+

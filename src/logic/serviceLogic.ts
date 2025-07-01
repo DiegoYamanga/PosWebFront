@@ -162,6 +162,7 @@ export class ServiceLogic {
   body: ReqCancelarTransaccionByID
   ): Promise<any> {
       console.log("ReqCancelarTransaccionByID----->",body);
+      console.log("STORE: "+ storeID + ", TRANS: " + transactionID)
     await this.endPointAdapterLogic.anularTransaccion(storeID, transactionID, body);
   }
 

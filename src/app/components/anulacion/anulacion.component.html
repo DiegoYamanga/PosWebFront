@@ -19,21 +19,33 @@
 </div>
 
 <!-- ETAPA 2: RESULTADOS -->
-<div *ngIf="!etapaSeleccion && cargando">Cargando transacciones...</div>
-<div *ngIf="!etapaSeleccion && error">{{ error }}</div>
+<div class="wrapper" *ngIf="!etapaSeleccion && !cargando && transacciones.length > 0">
+  <app-header [headerTitle]="'Fidelidad - Anulacion'" [arrowNavigation]="'fidelidad'"></app-header>
 
-<div *ngIf="!etapaSeleccion && !cargando && transacciones.length === 0">
-  No se encontraron transacciones para este usuario.
-</div>
+  <div class="containerTrans flex-grow">
 
-<div *ngIf="!etapaSeleccion && !cargando && transacciones.length > 0">
-  <h2>Transacciones encontradas</h2>
-  <div *ngFor="let trans of transacciones" class="transaccion-card">
-    <p><strong>ID:</strong> {{ trans.id }}</p>
-    <p><strong>Fecha:</strong> {{ trans.date }}</p>
-    <p><strong>Monto:</strong> ${{ trans.amount }}</p>
-    <p><strong>Tipo:</strong> {{ trans.branch_name }}</p>
-    <p><strong>Estado:</strong> {{ trans.status }}</p>
-    <button mat-raised-button color="warn" (click)="anularTransaccion(trans)">Anular</button>
+    <h3>Transacciones encontradas</h3>
+    
+    <label for="transSelect">Seleccioná una transacción:</label>
+    <select id="transSelect" [(ngModel)]="transaccionSeleccionada">
+      <option [ngValue]="null" disabled selected>-- Seleccionar --</option>
+      <option *ngFor="let trans of transacciones" [ngValue]="trans">
+        ID: {{ trans.id }} | Fecha: {{ trans.date }} | ${{ trans.amount }}
+      </option>
+    </select>
+    
+    <!-- Detalles de la transacción seleccionada -->
+    <div *ngIf="transaccionSeleccionada" class="detalleTrans">
+      <p><strong>ID:</strong> {{ transaccionSeleccionada.id }}</p>
+      <p><strong>Fecha:</strong> {{ transaccionSeleccionada.date }}</p>
+      <p><strong>Monto:</strong> ${{ transaccionSeleccionada.amount }}</p>
+      <p><strong>Tipo:</strong> {{ transaccionSeleccionada.branch_name }}</p>
+      <p><strong>Estado:</strong> {{ transaccionSeleccionada.status }}</p>
+    </div>
+    
+    <!-- Botón para anular -->
   </div>
+  <button class="btn btnAnular" [disabled]="!transaccionSeleccionada" (click)="anularTransaccion(transaccionSeleccionada)">Anular</button>
 </div>
+
+

@@ -10,11 +10,13 @@ import { MatDialog } from '@angular/material/dialog';
 import { ReqCancelarTransaccionByID } from '../../../DTOs/reqCancelarTransaccionByID';
 import { NotificacionComponent } from '../notificacion/notificacion.component';
 import { HeaderComponent } from '../header/header.component';
+import { FormsModule } from '@angular/forms';
+
 
 @Component({
   selector: 'app-anulacion',
   standalone: true,
-  imports: [CommonModule,HeaderComponent],
+  imports: [CommonModule,FormsModule,HeaderComponent],
   templateUrl: './anulacion.component.html',
   styleUrl: './anulacion.component.css'
 })
@@ -25,6 +27,7 @@ transacciones: ResTransactionCanheDTO[] = [];
   cargando = false;
   error: string | null = null;
   etapaSeleccion = true;
+  transaccionSeleccionada: any = null;
 
   constructor(
     private serviceLogic: ServiceLogic,
@@ -99,7 +102,11 @@ anularTransaccion(trans: ResTransactionCanheDTO) {
         this.transacciones = this.transacciones.filter(t => t.id !== trans.id);
 
         this.dialog.open(NotificacionComponent, {
-          width: '400px',
+          panelClass: 'full-screen-dialog',
+          maxWidth: '100vw',
+          maxHeight: '100vh',
+          height: '100vh',
+          width: '100vw',
           data: {
             success: true,
             titulo: 'Transacción anulada',
@@ -109,7 +116,11 @@ anularTransaccion(trans: ResTransactionCanheDTO) {
         });
       } else {
         this.dialog.open(NotificacionComponent, {
-          width: '400px',
+          panelClass: 'full-screen-dialog',
+          maxWidth: '100vw',
+          maxHeight: '100vh',
+          height: '100vh',
+          width: '100vw',
           data: {
             success: false,
             titulo: 'Error de anulación',

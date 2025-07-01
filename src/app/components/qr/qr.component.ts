@@ -4,13 +4,22 @@ import { HeaderComponent } from "../header/header.component";
 import { Html5QrcodeScanner } from "html5-qrcode";
 import { NavigationService } from '../../../logic/navigationService';
 import { CommonModule } from '@angular/common';
+import { EndpointAdapterLogic } from '../../../logic/endpointAdapterLogic';
+import { ServiceLogic } from '../../../logic/serviceLogic';
+import { Store } from '@ngrx/store';
+import { StateOrigenOperacionAction, StateResClienteDTOAction } from '../../redux/action';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { NotificacionComponent } from '../notificacion/notificacion.component';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-qr',
+  standalone :true,
   imports: [
     CommonModule,
     HeaderComponent,
-    
+    MatDialogModule
+
   ],
   templateUrl: './qr.component.html',
   styleUrl: './qr.component.css'
@@ -84,8 +93,18 @@ export class QrComponent {
 
   scaneado: string = "";
   html5QrCodeScanner!: Html5QrcodeScanner;
+  loading: boolean = false;
+  error: string | null = null;
 
-  constructor(private navigationService: NavigationService) { }
+  constructor(private navigationService: NavigationService,
+              private logic: EndpointAdapterLogic,
+              private serviceLogic : ServiceLogic,
+              private store: Store,
+              private dialog : MatDialog,
+  ) { 
+    console.log("MatDialog instanciado?", this.dialog); // ⛔️ undefined si no está bien inyectado
+
+    }
 
   ngAfterViewInit() {
     this.startScanner();
@@ -105,22 +124,67 @@ export class QrComponent {
   }
 
   handleScanSuccess(scannedString: string) {
+    this.loading = true;
     this.scaneado = scannedString;
     if (this.isValidQR(scannedString)) {
       console.log("SCAN TRUE");
+      console.log("ESCANEADO: ", this.scaneado)
       this.html5QrCodeScanner.clear();
+      this.buscarCliente()
     } else {
       console.log("SCAN FALSE");
     }
   }
 
+  async buscarCliente() {
+
+    this.loading = true;
+    try {
+      const cliente = await this.logic.buscarCliente("32", "43", this.scaneado);
+      if(!cliente){
+        this.error= "No existe un cliente con los datos ingresados";
+        this.loading = false;
+        return;
+      }
+      console.log("Cliente---->",cliente)
+      this.serviceLogic.setCliente(cliente);
+      this.store.dispatch(StateResClienteDTOAction.setClienteDTO({ resClienteDTO: cliente }));
+      this.store.dispatch(StateOrigenOperacionAction.setOrigenOperacion({ origen: 'COMPRA' }));
+      this.loading = false;
+      this.navigationService.goToDNIDetallesOperacion();
+      this.error = null;
+      
+      
+    } catch (e) {
+      console.log("Error: ",e)
+      this.error = "No existe un cliente con los datos ingresados"
+      this.loading = false;
+      console.log("Dialog:", this.dialog);
+      this.dialog.open(NotificacionComponent, {
+                panelClass: 'full-screen-dialog',
+                maxWidth: '100vw',
+                maxHeight: '100vh',
+                height: '100vh',
+                width: '100vw',
+                data: {
+                  success: false,
+                  titulo: 'Error',
+                  descripcion: 'El QR escaneado no corresponde a un usuario.',
+                  origen: 'FIDELIDAD'
+                }
+            });
+
+    }
+  }
+
   isValidQR(scannedString: string): boolean {
     const stringPattern = /^\/stores\/(\d+)\/branches\/(\d+)$/;
-    return stringPattern.test(scannedString);
+    return true;
+    // return stringPattern.test(scannedString);
   }
 
   handleScanError(error: any) {
-    console.error('Error al escanear:', error);
+    // console.error('Error al escanear:', error);
   }
 
   cancelar() {

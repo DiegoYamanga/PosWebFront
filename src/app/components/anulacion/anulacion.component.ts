@@ -38,6 +38,7 @@ transacciones: ResTransactionCanheDTO[] = [];
         this.storeID = loginData.store.id.toString();
       }
     });
+
   }
 
   buscarPorDNI() {
@@ -79,6 +80,7 @@ transacciones: ResTransactionCanheDTO[] = [];
 
 anularTransaccion(trans: ResTransactionCanheDTO) {
   if (!confirm(`¿Estás seguro que querés anular la transacción #${trans.id}?`)) return;
+  console.log("TRANSACCION SELEC: ", trans)
 
   this.cargando = true;
   this.error = null;
@@ -132,6 +134,6 @@ anularTransaccion(trans: ResTransactionCanheDTO) {
         }
       });
     }
-      ); 
+      );
   }
 }

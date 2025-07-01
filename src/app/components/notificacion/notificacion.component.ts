@@ -1,12 +1,13 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { NavigationService } from '../../../logic/navigationService';
 import { CommonModule } from '@angular/common';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-notificacion',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, MatDialogModule, MatButtonModule],
   templateUrl: './notificacion.component.html',
   styleUrl: './notificacion.component.css'
 })

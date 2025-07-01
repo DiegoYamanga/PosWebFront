@@ -23,6 +23,7 @@
 
 <app-header [headerTitle]="'Escanear QR'"></app-header>
 
+@if(!loading){
   <div class="qrContainer">
     
     <h3 class="text-center textScan">
@@ -36,4 +37,10 @@
     </div>
 
   </div>
+}
+@else{
+  <div class="d-flex align-items-center justify-content-center mt-5">
+    <span class="spinner-border spinner-border-sm spinnerLogo" role="status" aria-hidden="true"></span>
+  </div>
+}
 

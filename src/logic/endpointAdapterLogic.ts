@@ -223,6 +223,7 @@ export class EndpointAdapterLogic {
   }
 
   async crearTransaccionFidelidad(storeID: string, body: reqTransactionsFidelidad): Promise<any> {
+    console.log("BODY Q SE MANDA A TRANSACCION: ", body)
     return await firstValueFrom(this.httpService.nuevaTransaccionFidelidad(storeID, body));
   }
 

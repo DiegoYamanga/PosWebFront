@@ -56,8 +56,7 @@ this.store.select(AppSelectors.selectResLoginDTO).subscribe(async loginData => {
 
         const dialogRef = this.dialog.open(SeleccionarSucursalComponent, {
           width: '400px',
-          data: { branches: branchesArray },
-          disableClose: true
+          data: { branches: branchesArray }
         });
 
         dialogRef.afterClosed().subscribe(result => {

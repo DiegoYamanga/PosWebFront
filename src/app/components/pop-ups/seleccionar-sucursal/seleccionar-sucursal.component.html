@@ -1,4 +1,7 @@
-    <h2>Seleccionar sucursal</h2>
-    <div *ngFor="let branch of data.branches" class="branch-item" (click)="seleccionar(branch)">
-      <p>{{ branch.name }} (ID: {{ branch.id }})</p>
-    </div>
+<div class="container">
+  <h3>Seleccionar sucursal</h3>
+  <div *ngFor="let branch of data.branches" class="branch-item" (click)="seleccionar(branch)">
+    <p>{{ branch.name }} (ID: {{ branch.id }})</p>
+  </div>
+</div>    
+ 

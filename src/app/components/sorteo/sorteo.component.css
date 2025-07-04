@@ -17,7 +17,7 @@
   }
   .grid-buttons {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
     height: 20%;
   }
 
@@ -59,10 +59,10 @@ button {
   border-radius: 10px;
 } */
 
-.tarjetas {
+/* .tarjetas {
   background-color: #f7941e;
   border: 1px solid white;
-}
+} */
 .qr {
   background-color: #5e2a84;
   border: 1px solid white;
@@ -70,4 +70,24 @@ button {
 .documento {
   background-color: #007bff;
   border: 1px solid white;
+}
+.containerSorteo{
+  margin: 2rem;
+}
+.card-text{
+  color: gray;
+  font-size: .8rem;
+  margin: 0;
+}
+span{
+  font-size: .9rem;
+}
+.desdeHasta{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.btnParticipar{
+  font-size: .8rem;
 }

@@ -4,10 +4,10 @@
     <div class="main-content"></div>
 
   <div class="grid-buttons">
-    <button class="tarjetas" (click)="abrirPopTarjeta()">
+    <!-- <button class="tarjetas" (click)="abrirPopTarjeta()">
       <i class="material-icons">credit_card</i>
       TARJETAS
-    </button>
+    </button> -->
     <button class="qr" (click)="escanearQR()">
       <i class="material-icons">qr_code_scanner</i>
       QR
@@ -23,12 +23,15 @@
 <div *ngIf="etapa === 'sorteos'">
   <app-header [headerTitle]="'Sorteos Disponibles'"></app-header>
   <div class="container mt-3">
-    <div *ngFor="let sorteo of sorteos" class="card mb-3">
+    <div *ngFor="let sorteo of sorteos" class="card mb-3 containerSorteo" >
       <div class="card-body">
         <h5 class="card-title">{{ sorteo.title }}</h5>
-        <p class="card-text">Desde: {{ sorteo.date_from }} - Hasta: {{ sorteo.date_to }}</p>
-        <p class="card-text">Participaciones máximas: {{ sorteo.max_user_participations }}</p>
-        <button (click)="participarEnSorteo(sorteo)">Participar</button>
+        <div class="desdeHasta">
+          <p class="card-text">Desde: </p><span>{{ sorteo.date_from }}</span>
+          <p class="card-text">Hasta: </p><span>{{ sorteo.date_to }}</span>
+        </div>
+        <p class="card-text mb-3">Participaciones máximas: {{ sorteo.max_user_participations }}</p>
+        <button class="btn btn-primary btnParticipar" (click)="participarEnSorteo(sorteo)">Participar</button>
       </div>
     </div>
   </div>

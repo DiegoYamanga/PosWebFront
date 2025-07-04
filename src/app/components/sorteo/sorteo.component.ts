@@ -5,13 +5,14 @@ import { EndpointAdapterLogic } from '../../../logic/endpointAdapterLogic';
 import { LotsDTO } from '../../../DTOs/lotsDTO';
 import { ResClienteDTO } from '../../../DTOs/resClienteDTO';
 import { AppSelectors } from '../../redux/selectors';
-import { StateResLotsDTOAction } from '../../redux/action';
+import { StateFromComponent, StateResLotsDTOAction } from '../../redux/action';
 import { IdentificacionUsuarioComponent } from '../pop-ups/identificacion-usuario/identificacion-usuario.component';
 import { MatDialog } from '@angular/material/dialog';
 import { TarjetaUsuarioComponent } from '../pop-ups/tarjeta-usuario/tarjeta-usuario.component';
 import { HeaderComponent } from '../header/header.component';
 import { ReqParticipacionSorteoDTO } from '../../../DTOs/reqParticipacionSorteo';
 import { NotificacionComponent } from '../notificacion/notificacion.component';
+import { NavigationService } from '../../../logic/navigationService';
 
 
 
@@ -32,7 +33,8 @@ export class SorteoComponent implements OnInit {
   constructor(
     private store: Store,
     private endpointLogic: EndpointAdapterLogic,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private navigationService : NavigationService,
   ) {}
 
   ngOnInit(): void {
@@ -40,10 +42,14 @@ export class SorteoComponent implements OnInit {
       this.clienteInfo = cliente;
     });
 
+    this.store.select(AppSelectors.selectFromComponent).subscribe(fromComp => {
+      if(fromComp != "") this.etapa = "sorteos"
+    });
+
     this.store.select(AppSelectors.selectResLotsDTO).subscribe(lots => {
       if (lots && lots.length > 0) {
         this.sorteos = lots;
-        this.etapa = 'sorteos';
+        // this.etapa = 'sorteos';
       }
     });
 
@@ -99,6 +105,7 @@ export class SorteoComponent implements OnInit {
 
           const sorteos = await this.endpointLogic.obtenerSortosStore(this.storeID, this.branchID);
           this.store.dispatch(StateResLotsDTOAction.setLotsDTO({ reslotsDTO: sorteos }));
+          this.etapa = "sorteos"
         } catch (error) {
           console.error("❌ Error al obtener sorteos:", error);
 
@@ -121,8 +128,11 @@ export class SorteoComponent implements OnInit {
   }
 
 
-  escanearQR() {
-    console.log("Lógica escanear QR todavía no implementada");
+  async escanearQR() {
+    const sorteos = await this.endpointLogic.obtenerSortosStore(this.storeID, this.branchID);
+    this.store.dispatch(StateResLotsDTOAction.setLotsDTO({ reslotsDTO: sorteos }));
+    this.store.dispatch(StateFromComponent.setFromComponent({ fromComponent: 'SORTEO' }));
+    this.navigationService.goToQRScanner();
   }
 
   async participarEnSorteo(sorteo: LotsDTO) {
@@ -150,7 +160,7 @@ export class SorteoComponent implements OnInit {
           data: {
             success: false,
             titulo: 'No puede participar',
-            descripcion: 'El cliente no puede participar en este sorteo.',
+            descripcion: 'El cliente llegó al maximo de participaciones en este sorteo.',
             origen: 'SORTEO'
           }
         });

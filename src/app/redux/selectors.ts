@@ -49,6 +49,11 @@ const selectEncuestasDisponibles = createSelector(
   (state) => state.encuestasDisponibles
 );
 
+const selectFromComponent = createSelector(
+  selectStateModule,
+  (state) => state.fromComponent
+);
+
 
 export const AppSelectors = {
   selectState,
@@ -59,6 +64,7 @@ export const AppSelectors = {
   selectGiftCardOperacion,
   selectMontoGiftCard,
   selectResLotsDTO,
-  selectEncuestasDisponibles
+  selectEncuestasDisponibles,
+  selectFromComponent
   
 }

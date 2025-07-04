@@ -69,6 +69,13 @@ export const StateLoginAction = createActionGroup({
   },
 });
 
+export const StateFromComponent = createActionGroup({
+  source: 'FromComponent',
+  events: {
+    'setFromComponent': props<{ fromComponent: string }>()
+  },
+});
+
 
 
 

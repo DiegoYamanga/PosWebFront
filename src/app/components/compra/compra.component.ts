@@ -7,7 +7,7 @@ import { NavigationService } from '../../../logic/navigationService';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { IdentificacionUsuarioComponent } from '../pop-ups/identificacion-usuario/identificacion-usuario.component';
 import { HeaderComponent } from "../header/header.component";
-import { StateOrigenOperacionAction, StateResClienteDTOAction } from '../../redux/action';
+import { StateFromComponent, StateOrigenOperacionAction, StateResClienteDTOAction } from '../../redux/action';
 import { TarjetaUsuarioComponent } from '../pop-ups/tarjeta-usuario/tarjeta-usuario.component';
 import { ServiceLogic } from '../../../logic/serviceLogic';
 import { SeleccionarSucursalComponent } from '../pop-ups/seleccionar-sucursal/seleccionar-sucursal.component';
@@ -99,6 +99,7 @@ this.store.select(AppSelectors.selectResLoginDTO).subscribe(async loginData => {
 
   accionQR(): void {
     console.log("QR presionado");
+    this.store.dispatch(StateFromComponent.setFromComponent({ fromComponent: 'FIDELIDADCOMPRA' }));
     this.navigationService.goToQRScanner();
   }
 

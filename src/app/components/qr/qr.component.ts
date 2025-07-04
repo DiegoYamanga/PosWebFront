@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { HeaderComponent } from "../header/header.component";
 // import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { Html5QrcodeScanner } from "html5-qrcode";
@@ -11,6 +11,7 @@ import { StateOrigenOperacionAction, StateResClienteDTOAction } from '../../redu
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { NotificacionComponent } from '../notificacion/notificacion.component';
 import { MatButtonModule } from '@angular/material/button';
+import { AppSelectors } from '../../redux/selectors';
 
 @Component({
   selector: 'app-qr',
@@ -95,6 +96,7 @@ export class QrComponent {
   html5QrCodeScanner!: Html5QrcodeScanner;
   loading: boolean = false;
   error: string | null = null;
+  fromComponent: string = ""
 
   constructor(private navigationService: NavigationService,
               private logic: EndpointAdapterLogic,
@@ -104,7 +106,14 @@ export class QrComponent {
   ) { 
     console.log("MatDialog instanciado?", this.dialog); // ⛔️ undefined si no está bien inyectado
 
-    }
+  }
+
+  ngOnInit(){
+    this.store.select(AppSelectors.selectFromComponent).subscribe(fromComp => {
+      this.fromComponent = fromComp ? fromComp : "";
+      console.log("FROM COMP OBTENIDO: ", this.fromComponent)
+    });
+  }
 
   ngAfterViewInit() {
     this.startScanner();
@@ -151,8 +160,18 @@ export class QrComponent {
       this.store.dispatch(StateResClienteDTOAction.setClienteDTO({ resClienteDTO: cliente }));
       this.store.dispatch(StateOrigenOperacionAction.setOrigenOperacion({ origen: 'COMPRA' }));
       this.loading = false;
-      this.navigationService.goToDNIDetallesOperacion();
       this.error = null;
+      switch(this.fromComponent){
+        case "SORTEO":
+          this.navigationService.goToSorteo();
+          break;
+        case "FIDELIDADCOMPRA":
+          this.navigationService.goToDNIDetallesOperacion();
+          break;
+        default:
+          this.navigationService.goToInicio();
+          break;
+      }
       
       
     } catch (e) {

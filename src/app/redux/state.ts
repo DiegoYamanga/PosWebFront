@@ -25,9 +25,6 @@ export interface AppState {
 
     generarNumeroTicket: boolean;
 
-
-
-
-
+    fromComponent: string | null;
 
 }

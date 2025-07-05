@@ -10,6 +10,10 @@ export class NavigationService{
 
     constructor(private router: Router) {}
 
+    goToLogin(): void {
+      this.router.navigate(['/login']);
+    }
+
     irAFidelidad(): void {
       this.router.navigate(['/fidelidad']);
     }

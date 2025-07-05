@@ -3,6 +3,7 @@ import { NavigationService } from '../../../logic/navigationService';
 import { HeaderComponent } from "../header/header.component";
 import { Store } from '@ngrx/store';
 import { StateDocSorteo, StateEncuestasAction, StateFromComponent } from '../../redux/action';
+import { SessionLogic } from '../../../logic/sessionLogic';
 
 @Component({
   standalone : true,
@@ -13,9 +14,15 @@ import { StateDocSorteo, StateEncuestasAction, StateFromComponent } from '../../
 })
 export class InicioComponent {
 
+  userName: string = ""
   constructor(private navigation: NavigationService,
               private store: Store,
-  ) {}
+              private sessionLogic: SessionLogic
+  ) {
+    const userData = this.sessionLogic.getUserData();
+    console.log("USEERRRRR: ", userData)
+    this.userName = userData.username;
+  }
 
   ngOnInit(){
     this.store.dispatch(StateFromComponent.setFromComponent({ fromComponent: "" }));

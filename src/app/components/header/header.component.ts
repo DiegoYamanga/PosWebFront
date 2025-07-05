@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { NavigationService } from '../../../logic/navigationService';
+import { SessionLogic } from '../../../logic/sessionLogic';
 
 @Component({
   selector: 'app-header',
@@ -17,6 +18,7 @@ export class HeaderComponent {
 
   constructor(
     private navigation: NavigationService,
+    private sessionLogic: SessionLogic
   ){
     // console.log("NAV: ", this.navigation)
   }
@@ -42,5 +44,11 @@ export class HeaderComponent {
         this.navigation.goToInicio();
         break;
     }
+  }
+
+  logout(){
+    console.log("LOGOUT")
+    this.sessionLogic.clear();
+    this.navigation.goToLogin();
   }
 }

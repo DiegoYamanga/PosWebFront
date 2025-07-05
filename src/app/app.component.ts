@@ -11,6 +11,7 @@ import { reduxReducer } from './redux/reducer';
 import { CommonModule } from '@angular/common';
 import { SessionLogic } from '../logic/sessionLogic';
 import { StateResLoginDTOAction } from './redux/action';
+import { NavigationService } from '../logic/navigationService';
 // #import { ZXingScannerModule } from '@zxing/ngx-scanner';
 
 
@@ -42,7 +43,9 @@ export class AppComponent implements OnInit {
 
   constructor(
     private sessionLogic: SessionLogic,
-    private store: Store
+    private store: Store,
+    private navigation: NavigationService
+    
   ) {}
 
   ngOnInit(): void {
@@ -51,7 +54,9 @@ export class AppComponent implements OnInit {
 
     if (userData && token) {
       console.log("📦 Restaurando login desde localStorage...");
+      console.log("USER DATA: ", userData)
       this.store.dispatch(StateResLoginDTOAction.setResLoginDTO({ resLoginDTO: userData }));
+      this.navigation.goToInicio()
     } else {
       console.log("⚠️ No hay datos en localStorage");
     }

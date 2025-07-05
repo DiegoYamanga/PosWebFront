@@ -24,7 +24,7 @@
             <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
         </button>
       </mat-form-field>
-      <mat-error class="loginError" *ngIf="loginError"> <mat-icon>error_outline</mat-icon><span>Usuario o contraseña invalidos</span></mat-error>
+      <mat-error class="loginError" *ngIf="loginError || error"> <mat-icon>error_outline</mat-icon><span>Usuario o contraseña invalidos</span></mat-error>
     </div>
     @if (!loginSpinner) {
       <button (click)="onSubmit()" [disabled]="loginForm.controls.user.invalid" class="btn btnSign btn-block w-100">Ingresar</button>

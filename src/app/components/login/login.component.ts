@@ -63,9 +63,13 @@ export class LoginComponent {
     const credentials = { user, password };
 
     this.endPointAdapterLogic.loginFinal(credentials).subscribe({
-      next: (res: { token: string; }) => {
+      next: (res: any) => {
         if (res?.token) {
-          this.sessionLogic.setLoginData(res.token, res);
+          const fullUserData = {
+            ...res,
+            username: user
+          };
+          this.sessionLogic.setLoginData(res.token, fullUserData);
           this.navigation.goToInicio();
         } else {
           this.error = 'Credenciales incorrectas.';
@@ -74,7 +78,7 @@ export class LoginComponent {
       },
       error: () => {
         this.error = 'Error al intentar ingresar.';
-        this.router.navigate(['/error-login']);
+        // this.router.navigate(['/error-login']);
         this.loginSpinner = false;
       }
     });

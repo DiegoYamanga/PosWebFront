@@ -10,7 +10,7 @@ import { IdentificacionUsuarioComponent } from '../pop-ups/identificacion-usuari
 import { TarjetaUsuarioComponent } from '../pop-ups/tarjeta-usuario/tarjeta-usuario.component';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from "../header/header.component";
-import { StateEncuestasAction } from '../../redux/action';
+import { StateEncuestasAction, StateFromComponent } from '../../redux/action';
 
 @Component({
   selector: 'app-encuesta',
@@ -26,6 +26,7 @@ export class EncuestaComponent {
   numeroTarjeta: string | undefined;
   encuestas: EncuestaDTO[] = [];
   encuestasObtenidas: boolean = false;
+  docSorteo: string = "";
 
   constructor(
     private store: Store,
@@ -42,14 +43,21 @@ export class EncuestaComponent {
       });
 
     // Obtener documento
-    this.store.select(AppSelectors.selectResClienteDTO)
-      .subscribe((cliente) => {
-        if (cliente?.datosCliente.identification) {
-          this.documento = cliente.datosCliente.identification;
-        }
-        console.log("Encuesta Component -> Documento: ",this.documento)
+    // this.store.select(AppSelectors.selectResClienteDTO)
+    //   .subscribe((cliente) => {
+    //     if (cliente?.datosCliente.identification) {
+    //       this.documento = cliente.datosCliente.identification;
+    //     }
+    //     console.log("Encuesta Component -> Documento: ",this.documento)
 
-      });
+    //   });
+    this.store.select(AppSelectors.selectDocSorteo)
+     .subscribe((docSort) => {
+      if (docSort) {
+      this.docSorteo = docSort;
+      console.log("DOC OBTENIDO PARA SORTEO: ", docSort)
+     }
+    });
     this.store.select(AppSelectors.selectEncuestasDisponibles)
      .subscribe((encuestas) => {
       if (encuestas) {
@@ -59,7 +67,7 @@ export class EncuestaComponent {
     });
 
 
-      this.documento = serviceLogic.getDocumentoUsuario();
+      // this.documento = serviceLogic.getDocumentoUsuario();
       console.log("Encuesta Component -> Documento: ",this.documento)
 
 
@@ -73,26 +81,23 @@ export class EncuestaComponent {
     //   });
   }
 
+  ngOnInit(){
+    console.log("DOC SORTEO ON INIT: ",this.docSorteo)
+    console.log("ON INIT: ", this.docSorteo != "")
+    if(this.docSorteo != ""){
+      this.cargarEncuestas();
+    }
+  }
+
   onSeleccionar(tipo: 'tarjeta' | 'documento' | 'qr') {
   console.log("Encuesta Component -> tipo de indentificacion: ",tipo)
 
   if (tipo === 'qr') {
-    this.dialog.open(NotificacionComponent, {
-        panelClass: 'full-screen-dialog',
-        maxWidth: '100vw',
-        maxHeight: '100vh',
-        height: '100vh',
-        width: '100vw',
-      data: { mensaje: 'Funcionalidad de QR no disponible aún.', tipo: 'info' }
-    });
-    return;
+    this.store.dispatch(StateFromComponent.setFromComponent({ fromComponent: 'ENCUESTA' }));
+    this.navigationService.goToQRScanner();
   }
 
-  if (tipo === 'documento' && this.documento) {
-    this.cargarEncuestas();
-  } else if (tipo === 'tarjeta' && this.numeroTarjeta) {
-    this.cargarEncuestas();
-  } else {
+
     if (tipo === 'documento') {
       this.serviceLogic.setDocumentoUsuario(this.documento)
       const dialogRef = this.dialog.open(IdentificacionUsuarioComponent, {
@@ -107,19 +112,20 @@ export class EncuestaComponent {
       });
     }
 
-    if (tipo === 'tarjeta') {
-      const dialogRef = this.dialog.open(TarjetaUsuarioComponent, {
-        data: {} ,
-        width: '400px',
-        height: 'auto'
-      }).afterClosed().subscribe((resultado) => {
-        if (resultado?.exitoso && resultado.nroTarjeta) {
-          this.numeroTarjeta = resultado.nroTarjeta;
-          this.cargarEncuestas();
-        }
-      });
-    }
-  }
+    //POR EL MOMENTO NO USAMOS TARJETA
+
+    // if (tipo === 'tarjeta') {
+    //   const dialogRef = this.dialog.open(TarjetaUsuarioComponent, {
+    //     data: {} ,
+    //     width: '400px',
+    //     height: 'auto'
+    //   }).afterClosed().subscribe((resultado) => {
+    //     if (resultado?.exitoso && resultado.nroTarjeta) {
+    //       this.numeroTarjeta = resultado.nroTarjeta;
+    //       this.cargarEncuestas();
+    //     }
+    //   });
+    // }
 }
 
 

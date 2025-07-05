@@ -7,7 +7,7 @@ import { CommonModule } from '@angular/common';
 import { EndpointAdapterLogic } from '../../../logic/endpointAdapterLogic';
 import { ServiceLogic } from '../../../logic/serviceLogic';
 import { Store } from '@ngrx/store';
-import { StateOrigenOperacionAction, StateResClienteDTOAction } from '../../redux/action';
+import { StateDocSorteo, StateOrigenOperacionAction, StateResClienteDTOAction } from '../../redux/action';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { NotificacionComponent } from '../notificacion/notificacion.component';
 import { MatButtonModule } from '@angular/material/button';
@@ -164,6 +164,10 @@ export class QrComponent {
       switch(this.fromComponent){
         case "SORTEO":
           this.navigationService.goToSorteo();
+          break;
+        case "ENCUESTA":
+          this.store.dispatch(StateDocSorteo.setDocSorteo({ docSorteo: cliente.datosCliente.identification }));
+          this.navigationService.goToEncuesta();
           break;
         case "FIDELIDADCOMPRA":
           this.navigationService.goToDNIDetallesOperacion();

@@ -27,4 +27,6 @@ export interface AppState {
 
     fromComponent: string | null;
 
+    docSorteo: string | null;
+
 }

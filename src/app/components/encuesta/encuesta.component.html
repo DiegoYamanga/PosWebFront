@@ -1,25 +1,31 @@
 <div class="container">
   <app-header [headerTitle]="'Encuestas'" [arrowNavigation]="'inicio'"></app-header>
-    <div class="main-content"></div>
+    <div class="main-content">
+      
+      <div *ngIf="encuestasObtenidas && encuestas.length > 0" class="lista-encuestas">
+        <h4>Encuestas disponibles</h4>
+        <div *ngFor="let encuesta of encuestas" class="card-encuesta">
+        <h5 class="card-title">{{ encuesta.title }}</h5>
+        <div class="desdeHasta">
+          <p class="card-text">Desde: </p><span>{{ encuesta.date_from }}</span>
+          <p class="card-text">Hasta: </p><span>{{ encuesta.date_to }}</span>
+        </div>
+          <button class="selectBtn" (click)="seleccionarEncuesta(encuesta)">Seleccionar</button>
+        </div>
+      </div>
 
-    <div *ngIf="encuestasObtenidas && encuestas.length > 0" class="lista-encuestas">
-      <h2>Encuestas disponibles</h2>
-      <div *ngFor="let encuesta of encuestas" class="card-encuesta">
-        <h3>{{ encuesta.title }}</h3>
-        <p>Desde: {{ encuesta.date_from }} - Hasta: {{ encuesta.date_to }}</p>
-        <button (click)="seleccionarEncuesta(encuesta)">Seleccionar</button>
+      <div *ngIf="encuestasObtenidas && encuestas.length === 0" class="mensaje-vacio">
+        <p>No se encontraron encuestas disponibles.</p>
       </div>
     </div>
 
-    <div *ngIf="encuestasObtenidas && encuestas.length === 0" class="mensaje-vacio">
-      <p>No se encontraron encuestas disponibles.</p>
-    </div>
+
 
   <div class="grid-buttons">
-    <button class="tarjetas" (click)="onSeleccionar('tarjeta')">
+    <!-- <button class="tarjetas" (click)="onSeleccionar('tarjeta')">
       <i class="material-icons">credit_card</i>
       TARJETAS
-    </button>
+    </button> -->
     <button class="qr" (click)="onSeleccionar('qr')">
       <i class="material-icons">qr_code_scanner</i>
       QR

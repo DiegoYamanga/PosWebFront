@@ -6,33 +6,6 @@
   padding: 0;
   }
 
-
-/* .seleccion-tipo {
-  display: flex;
-  justify-content: space-around;
-  margin: 20px 0;
-
-  button {
-    padding: 10px 20px;
-    font-size: 16px;
-  }
-
-  .btn-tarjeta {
-    background-color: orange;
-    color: white;
-  }
-
-  .btn-qr {
-    background-color: purple;
-    color: white;
-  }
-
-  .btn-documento {
-    background-color: deepskyblue;
-    color: white;
-  }
-} */
-
 .container {
   display: flex;
   flex-direction: column;
@@ -47,7 +20,7 @@
 }
 .grid-buttons {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
   height: 20%;
 }
 
@@ -80,28 +53,46 @@ button {
 
 
 .lista-encuestas {
-  margin-top: 30px;
-  padding: 1rem;
+  padding: 2rem;
+}
 
-  .card-encuesta {
-    border: 1px solid #ccc;
-    padding: .5rem;
-    margin-bottom: 15px;
-    border-radius: 10px;
-    background: #f5f5f5;
+.card-encuesta {
+  border: 1px solid #ccc;
+  padding: .5rem;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  background: #f5f5f5;
+}
 
-    button{
-      color: black;
-      font-weight: 400;
-      border: 1px solid gray;
-      border-radius: 5px;
-      background-color: white;
-    }
-  }
+.selectBtn{
+  color: black;
+  font-weight: 400;
+  border: 1px solid gray;
+  border-radius: 5px;
+  background-color: white;
+  font-size: .9rem;
 }
 
 .mensaje-vacio {
   text-align: center;
   margin-top: 30px;
   color: gray;
+}
+.card-title{
+  font-size: 1.2rem;
+}
+.card-text{
+  color: gray;
+  font-size: .8rem;
+  margin: 0;
+}
+span{
+  font-size: .9rem;
+}
+.desdeHasta{
+  /* display: flex; */
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: .8rem;
+  margin-top: .8rem;
 }

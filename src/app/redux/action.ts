@@ -76,6 +76,13 @@ export const StateFromComponent = createActionGroup({
   },
 });
 
+export const StateDocSorteo = createActionGroup({
+  source: 'DocSorteo',
+  events: {
+    'setDocSorteo': props<{ docSorteo: string }>()
+  },
+});
+
 
 
 

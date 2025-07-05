@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavigationService } from '../../../logic/navigationService';
 import { HeaderComponent } from "../header/header.component";
 import { Store } from '@ngrx/store';
-import { StateFromComponent } from '../../redux/action';
+import { StateDocSorteo, StateEncuestasAction, StateFromComponent } from '../../redux/action';
 
 @Component({
   standalone : true,
@@ -19,7 +19,9 @@ export class InicioComponent {
 
   ngOnInit(){
     this.store.dispatch(StateFromComponent.setFromComponent({ fromComponent: "" }));
-    console.log("FROM COMP BORRADO")  //Para volver a cargar DNI en sorteos siempre
+    this.store.dispatch(StateDocSorteo.setDocSorteo({ docSorteo: "" }));
+    this.store.dispatch(StateEncuestasAction.setEncuestasDisponibles({ encuestas: null }));
+    console.log("ENCUESTAS, FROMCOMP y DOCSORTEO BORRADO")  //Para volver a cargar DNI en sorteos y encuestas siempre
   }
 
   irAFidelidad() {

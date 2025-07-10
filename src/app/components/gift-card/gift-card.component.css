@@ -13,8 +13,8 @@
 
 .botonera{
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    height: 40%;
+    grid-template-columns: 1fr 1fr 1fr;
+    height: 20%;
 }
 
 button {

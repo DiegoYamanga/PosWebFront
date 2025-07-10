@@ -35,6 +35,10 @@ export class DniDetallesOperacionComponent {
   tipoCanje: 'PUNTOS' | 'IMPORTE' | null = null;
   loginSpinner: boolean = false;
   nroTicket: string = '';
+  dayNumber : number = 0;
+  pointsDayString : string | undefined;
+  pointsMultiplier : number = 0;
+  obtainedPoints : number = 0;
 
 
   constructor(private store: Store,
@@ -53,6 +57,7 @@ export class DniDetallesOperacionComponent {
 
     this.store.select(AppSelectors.selectResClienteDTO).subscribe(cliente => {
       this.cliente = cliente;
+      console.log("CLIENTE EN COMPRA: ", this.cliente)
     });
 
     this.tipoCanje$.subscribe((tipo: any) => {
@@ -98,11 +103,13 @@ procederEtapa() {
     dialogRef.afterClosed().subscribe((opcion: 'IMPORTE' | 'PUNTOS') => {
       if (opcion) {
         this.store.dispatch(StateTipoCanjeAction.setTipoCanje({ tipoCanje: opcion }));
+        // this.getBenefits()
         this.etapa = 'detalle';
       }
     });
   } else {
     this.etapa = 'detalle';
+    this.getBenefits()
     }
   }
 
@@ -264,6 +271,21 @@ const reqSwapDTO: ReqSwapDTO = {
 
   }
 
+  getBenefits() {
+    let date = new Date;
+    this.dayNumber= date.getDay() == 0 ? 7 : date.getDay()   // Si me devuelve 0 -> domingo (dia 7), sino es el numero que llega
+    // this.discountDayString = "discount_" + this.dayNumber;
+    this.pointsDayString = "points_" + this.dayNumber;
+    // this.discountPercentage = this.selectedBranch[this.discountDayString]
+    this.pointsMultiplier = Number(this.cliente?.tipoCliente[this.pointsDayString] ?? 0);
+    console.log("pointsMultiplier: ", this.pointsMultiplier)
+
+    if(this.monto != null){
+      // this.discountToMade = this.purchaseAmount*this.discountPercentage/100;
+      // this.finalAmount = this.purchaseAmount - this.discountToMade;
+      this.obtainedPoints = Number(this.monto)*this.pointsMultiplier/100;
+    }
+  }
 
 
 

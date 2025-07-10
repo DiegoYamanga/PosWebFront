@@ -22,4 +22,6 @@ export interface ClienteTipoDTO {
     is_default: number;
     branch_id: number;         
     client_type_id?: number; 
+    
+    [key: string]: number | string | undefined;
   }

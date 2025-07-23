@@ -31,6 +31,7 @@ export class TarjetaDetallesOperacionComponent {
   etapa: 'monto' | 'detalle' = 'monto';
   loginSpinner: boolean = false;
   nroTicket: string = '';
+  cardNumber!: string | null;
 
   constructor(
     private store: Store,
@@ -52,12 +53,17 @@ export class TarjetaDetallesOperacionComponent {
         this.branchID = loginData.branch.id.toString();
       }
     });
+
+    this.cardNumber = this.serviceLogic.getCardNumberCompraInfo();
+
+    console.log("Numero de tarjeta Ingresado:",this.cardNumber)
+
+
   }
 
 
   async confirmarMonto() {
   if (!this.monto) return;
-  
   console.log("Confirmo Monto --> quiero ticket?",this.sessionLogic.getPedirNumeroTicket())
   if (this.sessionLogic.getPedirNumeroTicket() == 1) {
     const dialogRef = this.dialog.open(NumeroTicketComponent, {
@@ -81,13 +87,12 @@ export class TarjetaDetallesOperacionComponent {
   confirmarTipoOperacion() {
       const origen = this.serviceLogic.getOrigenOperacionTarjeta();
       console.log("Origen de operación:", origen);
-
       if (origen === 'COMPRA') {
         this.confirmarOperacionTarjeta();
       } else if (origen === 'GIFTCARD') {
         this.confirmarOperacion();
       }
-    
+
   }
 
 

@@ -26,6 +26,7 @@ export class TarjetaUsuarioComponent {
   cargando: any;
   storeID!: string;
   branchID!: string ;
+  indentification!: string;
 
   constructor(
     private logic: EndpointAdapterLogic,
@@ -61,6 +62,7 @@ confirmarTarjeta(): void {
     this.error = 'Debe ingresar un número de tarjeta.';
     return;
   }
+
   this.buscarTarjeta();
 
   this.dialogRef.close({
@@ -74,7 +76,7 @@ confirmarTarjeta(): void {
 
     try {
       console.log("TarjetaUsuario - Voy a buscar cliente")
-      const cliente = await this.logic.buscarCliente(this.storeID, this.branchID, this.numeroTarjeta);
+      const cliente = await this.logic.buscarCliente(this.storeID, this.branchID, this.indentification);
       console.log("TarjetaUsuario - Cliente:",cliente)
 
       if (!cliente) {

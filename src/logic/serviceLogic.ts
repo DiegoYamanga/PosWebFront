@@ -107,8 +107,12 @@ export class ServiceLogic {
   return this.endPointAdapterLogic.responderEncuesta(storeID, branchID, pollID, preguntaID, respuesta);
   }
 
-    public setCardNumberCompraInfo(cardNumberCompra: String) {
-    cardNumberCompra = cardNumberCompra;
+    public setCardNumberCompraInfo(cardNumberCompra: string | null) {
+    this.cardNumberCompra = cardNumberCompra;
+  }
+
+  public getCardNumberCompraInfo(){
+    return this.cardNumberCompra;
   }
 
   public setDocumentoUsuario(documentoUsuario: string | undefined) {

@@ -41,68 +41,68 @@ export class EndpointAdapterLogic {
     ) {
   }
 
-/// DESCOMENTAR CUANDO SE HAGA EL CAMBIO DESDE FIDELI DEL ENDPOINT
-  // public loginFinal(reqLoginDTO: ReqLogicDTO): Observable<resLoginDTO> {
-  //   return this.httpService.login(reqLoginDTO).pipe(
-  //     map((response) => {
-  //       console.log("Response--->",response)
-  //       if (response.status === 200) {
-  //         console.log("RESPONSEEE-->",response)
-  //         this.store.dispatch(StateResLoginDTOAction.setResLoginDTO({ resLoginDTO : response }));
-  //         console.log("Allow_ticket_number---->",this.sesionLogic.getAllowNumberTicket())
-  //         return response as resLoginDTO;
-  //       } else {
-  //         throw new Error('Login incorrecto');
-  //       }
-  //     })
-  //   );
-  // }
-
-
+// DESCOMENTAR CUANDO SE HAGA EL CAMBIO DESDE FIDELI DEL ENDPOINT
   public loginFinal(reqLoginDTO: ReqLogicDTO): Observable<resLoginDTO> {
-    const usuario = reqLoginDTO.user?.toLowerCase() ?? '';
-    //Eliminar una vez que este la logica real
-    if (usuario === 'preta') {
-        return this.http.get<resLoginDTO>('assets/mocks/preta.json').pipe(
-            map((response) => {
-                console.log("Mock Response PRETA --->", response);
-                if (response.status === 200) {
-                    this.store.dispatch(StateResLoginDTOAction.setResLoginDTO({ resLoginDTO: response }));
-                    return response as resLoginDTO;
-                } else {
-                    throw new Error('Login incorrecto');
-                }
-            })
-        );
-    }
-
-    if (usuario === 'mardelplata') {
-        return this.http.get<resLoginDTO>('assets/mocks/mardelplata.json').pipe(
-            map((response) => {
-                console.log("Mock Response MARDELPLATA --->", response);
-                if (response.status === 200) {
-                    this.store.dispatch(StateResLoginDTOAction.setResLoginDTO({ resLoginDTO: response }));
-                    return response as resLoginDTO;
-                } else {
-                    throw new Error('Login incorrecto');
-                }
-            })
-        );
-    }
-
-    //Backend real
     return this.httpService.login(reqLoginDTO).pipe(
-        map((response) => {
-            console.log("Response (real backend) --->", response);
-            if (response.status === 200) {
-                this.store.dispatch(StateResLoginDTOAction.setResLoginDTO({ resLoginDTO: response }));
-                return response as resLoginDTO;
-            } else {
-                throw new Error('Login incorrecto');
-            }
-        })
+      map((response) => {
+        console.log("Response--->",response)
+        if (response.status === 200) {
+          console.log("RESPONSEEE-->",response)
+          this.store.dispatch(StateResLoginDTOAction.setResLoginDTO({ resLoginDTO : response }));
+          // console.log("Allow_ticket_number---->",this.sesionLogic.getAllowNumberTicket())
+          return response as resLoginDTO;
+        } else {
+          throw new Error('Login incorrecto');
+        }
+      })
     );
-}
+  }
+
+
+//   public loginFinal(reqLoginDTO: ReqLogicDTO): Observable<resLoginDTO> {
+//     const usuario = reqLoginDTO.user?.toLowerCase() ?? '';
+//     //Eliminar una vez que este la logica real
+//     if (usuario === 'preta') {
+//         return this.http.get<resLoginDTO>('assets/mocks/preta.json').pipe(
+//             map((response) => {
+//                 console.log("Mock Response PRETA --->", response);
+//                 if (response.status === 200) {
+//                     this.store.dispatch(StateResLoginDTOAction.setResLoginDTO({ resLoginDTO: response }));
+//                     return response as resLoginDTO;
+//                 } else {
+//                     throw new Error('Login incorrecto');
+//                 }
+//             })
+//         );
+//     }
+
+//     if (usuario === 'mardelplata') {
+//         return this.http.get<resLoginDTO>('assets/mocks/mardelplata.json').pipe(
+//             map((response) => {
+//                 console.log("Mock Response MARDELPLATA --->", response);
+//                 if (response.status === 200) {
+//                     this.store.dispatch(StateResLoginDTOAction.setResLoginDTO({ resLoginDTO: response }));
+//                     return response as resLoginDTO;
+//                 } else {
+//                     throw new Error('Login incorrecto');
+//                 }
+//             })
+//         );
+//     }
+
+//     //Backend real
+//     return this.httpService.login(reqLoginDTO).pipe(
+//         map((response) => {
+//             console.log("Response (real backend) --->", response);
+//             if (response.status === 200) {
+//                 this.store.dispatch(StateResLoginDTOAction.setResLoginDTO({ resLoginDTO: response }));
+//                 return response as resLoginDTO;
+//             } else {
+//                 throw new Error('Login incorrecto');
+//             }
+//         })
+//     );
+// }
 
 
   async buscarCliente(storeID: string, branchID: string, documento: string): Promise<ResClienteDTO> {

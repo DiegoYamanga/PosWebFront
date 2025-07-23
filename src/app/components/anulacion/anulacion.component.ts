@@ -11,6 +11,8 @@ import { ReqCancelarTransaccionByID } from '../../../DTOs/reqCancelarTransaccion
 import { NotificacionComponent } from '../notificacion/notificacion.component';
 import { HeaderComponent } from '../header/header.component';
 import { FormsModule } from '@angular/forms';
+import { ConfirmarAnulacionComponent } from '../pop-ups/confirmar-anulacion/confirmar-anulacion.component';
+
 
 
 @Component({
@@ -81,70 +83,75 @@ transacciones: ResTransactionCanheDTO[] = [];
     }
   }
 
-anularTransaccion(trans: ResTransactionCanheDTO) {
-  if (!confirm(`¿Estás seguro que querés anular la transacción #${trans.id}?`)) return;
-  console.log("TRANSACCION SELEC: ", trans)
+  anularTransaccion(trans: ResTransactionCanheDTO) {
+    // Abrir el popup de confirmación
+    const dialogRef = this.dialog.open(ConfirmarAnulacionComponent, {
+      width: '400px',
+      data: { id: trans.id }
+    });
 
-  this.cargando = true;
-  this.error = null;
+    // Esperar el resultado del popup
+    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+      if (!confirmed) return; // Si el usuario cancela, no hace nada
 
-  const body: ReqCancelarTransaccionByID = {
-    serial_number: trans.serial_number,
-    card_number: trans.card_number || null,
-    identification: trans.user_identification || null,
-    local_datetime: new Date().toISOString().slice(0, 19),
-    branch_id: trans.branch_id.toString()
-  };
+      console.log("TRANSACCION SELEC: ", trans);
 
-  this.serviceLogic.anularTransaccion(this.storeID, trans.id.toString(), body)
-    .then((respuesta) => {
-      if (respuesta && respuesta.transaction) {
-        this.transacciones = this.transacciones.filter(t => t.id !== trans.id);
+      this.cargando = true;
+      this.error = null;
 
-        this.dialog.open(NotificacionComponent, {
-          panelClass: 'full-screen-dialog',
-          maxWidth: '100vw',
-          maxHeight: '100vh',
-          height: '100vh',
-          width: '100vw',
-          data: {
-            success: true,
-            titulo: 'Transacción anulada',
-            descripcion: 'La transacción fue anulada correctamente.',
-            origen: 'FIDELIDAD'
-          }
+      if(trans.branch_id == null){
+        
+      }  
+
+
+      const body: ReqCancelarTransaccionByID = {
+        serial_number: trans.serial_number,
+        card_number: trans.card_number || null,
+        identification: trans.user_identification || null,
+        local_datetime: new Date().toISOString().slice(0, 19),
+        branch_id: trans.branch_id.toString()
+      };
+
+
+
+      this.serviceLogic.anularTransaccion(this.storeID, trans.id.toString(), body)
+        .then((respuesta) => {
+          console.log("Respuesta Anulacion:",respuesta)
+          this.transacciones = this.transacciones.filter(t => t.id !== trans.id);
+          this.dialog.open(NotificacionComponent, {
+            panelClass: 'full-screen-dialog',
+            maxWidth: '100vw',
+            maxHeight: '100vh',
+            height: '100vh',
+            width: '100vw',
+            data: {
+              success: true,
+              titulo: 'Transacción anulada',
+              descripcion: 'La transacción fue anulada correctamente.',
+              origen: 'FIDELIDAD'
+            }
+          });
+        
+        })
+        .catch((err) => {
+          const mensaje = err?.message?.includes('La transacción no puede ser cancelada')
+            ? 'La transacción no puede ser cancelada. Inténtelo nuevamente.'
+            : 'No se pudo realizar la anulación. Inténtelo más tarde.';
+
+          this.dialog.open(NotificacionComponent, {
+            width: '400px',
+            data: {
+              success: false,
+              titulo: 'Error de anulación',
+              descripcion: mensaje,
+              origen: 'FIDELIDAD'
+            }
+          });
+        })
+        .finally(() => {
+          this.cargando = false;
         });
-      } else {
-        this.dialog.open(NotificacionComponent, {
-          panelClass: 'full-screen-dialog',
-          maxWidth: '100vw',
-          maxHeight: '100vh',
-          height: '100vh',
-          width: '100vw',
-          data: {
-            success: false,
-            titulo: 'Error de anulación',
-            descripcion: 'La transacción no puede ser cancelada. Inténtelo nuevamente.',
-            origen: 'FIDELIDAD'
-          }
-        });
-      }
-    })
-    .catch((err) => {
-      const mensaje = err?.message?.includes('La transacción no puede ser cancelada')
-        ? 'La transacción no puede ser cancelada. Inténtelo nuevamente.'
-        : 'No se pudo realizar la anulación. Inténtelo más tarde.';
-
-      this.dialog.open(NotificacionComponent, {
-        width: '400px',
-        data: {
-          success: false,
-          titulo: 'Error de anulación',
-          descripcion: mensaje,
-          origen: 'FIDELIDAD'
-        }
-      });
-    }
-      );
+    });
   }
+
 }

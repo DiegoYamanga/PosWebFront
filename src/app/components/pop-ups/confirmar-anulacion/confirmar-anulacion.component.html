@@ -1,0 +1,10 @@
+<div class="popup-container">
+  <h3 class="titulo">¿Confirmar Anulación?</h3>
+  <p class="mensaje">
+    ¿Estás seguro de que deseas anular la transacción #{{ data.id }}?
+  </p>
+  <div class="acciones">
+    <button class="btn cancelar" (click)="close(false)">CANCELAR</button>
+    <button class="btn aceptar" (click)="close(true)">CONFIRMAR</button>
+  </div>
+</div>

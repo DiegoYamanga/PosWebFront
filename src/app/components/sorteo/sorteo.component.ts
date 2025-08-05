@@ -85,7 +85,7 @@ export class SorteoComponent implements OnInit {
     dialogRef.afterClosed().subscribe(async data => {
       if (data?.exitoso && this.clienteInfo) {
         try {
-          //Validamos storeID y branchID ANTES de continuar
+          // Validamos storeID y branchID ANTES de continuar
           if (!this.storeID || !this.branchID) {
             this.dialog.open(NotificacionComponent, {
               panelClass: 'full-screen-dialog',
@@ -104,8 +104,28 @@ export class SorteoComponent implements OnInit {
           }
 
           const sorteos = await this.endpointLogic.obtenerSortosStore(this.storeID, this.branchID);
+
+          // ✅ Validar si viene vacío o null
+          if (!sorteos || sorteos.length === 0) {
+            this.dialog.open(NotificacionComponent, {
+              panelClass: 'full-screen-dialog',
+              maxWidth: '100vw',
+              maxHeight: '100vh',
+              height: '100vh',
+              width: '100vw',
+              data: {
+                success: false,
+                titulo: 'Sin sorteos',
+                descripcion: 'No hay sorteos disponibles.',
+                origen: 'SORTEO'
+              }
+            });
+            return;
+          }
+
           this.store.dispatch(StateResLotsDTOAction.setLotsDTO({ reslotsDTO: sorteos }));
-          this.etapa = "sorteos"
+          this.etapa = "sorteos";
+
         } catch (error) {
           console.error("❌ Error al obtener sorteos:", error);
 
@@ -126,6 +146,7 @@ export class SorteoComponent implements OnInit {
       }
     });
   }
+
 
 
   async escanearQR() {

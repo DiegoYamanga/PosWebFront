@@ -124,7 +124,7 @@ procederEtapa() {
       serial_number: 'MOBILE',
       identification: this.cliente.datosCliente.identification,
       amount: parseFloat(this.monto),
-      local_datetime: new Date().toISOString(),
+      local_datetime: new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString(),
       branch_id: this.branchID
     };
 

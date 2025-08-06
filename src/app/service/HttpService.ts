@@ -32,8 +32,12 @@ export class HttpService {
   }
 
   public login(body: ReqLogicDTO) : Observable<any> {
-    console.log("reqLogin--->",body)
-    return this.http.post(this.BASE_URL + "/mobile_login", body);
+    // console.log("reqLogin--->",body)
+    return this.http.post(this.BASE_URL + "/web_login", body);
+  }
+
+  public getBranches(storeID : String) : Observable<any> {
+    return this.http.get(this.BASE_URL + "/stores/" + storeID + "/branches");
   }
 
   public register(body: ReqRegisterDTO) : Observable<any> {
@@ -69,7 +73,7 @@ export class HttpService {
 
   public cargarGiftCards(storeID : String, reqDescargarGiftCardDTO : ReqGiftCardDatosDTO) : Observable<any> {
     console.log(reqDescargarGiftCardDTO)
-    return this.http.post(this.BASE_URL + "/stores/" + storeID + "/giftcards" + "/charge",reqDescargarGiftCardDTO, 
+    return this.http.post(this.BASE_URL + "/stores/" + storeID + "/giftcards" + "/charge",reqDescargarGiftCardDTO,
       {headers: { 'Content-Type': 'application/x-www-form-urlencoded' }});
   }
 

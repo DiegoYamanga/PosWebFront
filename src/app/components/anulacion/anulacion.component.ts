@@ -139,7 +139,11 @@ transacciones: ResTransactionCanheDTO[] = [];
             : 'No se pudo realizar la anulación. Inténtelo más tarde.';
 
           this.dialog.open(NotificacionComponent, {
-            width: '400px',
+            panelClass: 'full-screen-dialog',
+            maxWidth: '100vw',
+            maxHeight: '100vh',
+            height: '100vh',
+            width: '100vw',
             data: {
               success: false,
               titulo: 'Error de anulación',

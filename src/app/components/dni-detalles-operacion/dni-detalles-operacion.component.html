@@ -3,13 +3,13 @@
 <div *ngIf="etapa === 'monto' && cliente">
   <app-header [headerTitle]="'Monto de compra'"></app-header>
   <div class="container">
-    
+
     <div class="cliente-info d-flex justify-content-between">
       <div class="cliente-nombre">
         <p class="clientName">{{ cliente.datosCliente.name }} {{ cliente.datosCliente.last_name }}</p>
         <p class="clientType">{{ cliente.tipoCliente.name }}</p>
       </div>
-  
+
       <div class="cliente-puntos">
         <span>{{ cliente.datosCliente.points | number:'1.0-0' }} puntos</span><br />
         <span class="cash">$ {{ cliente.datosCliente.cash | number:'1.2-2' }}</span>
@@ -30,13 +30,13 @@
 <div *ngIf="etapa === 'detalle' && cliente"  class="detalle-wrapper">
   <app-header [headerTitle]="'Detalle operación'"></app-header>
   <div class="container flex-grow">
-    
+
     <div class="cliente-info d-flex justify-content-between">
       <div class="cliente-nombre">
         <p class="clientName">{{ cliente.datosCliente.name }} {{ cliente.datosCliente.last_name }}</p>
         <p class="clientType">{{ cliente.tipoCliente.name }}</p>
       </div>
-  
+
       <div class="cliente-puntos">
         <span>{{ cliente.datosCliente.points | number:'1.0-0' }} puntos</span><br />
         <span class="cash">$ {{ cliente.datosCliente.cash | number:'1.2-2' }}</span>
@@ -51,19 +51,13 @@
           <p class="descripcionCampo">MEDIO DE PAGO</p>
           <p class="valorCampo">{{ cliente.datosCliente.client_type_name }}</p>
         </div> -->
-        <div class="campoFilaRigth">
-          <p class="descripcionCampo">NRO. TICKET</p>
-          <p class="valorCampo">{{nroTicket}}</p>
-        </div>
-      </div>
-      <div class="fila">
         <div class="campoFila">
           <p class="descripcionCampo">TIPO DE OPERACION</p>
           <p class="valorCampo">{{ origenOperacion }}</p>
         </div>
         <div class="campoFilaRigth">
-          <p class="descripcionCampo">MONTO</p>
-          <p class="valorCampo">$ {{ monto }}</p>
+          <p class="descripcionCampo">NRO. TICKET: </p>
+          <p class="valorCampo">{{nroTicket}}</p>
         </div>
       </div>
       <div class="fila">
@@ -72,6 +66,12 @@
           <p class="valorCampo green">{{ cliente.datosCliente.points }}</p>
         </div>
         <div class="campoFilaRigth">
+          <p class="descripcionCampo">MONTO</p>
+          <p class="valorCampo">$ {{ monto }}</p>
+        </div>
+      </div>
+      <div class="fila">
+        <div class="campoFila">
           <p class="descripcionCampo">PUNTOS OBTENIDOS</p>
           <p class="valorCampo green">{{ obtainedPoints }}</p>
         </div>

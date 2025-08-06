@@ -4,7 +4,7 @@ import { reduxReducer } from "../app/redux/reducer";
 import { HttpService } from "../app/service/HttpService";
 import { ReqLogicDTO } from "../DTOs/ReqLoginDTO";
 import { resLoginDTO } from "../DTOs/resLoginDTO";
-import { firstValueFrom, map, Observable } from "rxjs";
+import { firstValueFrom, map, Observable, switchMap } from "rxjs";
 import { ResClienteDTO } from "../DTOs/resClienteDTO";
 import { LotsDTO } from "../DTOs/lotsDTO";
 import { ReqGiftCardDatosDTO } from "../DTOs/reqGiftCardDatosDTO";
@@ -32,7 +32,7 @@ import { HttpClient } from "@angular/common/http";
 export class EndpointAdapterLogic {
 
   private SESSION_KEY = "FIDELY_SESSION_DATA_ID:"
-  private SESSION_DURATION = 30 * 24 * 60 * 60 * 1000  //Miliseconds (30 days)
+  private SESSION_DURATION = 30 * 24 * 60 * 60 * 1000 
 
   constructor(private httpService: HttpService,
     private store: Store,
@@ -43,20 +43,34 @@ export class EndpointAdapterLogic {
 
 // DESCOMENTAR CUANDO SE HAGA EL CAMBIO DESDE FIDELI DEL ENDPOINT
   public loginFinal(reqLoginDTO: ReqLogicDTO): Observable<resLoginDTO> {
-    return this.httpService.login(reqLoginDTO).pipe(
-      map((response) => {
-        console.log("Response--->",response)
-        if (response.status === 200) {
-          console.log("RESPONSEEE-->",response)
-          this.store.dispatch(StateResLoginDTOAction.setResLoginDTO({ resLoginDTO : response }));
-          // console.log("Allow_ticket_number---->",this.sesionLogic.getAllowNumberTicket())
-          return response as resLoginDTO;
-        } else {
-          throw new Error('Login incorrecto');
-        }
-      })
-    );
-  }
+  return this.httpService.login(reqLoginDTO).pipe(
+    switchMap((response) => {
+    
+      if (response.status === 200) {
+        console.log("RESP: ",response)
+        const storeID = response.store.id;
+
+        return this.httpService.getBranches(storeID).pipe(
+          map((datoFaltante) => {
+
+            let responseFinal: resLoginDTO = {
+              ...response
+            };
+            //Agrego el array de branches al resLoginDTO para seleccionar la que quiera en caso de traer branch = null
+            responseFinal.branches = datoFaltante;
+            console.log("DISPATCHEO: ", responseFinal)
+
+            this.store.dispatch(StateResLoginDTOAction.setResLoginDTO({ resLoginDTO: responseFinal }));
+
+            return responseFinal;
+          })
+        );
+      } else {
+        throw new Error('Login incorrecto');
+      }
+    })
+  );
+}
 
 
 //   public loginFinal(reqLoginDTO: ReqLogicDTO): Observable<resLoginDTO> {

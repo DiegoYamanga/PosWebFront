@@ -26,6 +26,7 @@ export class AnulacionComponent {
 
 transacciones: ResTransactionCanheDTO[] = [];
   storeID!: string;
+  branchID!: number;
   cargando = false;
   error: string | null = null;
   etapaSeleccion = true;
@@ -41,6 +42,7 @@ transacciones: ResTransactionCanheDTO[] = [];
     this.store.select(AppSelectors.selectResLoginDTO).subscribe(loginData => {
       if (loginData) {
         this.storeID = loginData.store.id.toString();
+        this.branchID = loginData.branch.id;
       }
     });
 
@@ -74,7 +76,9 @@ transacciones: ResTransactionCanheDTO[] = [];
     this.transacciones = [];
 
     try {
-      this.transacciones = await this.serviceLogic.buscarTransaccionesParaAnulacion(this.storeID);
+      let transTotales = await this.serviceLogic.buscarTransaccionesParaAnulacion(this.storeID);
+      this.transacciones = transTotales.filter( t => t.status !== "cancelled" && t.branch_id === this.branchID);
+      console.log("TRANS: ", this.transacciones)
       this.etapaSeleccion = false;
     } catch (err: any) {
       this.error = err.message || 'Error al buscar transacciones.';
@@ -117,7 +121,7 @@ transacciones: ResTransactionCanheDTO[] = [];
       this.serviceLogic.anularTransaccion(this.storeID, trans.id.toString(), body)
         .then((respuesta) => {
           console.log("Respuesta Anulacion:",respuesta)
-          this.transacciones = this.transacciones.filter(t => t.id !== trans.id);
+          // this.transacciones = this.transacciones.filter(t => t.id !== trans.id);
           this.dialog.open(NotificacionComponent, {
             panelClass: 'full-screen-dialog',
             maxWidth: '100vw',
@@ -137,6 +141,8 @@ transacciones: ResTransactionCanheDTO[] = [];
           const mensaje = err?.message?.includes('La transacción no puede ser cancelada')
             ? 'La transacción no puede ser cancelada. Inténtelo nuevamente.'
             : 'No se pudo realizar la anulación. Inténtelo más tarde.';
+            
+            console.error("ERROR EN ANULACIÓN:", err);
 
           this.dialog.open(NotificacionComponent, {
             panelClass: 'full-screen-dialog',

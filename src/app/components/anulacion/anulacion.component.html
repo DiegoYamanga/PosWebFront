@@ -48,4 +48,17 @@
   <button class="btn btnAnular" [disabled]="!transaccionSeleccionada" (click)="anularTransaccion(transaccionSeleccionada)">Anular</button>
 </div>
 
+<!-- SI NO HAY TRANSACCIONES -->
+<div class="wrapper" *ngIf="!etapaSeleccion && !cargando && transacciones.length == 0">
+  <app-header [headerTitle]="'Fidelidad - Anulacion'" [arrowNavigation]="'fidelidad'"></app-header>
+
+  <div class="containerTrans flex-grow">
+
+    <h3>No se encontraron transacciones para anular</h3>
+    
+    <!-- Botón para anular -->
+  </div>
+  <button class="btn btnAnular" disabled (click)="anularTransaccion(transaccionSeleccionada)">Anular</button>
+</div>
+
 

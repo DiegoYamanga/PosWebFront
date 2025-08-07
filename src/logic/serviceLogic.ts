@@ -117,7 +117,7 @@ export class ServiceLogic {
 
   public setDocumentoUsuario(documentoUsuario: string | undefined) {
       this.documetoUsuario = documentoUsuario;
-      if(this.isBrowser()) {  
+      if(this.isBrowser()) {
           if (documentoUsuario) {
               localStorage.setItem('documentoUsuario', documentoUsuario);
           } else {
@@ -154,10 +154,10 @@ export class ServiceLogic {
   }
 
   async buscarTransaccionesParaAnulacion(storeID: string): Promise<ResTransactionCanheDTO[]> {
-  const id = this.getIdentificadorTransaccion();
-  if (!id) throw new Error("Identificador vacío");
+    const id = this.getIdentificadorTransaccion();
+    if (!id) throw new Error("Identificador vacío");
 
-  return await firstValueFrom(this.endPointAdapterLogic.buscarTransacciones(storeID, id));
+    return await firstValueFrom(this.endPointAdapterLogic.buscarTransacciones(storeID, id));
   }
 
   async anularTransaccion(

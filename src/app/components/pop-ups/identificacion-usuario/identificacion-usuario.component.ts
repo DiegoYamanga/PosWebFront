@@ -10,6 +10,7 @@ import { StateResClienteDTOAction } from '../../../redux/action';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
+import { AppSelectors } from '../../../redux/selectors';
 
 @Component({
   standalone: true,
@@ -28,6 +29,8 @@ export class IdentificacionUsuarioComponent {
   documento: string = '';
   error: string | null = null;
   loading: boolean = false;
+  storeID: string | undefined;
+  branchID: string | undefined;
 
   constructor(
     private logic: EndpointAdapterLogic,
@@ -37,24 +40,37 @@ export class IdentificacionUsuarioComponent {
     private navigation : NavigationService,
     private dialogRef: MatDialogRef<IdentificacionUsuarioComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
-  ) {}
+  ) {
+    this.store.select(AppSelectors.selectResLoginDTO)
+            .subscribe(value => {
+              this.storeID = value?.store.id.toString();
+              this.branchID = value?.branch.id.toString();
+              console.log("BRANCH: ", this.branchID)
+              console.log("STORE: ", this.storeID)
+    });
+  }
 
   async buscarCliente() {
 
     this.loading = true;
     try {
-      const cliente = await this.logic.buscarCliente("32", "43", this.documento);
-      if(!cliente){
-        this.error= "No existe un cliente con los datos ingresados";
-        this.loading = false;
-        return;
-      }
-      console.log("Cliente---->",cliente)
-      this.serviceLogic.setCliente(cliente);
-      this.store.dispatch(StateResClienteDTOAction.setClienteDTO({ resClienteDTO: cliente }));
-      this.error = null;
+      if(this.storeID && this.branchID){
+        const cliente = await this.logic.buscarCliente(this.storeID, this.branchID, this.documento);
+        if(!cliente){
+          this.error= "No existe un cliente con los datos ingresados";
+          this.loading = false;
+          return;
+        }
+//         console.log("Cliente---->",cliente)
+        this.serviceLogic.setCliente(cliente);
+        this.store.dispatch(StateResClienteDTOAction.setClienteDTO({ resClienteDTO: cliente }));
+        this.error = null;
 
-      this.close();
+        this.close();
+      } else{
+        this.error="Error buscando cliente"
+        this.loading = false;
+      }
     } catch (e) {
       console.log("Error: ",e)
       this.error = "No existe un cliente con los datos ingresados"

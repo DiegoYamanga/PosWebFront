@@ -4,6 +4,10 @@ import { HeaderComponent } from "../header/header.component";
 import { Store } from '@ngrx/store';
 import { StateDocSorteo, StateEncuestasAction, StateFromComponent } from '../../redux/action';
 import { SessionLogic } from '../../../logic/sessionLogic';
+import { MatDialog } from '@angular/material/dialog';
+import { SeleccionarSucursalComponent } from '../pop-ups/seleccionar-sucursal/seleccionar-sucursal.component';
+import { resLoginDTO } from '../../../DTOs/resLoginDTO';
+import { AppSelectors } from '../../redux/selectors';
 
 @Component({
   standalone : true,
@@ -15,12 +19,14 @@ import { SessionLogic } from '../../../logic/sessionLogic';
 export class InicioComponent {
 
   userName: string = ""
+  userData: resLoginDTO | undefined;
   constructor(private navigation: NavigationService,
               private store: Store,
-              private sessionLogic: SessionLogic
+              private sessionLogic: SessionLogic,
+              private dialog: MatDialog
   ) {
     const userData = this.sessionLogic.getUserData();
-    console.log("USEERRRRR: ", userData)
+//     console.log("USEERRRRR: ", userData)
     this.userName = userData.username;
   }
 
@@ -29,22 +35,63 @@ export class InicioComponent {
     this.store.dispatch(StateDocSorteo.setDocSorteo({ docSorteo: "" }));
     this.store.dispatch(StateEncuestasAction.setEncuestasDisponibles({ encuestas: null }));
     console.log("ENCUESTAS, FROMCOMP y DOCSORTEO BORRADO")  //Para volver a cargar DNI en sorteos y encuestas siempre
+     this.store.select(AppSelectors.selectResLoginDTO)
+            .subscribe(value => {
+              this.userData = value;
+    });
+
   }
 
   irAFidelidad() {
-    this.navigation.irAFidelidad();
+    if(this.userData?.isStore){
+      const dialogRef = this.dialog.open(SeleccionarSucursalComponent, { width: '400px' });
+      dialogRef.afterClosed().subscribe(async result => {
+        if (result) {
+          this.navigation.irAFidelidad();
+        }
+      });
+    } else{
+      this.navigation.irAFidelidad();
+    }
   }
 
   irAGiftCard() {
-    this.navigation.goToGiftCard();
+    if(this.userData?.isStore){
+      const dialogRef = this.dialog.open(SeleccionarSucursalComponent, { width: '400px' });
+      dialogRef.afterClosed().subscribe(async result => {
+        if (result) {
+          this.navigation.goToGiftCard();
+        }
+      });
+    } else{
+      this.navigation.goToGiftCard();
+    }
   }
 
   irASorteo() {
-    this.navigation.goToSorteo();
+    if(this.userData?.isStore){
+      const dialogRef = this.dialog.open(SeleccionarSucursalComponent, { width: '400px' });
+      dialogRef.afterClosed().subscribe(async result => {
+        if (result) {
+          this.navigation.goToSorteo();
+        }
+      });
+    } else{
+      this.navigation.goToSorteo();
+    }
   }
 
   irAEncuesta() {
-    this.navigation.goToEncuesta();
+    if(this.userData?.isStore){
+      const dialogRef = this.dialog.open(SeleccionarSucursalComponent, { width: '400px' });
+      dialogRef.afterClosed().subscribe(async result => {
+        if (result) {
+          this.navigation.goToEncuesta();
+        }
+      });
+    } else{
+      this.navigation.goToEncuesta();
+    }
   }
 
   irAGestion() {

@@ -4,9 +4,10 @@ import { StoreDTO } from "./storeDTO";
 export interface resLoginDTO {
 
     branch: BranchDTO,
-    branches: BranchDTO[],
+    branches: any,
     status: number,
     store: StoreDTO,
-    token: string
+    token: string,
+    isStore: boolean
 
   }

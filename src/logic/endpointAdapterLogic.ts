@@ -32,7 +32,7 @@ import { HttpClient } from "@angular/common/http";
 export class EndpointAdapterLogic {
 
   private SESSION_KEY = "FIDELY_SESSION_DATA_ID:"
-  private SESSION_DURATION = 30 * 24 * 60 * 60 * 1000 
+  private SESSION_DURATION = 30 * 24 * 60 * 60 * 1000
 
   constructor(private httpService: HttpService,
     private store: Store,
@@ -42,13 +42,17 @@ export class EndpointAdapterLogic {
   }
 
 // DESCOMENTAR CUANDO SE HAGA EL CAMBIO DESDE FIDELI DEL ENDPOINT
-  public loginFinal(reqLoginDTO: ReqLogicDTO): Observable<resLoginDTO> {
+public loginFinal(reqLoginDTO: ReqLogicDTO): Observable<resLoginDTO> {
+    let isStore = false;
   return this.httpService.login(reqLoginDTO).pipe(
     switchMap((response) => {
-    
+
       if (response.status === 200) {
         console.log("RESP: ",response)
         const storeID = response.store.id;
+        if(response.branch == null){
+          isStore = true;
+        }
 
         return this.httpService.getBranches(storeID).pipe(
           map((datoFaltante) => {
@@ -58,6 +62,7 @@ export class EndpointAdapterLogic {
             };
             //Agrego el array de branches al resLoginDTO para seleccionar la que quiera en caso de traer branch = null
             responseFinal.branches = datoFaltante;
+            responseFinal.isStore = isStore;
             console.log("DISPATCHEO: ", responseFinal)
 
             this.store.dispatch(StateResLoginDTOAction.setResLoginDTO({ resLoginDTO: responseFinal }));
@@ -166,7 +171,7 @@ export class EndpointAdapterLogic {
     const response = await firstValueFrom(
       this.httpService.getParcipante(storeID, branchID, lotID, lookup)
     );
-    console.log("a ver como llega",response)
+    // console.log("a ver como llega",response)
     return !!response?.can_participate;  // asumimos que el back devuelve algo así
   } catch (error) {
     console.error("Error en verificarParticipacion:", error);

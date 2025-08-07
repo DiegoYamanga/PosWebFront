@@ -62,7 +62,8 @@ confirmarTarjeta(): void {
     this.error = 'Debe ingresar un número de tarjeta.';
     return;
   }
-
+  this.indentification = this.numeroTarjeta;
+  console.log("TTARJETA CON LA Q VOY A BUCAR CLIENTE: ", this.indentification)
   this.buscarTarjeta();
 
   this.dialogRef.close({

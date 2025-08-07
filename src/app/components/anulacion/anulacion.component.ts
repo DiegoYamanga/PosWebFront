@@ -77,7 +77,7 @@ transacciones: ResTransactionCanheDTO[] = [];
 
     try {
       let transTotales = await this.serviceLogic.buscarTransaccionesParaAnulacion(this.storeID);
-      this.transacciones = transTotales.filter( t => t.status !== "cancelled" && t.branch_id === this.branchID);
+      this.transacciones = transTotales.filter( t => t.status !== "cancelled" && t.branch_id === this.branchID && t.amount >= 0);
       console.log("TRANS: ", this.transacciones)
       this.etapaSeleccion = false;
     } catch (err: any) {
@@ -109,7 +109,7 @@ transacciones: ResTransactionCanheDTO[] = [];
 
 
       const body: ReqCancelarTransaccionByID = {
-        serial_number: trans.serial_number,
+        serial_number: "WEB",
         card_number: trans.card_number || null,
         identification: trans.user_identification || null,
         local_datetime: new Date().toISOString().slice(0, 19),

@@ -76,7 +76,7 @@ export class EncuestaPreguntasComponent {
     if (!pregunta) return;
 
     const payload: RespuestaEncuestaDTO = {
-      terminal: 'MOBILE',
+      terminal: 'WEB',
       card_number: this.nroTarjeta ?? null,
       identification: this.documento ?? null,
       value: this.respuestaSeleccionada

@@ -255,7 +255,7 @@ ngOnInit(): void {
 
       } else if (operacion === 'Anulación') {
         const cancelBody: ReqCancelarTransaccionByID = {
-          serial_number: 'MOBILE',
+          serial_number: 'WEB',
           local_datetime: new Date().toISOString(),
           branch_id: this.branchID,
           card_number: tarjeta,

@@ -121,7 +121,7 @@ procederEtapa() {
     this.loginSpinner = true;
 
     const payload: reqTransactionsFidelidad = {
-      serial_number: 'MOBILE',
+      serial_number: 'WEB',
       identification: this.cliente.datosCliente.identification,
       amount: parseFloat(this.monto),
       local_datetime: new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString(),
@@ -225,7 +225,7 @@ procederEtapa() {
   }
 
 const reqSwapDTO: ReqSwapDTO = {
-  serial_number: 'MOBILE',
+  serial_number: 'WEB',
   card_number: this.nroTarjeta, // string
   identification: this.cliente?.datosCliente?.identification, // string
   amount: parseFloat(this.monto), // number

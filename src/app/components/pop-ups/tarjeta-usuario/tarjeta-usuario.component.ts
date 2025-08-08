@@ -57,6 +57,7 @@ export class TarjetaUsuarioComponent {
   
 
 confirmarTarjeta(): void {
+  this.loading = true;
   this.serviceLogic.setCardNumberCompraInfo(this.numeroTarjeta);
   if (!this.numeroTarjeta) {
     this.error = 'Debe ingresar un número de tarjeta.';
@@ -66,10 +67,6 @@ confirmarTarjeta(): void {
   console.log("TTARJETA CON LA Q VOY A BUCAR CLIENTE: ", this.indentification)
   this.buscarTarjeta();
 
-  this.dialogRef.close({
-    exitoso: true,
-    nroTarjeta: this.numeroTarjeta
-  });
 }
 
   async buscarTarjeta() {
@@ -90,10 +87,7 @@ confirmarTarjeta(): void {
       this.store.dispatch(StateResClienteDTOAction.setClienteDTO({ resClienteDTO: cliente }));
       this.error = null;
 
-      this.dialogRef.close({
-        exitoso: true,
-        nroTarjeta: this.numeroTarjeta
-      });
+      this.close();
     } catch (e) {
       console.log("Error:", e);
       this.error = "No existe un cliente con los datos ingresados";

@@ -164,7 +164,7 @@ export class TarjetaDetallesOperacionComponent {
     this.loginSpinner = true;
 
     const payload: reqTransactionsFidelidad = {
-      serial_number: 'MOBILE',
+      serial_number: 'WEB',
       identification: this.cliente.datosCliente.identification,
       amount: parseFloat(this.monto),
       local_datetime: new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString(),

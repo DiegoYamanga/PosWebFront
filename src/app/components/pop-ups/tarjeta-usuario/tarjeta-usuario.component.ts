@@ -64,7 +64,6 @@ confirmarTarjeta(): void {
     return;
   }
   this.indentification = this.numeroTarjeta;
-  console.log("TTARJETA CON LA Q VOY A BUCAR CLIENTE: ", this.indentification)
   this.buscarTarjeta();
 
 }
@@ -73,9 +72,7 @@ confirmarTarjeta(): void {
     this.loading = true;
 
     try {
-      console.log("TarjetaUsuario - Voy a buscar cliente")
       const cliente = await this.logic.buscarCliente(this.storeID, this.branchID, this.indentification);
-      console.log("TarjetaUsuario - Cliente:",cliente)
 
       if (!cliente) {
         this.error = "No existe un cliente con los datos ingresados";

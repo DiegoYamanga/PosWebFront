@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { HeaderComponent } from "../header/header.component";
 // import { ZXingScannerModule } from '@zxing/ngx-scanner';
-import { Html5QrcodeScanner } from "html5-qrcode";
 import { NavigationService } from '../../../logic/navigationService';
 import { CommonModule } from '@angular/common';
 import { EndpointAdapterLogic } from '../../../logic/endpointAdapterLogic';
@@ -12,6 +11,8 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { NotificacionComponent } from '../notificacion/notificacion.component';
 import { MatButtonModule } from '@angular/material/button';
 import { AppSelectors } from '../../redux/selectors';
+import { Html5QrcodeScanner, Html5QrcodeScanType } from "html5-qrcode";
+
 
 @Component({
   selector: 'app-qr',
@@ -97,21 +98,19 @@ export class QrComponent {
   loading: boolean = false;
   error: string | null = null;
   fromComponent: string = ""
+  cameraPermissionChecked = false;
+  cameraGranted = false;
 
   constructor(private navigationService: NavigationService,
               private logic: EndpointAdapterLogic,
               private serviceLogic : ServiceLogic,
               private store: Store,
               private dialog : MatDialog,
-  ) { 
-    console.log("MatDialog instanciado?", this.dialog); // ⛔️ undefined si no está bien inyectado
-
-  }
+  ) {}
 
   ngOnInit(){
     this.store.select(AppSelectors.selectFromComponent).subscribe(fromComp => {
       this.fromComponent = fromComp ? fromComp : "";
-      console.log("FROM COMP OBTENIDO: ", this.fromComponent)
     });
   }
 
@@ -122,15 +121,33 @@ export class QrComponent {
   startScanner() {
     this.html5QrCodeScanner = new Html5QrcodeScanner(
       "reader",
-      { fps: 10, qrbox: { width: 250, height: 250 } },
-      /* verbose= */ false
+      {
+        fps: 10,
+        qrbox: { width: 250, height: 250 },
+        // Solo cámara (oculta la opción de “Scan an Image File”)
+        supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA],
+        rememberLastUsedCamera: true,
+      },
+      false
     );
 
     this.html5QrCodeScanner.render(
       (decodedText) => this.handleScanSuccess(decodedText),
       (errorMessage) => this.handleScanError(errorMessage)
     );
+
+    // Ajustes de UI luego de renderizar
+    setTimeout(() => {
+      // Cambiar texto del botón de permiso de cámara
+      const permBtn = document.getElementById('html5-qrcode-button-camera-permission');
+      if (permBtn) permBtn.textContent = 'Usar Cámara';
+
+      // (Fallback) por si aparece el botón de archivo en alguna versión
+      const fileBtn = document.getElementById('html5-qrcode-button-file-selection');
+      if (fileBtn) fileBtn.style.display = 'none';
+    }, 0);
   }
+
 
   handleScanSuccess(scannedString: string) {
     this.loading = true;
@@ -155,7 +172,6 @@ export class QrComponent {
         this.loading = false;
         return;
       }
-      console.log("Cliente---->",cliente)
       this.serviceLogic.setCliente(cliente);
       this.store.dispatch(StateResClienteDTOAction.setClienteDTO({ resClienteDTO: cliente }));
       this.store.dispatch(StateOrigenOperacionAction.setOrigenOperacion({ origen: 'COMPRA' }));
@@ -182,7 +198,6 @@ export class QrComponent {
       console.log("Error: ",e)
       this.error = "No existe un cliente con los datos ingresados"
       this.loading = false;
-      console.log("Dialog:", this.dialog);
       this.dialog.open(NotificacionComponent, {
                 panelClass: 'full-screen-dialog',
                 maxWidth: '100vw',
@@ -220,6 +235,8 @@ export class QrComponent {
       this.html5QrCodeScanner.clear().catch(err => console.error("Error al limpiar QR scanner", err));
     }
   }
+
+  
 
 
 }

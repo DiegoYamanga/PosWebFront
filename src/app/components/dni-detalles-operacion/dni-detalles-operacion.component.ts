@@ -132,13 +132,11 @@ procederEtapa() {
 
       if(this.origenOperacion === "CANJE"){
         this.confirmarCanje(this.tipoCanje$);
-        console.log("Salgo de aca")
         this.loginSpinner = false;
         return;
       }
 
       const result = await this.endpointAdapterlogic.crearTransaccionFidelidad(this.storeID, payload);
-      console.log("Obtuve la transaccion por fidelidad?")
       console.log("Transacción Fidelidad registrada:", result);
 
       this.loginSpinner = false;
@@ -204,8 +202,6 @@ procederEtapa() {
   const cliente = this.cliente; // ya lo tenés cargado del selector
   const tipo = this.tipoCanje$;
   const monto = this.monto;
-
-  console.log("Como me llega los campos",cliente+tipo+monto)
 
   if (!cliente || !tipo || !monto || !this.storeID || !this.branchID) {
     this.dialog.open(NotificacionComponent, {

@@ -61,7 +61,6 @@ export class IdentificacionUsuarioComponent {
           this.loading = false;
           return;
         }
-//         console.log("Cliente---->",cliente)
         this.serviceLogic.setCliente(cliente);
         this.store.dispatch(StateResClienteDTOAction.setClienteDTO({ resClienteDTO: cliente }));
         this.error = null;

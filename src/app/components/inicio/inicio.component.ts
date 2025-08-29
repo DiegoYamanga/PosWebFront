@@ -28,7 +28,6 @@ export class InicioComponent {
               private dialog: MatDialog
   ) {
     const userData = this.sessionLogic.getUserData();
-//     console.log("USEERRRRR: ", userData)
     this.userName = userData.username;
   }
 
@@ -36,7 +35,6 @@ export class InicioComponent {
     this.store.dispatch(StateFromComponent.setFromComponent({ fromComponent: "" }));
     this.store.dispatch(StateDocSorteo.setDocSorteo({ docSorteo: "" }));
     this.store.dispatch(StateEncuestasAction.setEncuestasDisponibles({ encuestas: null }));
-    console.log("ENCUESTAS, FROMCOMP y DOCSORTEO BORRADO")  //Para volver a cargar DNI en sorteos y encuestas siempre
      this.store.select(AppSelectors.selectResLoginDTO)
             .subscribe(value => {
               this.userData = value;
@@ -98,12 +96,10 @@ export class InicioComponent {
   }
 
   irAGestion() {
-    // Agregá este método cuando tengas ese componente
     console.log('Ir a Gestión');
   }
 
   irAPagos() {
-    // Agregá este método cuando tengas ese componente
     console.log('Ir a Pagos');
   }
 

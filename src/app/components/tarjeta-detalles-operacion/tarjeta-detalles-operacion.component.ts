@@ -56,15 +56,12 @@ export class TarjetaDetallesOperacionComponent {
 
     this.cardNumber = this.serviceLogic.getCardNumberCompraInfo();
 
-    console.log("Numero de tarjeta Ingresado:",this.cardNumber)
-
 
   }
 
 
   async confirmarMonto() {
   if (!this.monto) return;
-  console.log("Confirmo Monto --> quiero ticket?",this.sessionLogic.getPedirNumeroTicket())
   if (this.sessionLogic.getPedirNumeroTicket() == 1) {
     const dialogRef = this.dialog.open(NumeroTicketComponent, {
       width: '300px'
@@ -173,8 +170,6 @@ export class TarjetaDetallesOperacionComponent {
 
     try {
       const result = await this.endpointLogic.crearTransaccionFidelidad(this.storeID, payload);
-      console.log("Obtuve la transaccion por fidelidad?")
-      console.log("✔️ Transacción Fidelidad registrada:", result);
 
       this.loginSpinner = false;
       this.dialog.open(NotificacionComponent, {

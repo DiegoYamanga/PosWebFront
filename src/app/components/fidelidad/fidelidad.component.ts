@@ -39,10 +39,6 @@ export class FidelidadComponent {
       if (loginData) {
           this.storeID = loginData.store.id.toString();
           this.branchID = loginData.branch.id.toString();
-        console.log("ID de sucursal:", loginData.branch.id);
-        console.log("ID de Store:", loginData.store.id);
-        console.log("Token:", loginData.token);
-        console.log("LOGIN DATA",loginData)
     }
     });
   }
@@ -86,15 +82,12 @@ export class FidelidadComponent {
       width: '400px'
     });
 
-    console.log("LEGO ACA POR LO MENOS:"); // ✅ DEBUG
 
     dialogRef.afterClosed().subscribe(async (result) => {
       if (result?.exitoso && result?.documento) {
         const cliente = await this.endpointLogic.buscarCliente(this.storeID, this.branchID, result.documento);
-          console.log("Cliente datos:", cliente); // ✅ DEBUG
 
         if (cliente) {
-            console.log("Cliente recuperado:", cliente); // ✅ DEBUG
           this.dialog.open(ConsultarSaldoComponent, {
             width: '400px',
             data: { tipo: 'FIDELIDAD', cliente }

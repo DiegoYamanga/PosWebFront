@@ -31,7 +31,6 @@ export class CompraComponent {
   ) {
     this.store.select(AppSelectors.selectResClienteDTO)
     .subscribe(value => {
-      console.log("Valueee------>",value);
       this.cliente = value;
 
     });

@@ -19,9 +19,7 @@ export class HeaderComponent {
   constructor(
     private navigation: NavigationService,
     private sessionLogic: SessionLogic
-  ){
-    // console.log("NAV: ", this.navigation)
-  }
+  ){}
 
   navigate(){
       switch(this.arrowNavigation){
@@ -47,7 +45,6 @@ export class HeaderComponent {
   }
 
   logout(){
-    console.log("LOGOUT")
     this.sessionLogic.clear();
     this.navigation.goToLogin();
   }

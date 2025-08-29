@@ -98,7 +98,6 @@ transacciones: ResTransactionCanheDTO[] = [];
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {
       if (!confirmed) return; // Si el usuario cancela, no hace nada
 
-      console.log("TRANSACCION SELEC: ", trans);
 
       this.cargando = true;
       this.error = null;

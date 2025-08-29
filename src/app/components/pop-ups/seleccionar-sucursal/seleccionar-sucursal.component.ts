@@ -35,7 +35,6 @@ export class SeleccionarSucursalComponent {
       let resLogNuevo = {...this.resLogin}
       resLogNuevo.branch = branch;
       this.store.dispatch(StateResLoginDTOAction.setResLoginDTO({ resLoginDTO: resLogNuevo }));
-      console.log("RES LOGIN DISPATCHEADO: ", resLogNuevo)
     }
 
     this.dialogRef.close(branch);

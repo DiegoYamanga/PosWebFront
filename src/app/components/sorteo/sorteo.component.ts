@@ -57,10 +57,6 @@ export class SorteoComponent implements OnInit {
       if (loginData) {
         this.storeID = loginData.store.id;
         this.branchID = loginData.branch.id;
-        console.log("ID de sucursal:", loginData.branch.id);
-        console.log("ID de Store:", loginData.store.id);
-        console.log("Token:", loginData.token);
-        console.log("LOGIN DATA",loginData)
       }
     });
   }
@@ -71,9 +67,7 @@ export class SorteoComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(numeroTarjeta => {
-      if (numeroTarjeta) {
-        console.log("Tarjeta sorteada:", numeroTarjeta);
-      }
+      if (numeroTarjeta) {}
     });
   }
 
@@ -168,8 +162,6 @@ export class SorteoComponent implements OnInit {
         sorteo.id,
         lookup
       );
-
-      console.log("Puede participar?",puedeParticipar)
 
       if (!puedeParticipar) {
         this.dialog.open(NotificacionComponent, {

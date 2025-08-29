@@ -1,4 +1,4 @@
-/*SCANNER*/
+SCANNER
 .textScan{
   color: #000;
   padding-top: 1rem;
@@ -28,3 +28,4 @@
   color: #3F51B5;
   padding-top: 3rem;
 }
+#html5-qrcode-button-file-selection { display: none !important; }

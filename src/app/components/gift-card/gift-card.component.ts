@@ -44,7 +44,6 @@ export class GiftCardComponent {
   ) {}
 
 ngOnInit(): void {
-  console.log("Entrando a ngOnInit del GiftCardComponent");
 
   this.store.select(AppSelectors.selectResLoginDTO).subscribe(async loginData => {
     console.log("Login data:", loginData);
@@ -95,9 +94,7 @@ ngOnInit(): void {
 
 
   abrirPopupYGuardar(operacion: 'COMPRA' | 'CARGAR_SALDO' | 'ANULACION' | 'CONSULTAR_SALDO') {
-    console.log("Abrir popUp y guardar")
     if (!this.storeID || !this.branchID) {
-      console.log("No tengo datos del store o branch al consultar saldo")
       this.dialog.open(NotificacionComponent, {
         panelClass: 'full-screen-dialog',
         maxWidth: '100vw',
@@ -128,7 +125,6 @@ ngOnInit(): void {
 
       try {
         const respuesta: GiftcardDTO = await this.endpointAdapterLogic.consultarSaldoGiftCard(this.storeID, this.numeroTarjeta);
-        console.log("la respuesta del consultar saldo",respuesta)
         this.serviceLogic.setGiftCardInfo(respuesta);
         this.titulo = this.obtenerTituloOperacion(operacion);
 
@@ -181,7 +177,6 @@ ngOnInit(): void {
 
 
   obtenerTituloOperacion(operacion: string): string {
-    console.log("SETEO TITULO: ", operacion)
     switch (operacion) {
       case 'COMPRA': return 'Monto de compra';
       case 'CARGAR_SALDO': return 'Cargar saldo';
@@ -194,7 +189,6 @@ ngOnInit(): void {
     try {
       const response: GiftcardDTO = await this.endpointAdapterLogic.consultarSaldoGiftCard(this.storeID, numeroTarjeta);
       this.serviceLogic.setGiftCardInfo(response);
-      console.log("Estoy aca---> GIFTCARD DATA:",response)
 
       this.dialog.open(ConsultarSaldoComponent, {
         width: '400px',

@@ -20,6 +20,8 @@ export class InicioComponent {
 
   userName: string = ""
   userData: resLoginDTO | undefined;
+  logoBranch: string | undefined;
+
   constructor(private navigation: NavigationService,
               private store: Store,
               private sessionLogic: SessionLogic,
@@ -38,6 +40,7 @@ export class InicioComponent {
      this.store.select(AppSelectors.selectResLoginDTO)
             .subscribe(value => {
               this.userData = value;
+              this.logoBranch = value?.store.logo_url;
     });
 
   }

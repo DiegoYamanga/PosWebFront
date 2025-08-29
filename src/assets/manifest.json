@@ -1,0 +1,25 @@
+{
+    "name": "Fidely",
+    "short_name": "Fidely",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#ffffff",
+    "icons": [
+      {
+        "src": "fidelypng.png",
+        "sizes": "192x192",
+        "type": "image/png"
+      },
+      {
+        "src": "fidelypng.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      },
+      {
+        "src": "fidelypng.png",
+        "sizes": "1080x1080",
+        "type": "image/png"
+      }
+    ]
+  }

@@ -4,6 +4,8 @@
   margin: auto;
   background-color: white;
   font-family: Roboto, sans-serif;
+  max-height: 50vh;
+  overflow-y: auto;
 }
 
 h3{

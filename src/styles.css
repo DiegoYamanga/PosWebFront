@@ -9,6 +9,7 @@ html, body { height: 100%; }
 body {
     margin: 0;
     font-family: 'RedHatDisplay', sans-serif !important;
+    width: 100%;
     max-width: 600px;
     margin: auto!important;
     box-shadow: -10px 0 15px -5px rgba(90, 90, 90, 0.3),

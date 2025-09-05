@@ -1,5 +1,11 @@
 <div class="header">
-    <i  *ngIf="showArrow" class="material-icons" (click)="navigate()">arrow_back</i>
-    <h4>{{headerTitle}}</h4>
-    <i  class="material-icons" (click)="logout()">logout</i>
+  <i *ngIf="showArrow" class="material-icons" (click)="navigate()">arrow_back</i>
+  <h4>{{headerTitle}}</h4>
+
+  <!-- Botón agregar usuario -->
+  <i class="material-icons" (click)="addUser()" style="cursor:pointer" title="Agregar usuario">
+    person_add
+  </i>
+
+  <i class="material-icons" (click)="logout()" style="cursor:pointer">logout</i>
 </div>

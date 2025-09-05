@@ -48,7 +48,6 @@ public loginFinal(reqLoginDTO: ReqLogicDTO): Observable<resLoginDTO> {
     switchMap((response) => {
 
       if (response.status === 200) {
-        console.log("RESP: ",response)
         const storeID = response.store.id;
         if(response.branch == null){
           isStore = true;
@@ -63,7 +62,6 @@ public loginFinal(reqLoginDTO: ReqLogicDTO): Observable<resLoginDTO> {
             //Agrego el array de branches al resLoginDTO para seleccionar la que quiera en caso de traer branch = null
             responseFinal.branches = datoFaltante;
             responseFinal.isStore = isStore;
-            console.log("DISPATCHEO: ", responseFinal)
 
             this.store.dispatch(StateResLoginDTOAction.setResLoginDTO({ resLoginDTO: responseFinal }));
 
@@ -128,7 +126,6 @@ public loginFinal(reqLoginDTO: ReqLogicDTO): Observable<resLoginDTO> {
     const response = await firstValueFrom(
       this.httpService.getClientInfo(storeID, branchID, documento)
     );
-    console.log("response----->",response)
     return {
       datosCliente: response.client,
       tipoCliente: response.client_type
@@ -136,12 +133,9 @@ public loginFinal(reqLoginDTO: ReqLogicDTO): Observable<resLoginDTO> {
   }
 
   async obtenerSortosStore(storeID: number, branchID: number): Promise<LotsDTO[]> {
-    console.log("store: ",storeID,"branchid: ",branchID);
     const lots = await firstValueFrom(
       this.httpService.getStoreSorteos(storeID, branchID)
     );
-    console.log("Sorteos recibidos:", lots);
-
     return lots as LotsDTO[];
   }
 
@@ -164,14 +158,10 @@ public loginFinal(reqLoginDTO: ReqLogicDTO): Observable<resLoginDTO> {
 
   // Verificar si puede participar
   async verificarParticipacion(storeID: number, branchID: number, lotID: number, lookup: string): Promise<boolean> {
-  console.log("store: ",storeID,"branchid: ",branchID, "idLots",lotID, "DNI:",lookup);
-
-
   try {
     const response = await firstValueFrom(
       this.httpService.getParcipante(storeID, branchID, lotID, lookup)
     );
-    // console.log("a ver como llega",response)
     return !!response?.can_participate;  // asumimos que el back devuelve algo así
   } catch (error) {
     console.error("Error en verificarParticipacion:", error);
@@ -181,8 +171,6 @@ public loginFinal(reqLoginDTO: ReqLogicDTO): Observable<resLoginDTO> {
 
   // Generar la participación
   async generarParticipacion(storeID: number, branchID: number, lotID: number, lookup: string, body: ReqParticipacionSorteoDTO): Promise<any> {
-    console.log("store: ",storeID,"branchid: ",branchID, "idLots",lotID, "DNI:",lookup);
-    console.log("reqParcipante-->",body)
     try {
       const response = await firstValueFrom(
         this.httpService.generarParticipante(storeID, branchID, lotID, lookup, body)
@@ -203,12 +191,10 @@ public loginFinal(reqLoginDTO: ReqLogicDTO): Observable<resLoginDTO> {
   }
 
   public async consultarSaldoGiftCard(storeID: string, cardNumber: string): Promise<GiftcardDTO> {
-    console.log("tarjeta: ",cardNumber)
     try {
       const response = await firstValueFrom(
         this.httpService.getGiftCard(storeID, cardNumber)
       );
-      console.log("responseee--->",response)
       // Validamos que la respuesta tenga los campos esperados
       if (!response || !response.card_number) {
         throw { status: 404, error: 'Giftcard no encontrada' };
@@ -242,7 +228,6 @@ public loginFinal(reqLoginDTO: ReqLogicDTO): Observable<resLoginDTO> {
   }
 
   async crearTransaccionFidelidad(storeID: string, body: reqTransactionsFidelidad): Promise<any> {
-    console.log("BODY Q SE MANDA A TRANSACCION: ", body)
     return await firstValueFrom(this.httpService.nuevaTransaccionFidelidad(storeID, body));
   }
 

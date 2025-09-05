@@ -36,7 +36,9 @@ export const routes: Routes = [
     { path: 'encuesta', component: EncuestaComponent },
     { path: 'encuestaPreguntas', component: EncuestaPreguntasComponent },
     { path: 'anulacion', component: AnulacionComponent },
-    { path: 'qrScanner', component: QrComponent}
+    { path: 'qrScanner', component: QrComponent},
+    { path: 'register', component: RegisterComponent }
+
 
 ];
 

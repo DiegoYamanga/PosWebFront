@@ -70,4 +70,9 @@ export class NavigationService{
     this.router.navigate(['/anulacion']);
   }
 
+  goToRegister() {
+    this.router.navigate(['/register']);
+  }
+
+
 }

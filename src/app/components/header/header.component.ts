@@ -48,4 +48,9 @@ export class HeaderComponent {
     this.sessionLogic.clear();
     this.navigation.goToLogin();
   }
+
+  addUser() {
+  this.navigation.goToRegister();
+  }
+
 }

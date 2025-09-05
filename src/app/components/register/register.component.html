@@ -1,111 +1,122 @@
 <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-    <div>
-      <label>Terminal:</label>
-      <input formControlName="terminal" type="text" />
-    </div>
-  
-    <div>
-      <label>Store ID:</label>
-      <input formControlName="store_id" type="number" />
-    </div>
-  
-    <div>
-      <label>Identificación:</label>
-      <input formControlName="identification" type="text" />
-    </div>
-  
-    <div>
-      <label>Tipo de Identificación:</label>
-      <input formControlName="identification_type" type="text" />
-    </div>
-  
-    <div>
-      <label>Nombre:</label>
-      <input formControlName="name" type="text" />
-    </div>
-  
-    <div>
-      <label>Apellido:</label>
-      <input formControlName="last_name" type="text" />
-    </div>
-  
-    <div>
-      <label>Fecha de Nacimiento:</label>
-      <input formControlName="born_date" type="date" />
-    </div>
-  
-    <div>
-      <label>Teléfono:</label>
-      <input formControlName="phone" type="text" />
-    </div>
-  
-    <div>
-      <label>Email:</label>
-      <input formControlName="email" type="email" />
-    </div>
-  
-    <div>
-      <label>Número de Tarjeta:</label>
-      <input formControlName="card_number" type="text" />
-    </div>
-  
-    <div>
-      <label>Sexo:</label>
-      <input formControlName="sex" type="text" />
-    </div>
-  
-    <div>
-      <label>País ID:</label>
-      <input formControlName="country_id" type="number" />
-    </div>
-  
-    <div>
-      <label>País:</label>
-      <input formControlName="country" type="text" />
-    </div>
-  
-    <div>
-      <label>Provincia ID:</label>
-      <input formControlName="province_id" type="number" />
-    </div>
-  
-    <div>
-      <label>Provincia:</label>
-      <input formControlName="province" type="text" />
-    </div>
-  
-    <div>
-      <label>Ciudad ID:</label>
-      <input formControlName="city_id" type="number" />
-    </div>
-  
-    <div>
-      <label>Ciudad:</label>
-      <input formControlName="city" type="text" />
-    </div>
-  
-    <div>
-      <label>Calle:</label>
-      <input formControlName="street" type="text" />
-    </div>
-  
-    <div>
-      <label>Número:</label>
-      <input formControlName="number" type="text" />
-    </div>
-  
-    <div>
-      <label>Dirección:</label>
-      <input formControlName="address" type="text" />
-    </div>
-  
-    <div>
-      <label>Código Postal:</label>
-      <input formControlName="postal_code" type="text" />
-    </div>
-  
-    <button type="submit" [disabled]="registerForm.invalid">Registrar</button>
-  </form>
-  
-  <!-- Mensaje de respuesta -->
-  <p *ngIf="responseMessage">{{ responseMessage }}</p>
+  <div>
+    <label>Terminal:</label>
+    <input formControlName="terminal" type="text" />
+  </div>
+
+  <div>
+    <label>Store ID:</label>
+    <input formControlName="store_id" type="number" />
+  </div>
+
+  <div>
+    <label>Identificación:</label>
+    <input formControlName="identification" type="text" />
+  </div>
+
+  <div>
+    <label>Tipo de Identificación:</label>
+    <input formControlName="identification_type" type="text" />
+  </div>
+
+  <div>
+    <label>Nombre:</label>
+    <input formControlName="name" type="text" />
+  </div>
+
+  <div>
+    <label>Apellido:</label>
+    <input formControlName="last_name" type="text" />
+  </div>
+
+  <div>
+    <label>Fecha de Nacimiento:</label>
+    <input formControlName="born_date" type="date" />
+  </div>
+
+  <div>
+    <label>Teléfono:</label>
+    <input formControlName="phone" type="text" />
+  </div>
+
+  <div>
+    <label>Email:</label>
+    <input formControlName="email" type="email" />
+  </div>
+
+  <div>
+    <label>Número de Tarjeta:</label>
+    <input formControlName="card_number" type="text" />
+  </div>
+
+  <div>
+    <label>Sexo:</label>
+    <input formControlName="sex" type="text" />
+  </div>
+
+
+  <!-- País -->
+  <div>
+    <label for="country_id">País:</label>
+    <select id="country_id" formControlName="country_id">
+      <option [ngValue]="null" disabled>Seleccione un país</option>
+      <option *ngFor="let c of countries" [ngValue]="c.id">
+        {{ c.name }}
+      </option>
+    </select>
+    <span *ngIf="loadingCountries">Cargando países...</span>
+  </div>
+
+  <!-- Provincia -->
+  <div>
+    <label for="province_id">Provincia:</label>
+    <select id="province_id" formControlName="province_id" [disabled]="!registerForm.get('country_id')?.value || loadingProvinces">
+      <option [ngValue]="null" disabled>Seleccione una provincia</option>
+      <option *ngFor="let p of provinces" [ngValue]="p.id">
+        {{ p.name }}
+      </option>
+    </select>
+    <span *ngIf="loadingProvinces">Cargando provincias...</span>
+  </div>
+
+  <!-- Ciudad -->
+  <div>
+    <label for="city_id">Ciudad:</label>
+    <select id="city_id" formControlName="city_id" [disabled]="!registerForm.get('province_id')?.value || loadingCities">
+      <option [ngValue]="null" disabled>Seleccione una ciudad</option>
+      <option *ngFor="let ci of cities" [ngValue]="ci.id">
+        {{ ci.name }}
+      </option>
+    </select>
+    <span *ngIf="loadingCities">Cargando ciudades...</span>
+  </div>
+
+    <!-- Campos de nombre ocultos -->
+    <input formControlName="country" type="hidden" />
+    <input formControlName="province" type="hidden" />
+    <input formControlName="city" type="hidden" />
+
+  <div>
+    <label>Calle:</label>
+    <input formControlName="street" type="text" />
+  </div>
+
+  <div>
+    <label>Número:</label>
+    <input formControlName="number" type="text" />
+  </div>
+
+  <div>
+    <label>Dirección:</label>
+    <input formControlName="address" type="text" />
+  </div>
+
+  <div>
+    <label>Código Postal:</label>
+    <input formControlName="postal_code" type="text" />
+  </div>
+
+  <button type="submit" [disabled]="registerForm.invalid">Registrar</button>
+</form>
+
+<p *ngIf="responseMessage">{{ responseMessage }}</p>

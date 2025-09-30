@@ -49,7 +49,7 @@ export class SessionLogic {
     if(this.isBrowser()){
       return this.token ?? localStorage.getItem("TOKEN");
     }
-    return null;  
+    return null;
   }
 
 
@@ -69,7 +69,7 @@ export class SessionLogic {
   }
 
   getPedirNumeroTicket(): number {
-      console.log("APEEEEEER------->", this.getUserData()?.store.allow_ticket_number);
+      // console.log("APEEEEEER------->", this.getUserData()?.store.allow_ticket_number);
       return this.getUserData()?.store.allow_ticket_number ?? 0;
   }
 

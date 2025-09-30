@@ -84,7 +84,9 @@ export class HttpService {
 
 
   public transaccionConCanjeDePuntos(storeID : String  , reqSwapDTO : ReqSwapDTO) : Observable<any> {
-    return this.http.post(this.BASE_URL + "/stores/" + storeID + "/swap",reqSwapDTO);
+    console.log("REQUEST CANJE: ", reqSwapDTO)
+    return this.http.post(this.BASE_URL + "/stores/" + storeID + "/swap",reqSwapDTO,
+      {headers: { 'Content-Type': 'application/x-www-form-urlencoded' }});
   }
 
 

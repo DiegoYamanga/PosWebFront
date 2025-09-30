@@ -14,3 +14,7 @@
 i{
   cursor: pointer;
 }
+.noClick{
+  cursor: pointer;
+  width: 1.5rem;
+}

@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { AppSelectors } from '../../redux/selectors';
+import { HeaderComponent } from "../header/header.component";
 
 export interface PaisDTO { id: number; name: string; }
 export interface ProvinciaDTO { id: number; name: string; }
@@ -14,7 +15,7 @@ export interface CiudadDTO { id: number; name: string; }
 @Component({
   standalone: true,
   selector: 'app-register',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, HeaderComponent],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })

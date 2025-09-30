@@ -1,9 +1,14 @@
 <div class="header">
   <i *ngIf="showArrow" class="material-icons" (click)="navigate()">arrow_back</i>
+
+  <!-- Celdas para igualar el campo del titulo -->
+  <span *ngIf="showRegister" class="noClick"> &nbsp;</span>
+  <span *ngIf="!showArrow" class="noClick"> &nbsp;</span>
+  
   <h4>{{headerTitle}}</h4>
 
   <!-- Botón agregar usuario -->
-  <i class="material-icons" (click)="addUser()" style="cursor:pointer" title="Agregar usuario">
+  <i *ngIf="showRegister" class="material-icons pe-1" (click)="addUser()" style="cursor:pointer" title="Agregar usuario">
     person_add
   </i>
 

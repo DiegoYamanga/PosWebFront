@@ -8,29 +8,26 @@
   --border: #e5e7eb;
   --error: #ef4444;
 
-  display: block;
-  min-height: 100svh;
-  background: linear-gradient(180deg, #fff 0%, var(--bg) 100%);
-  padding: 32px 16px;
+  /* display: block; */
+  /* max-height: 100vh; */
   color: var(--text);
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
-/* Card del formulario */
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+  padding: 0;
+  overflow-y: auto;
+}
+
 form {
   width: 100%;
-  max-width: 880px;
   margin: 0 auto;
-  background: #fff;
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  box-shadow:
-    0 10px 15px -3px rgba(0,0,0,.08),
-    0 4px 6px -4px rgba(0,0,0,.06);
-  padding: 28px;
+  padding: 1rem;
 }
 
-/* Cada fila: label + input */
 form > div {
   display: grid;
   grid-template-columns: 240px 1fr;
@@ -39,7 +36,6 @@ form > div {
   margin-bottom: 14px;
 }
 
-/* Labels */
 label {
   color: var(--muted);
   font-size: .95rem;
@@ -50,7 +46,8 @@ label {
 input[type="text"],
 input[type="number"],
 input[type="email"],
-input[type="date"] {
+input[type="date"],
+select {
   width: 100%;
   padding: 10px 12px;
   border: 1.6px solid var(--border);
@@ -123,7 +120,7 @@ p {
 /* Responsive */
 @media (max-width: 860px) {
   form {
-    padding: 22px;
+    /* padding: 22px; */
   }
   form > div {
     grid-template-columns: 1fr;

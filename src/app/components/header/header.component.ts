@@ -15,6 +15,7 @@ export class HeaderComponent {
   @Input() headerTitle: String = "";
   @Input() arrowNavigation: String = "";
   @Input() showArrow: boolean = true;
+  @Input() showRegister: boolean = false;
 
   constructor(
     private navigation: NavigationService,

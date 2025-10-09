@@ -19,7 +19,7 @@ import { DatosGlobalService } from '../../../logic/datosGlobalService';
 export class CanjeComponent implements OnInit {
 
 
-  tipoCanje: 'PUNTOS' | 'IMPORTE' | null = null;
+  tipoCanje: 'P' | 'I' | null = null;
   cliente: ResClienteDTO | undefined;
   storeID!: string;
   branchID!: string;

@@ -69,7 +69,7 @@ export class FidelidadComponent {
   abrirTipoCanjePopup() {
     const dialogRef = this.dialog.open(TipoCanjeDialogoComponent);
 
-    dialogRef.afterClosed().subscribe((opcion: 'IMPORTE' | 'PUNTOS') => {
+    dialogRef.afterClosed().subscribe((opcion: 'I' | 'P') => {
       if (opcion) {
         this.store.dispatch(StateTipoCanjeAction.setTipoCanje({ tipoCanje: opcion }));
         this.navigation.goToCanje();

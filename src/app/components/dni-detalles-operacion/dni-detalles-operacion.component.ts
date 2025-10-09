@@ -32,7 +32,7 @@ export class DniDetallesOperacionComponent {
   storeID: string = '';
   branchID: string = '';
   nroTarjeta: string = '';
-  tipoCanje: 'PUNTOS' | 'IMPORTE' | null = null;
+  tipoCanje: 'P' | 'I' | null = null;
   loginSpinner: boolean = false;
   nroTicket: string = '';
   dayNumber : number = 0;
@@ -100,7 +100,7 @@ procederEtapa() {
       width: '400px'
     });
 
-    dialogRef.afterClosed().subscribe((opcion: 'IMPORTE' | 'PUNTOS') => {
+    dialogRef.afterClosed().subscribe((opcion: 'I' | 'P') => {
       if (opcion) {
         this.store.dispatch(StateTipoCanjeAction.setTipoCanje({ tipoCanje: opcion }));
         // this.getBenefits()

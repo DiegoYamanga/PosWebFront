@@ -23,7 +23,7 @@ export const StateResClienteDTOAction = createActionGroup({
 export const StateTipoCanjeAction = createActionGroup({
   source: 'TipoCanjeState',
   events: {
-    'setTipoCanje': props<{ tipoCanje: 'IMPORTE' | 'PUNTOS' }>(),
+    'setTipoCanje': props<{ tipoCanje: 'I' | 'P' }>(),
   },
 });
 

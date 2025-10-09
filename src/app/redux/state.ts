@@ -11,7 +11,7 @@ export interface AppState {
 
     resClienteDTO : ResClienteDTO | undefined;
 
-    tipoCanje: 'IMPORTE' | 'PUNTOS' | null;
+    tipoCanje: 'I' | 'P' | null;
 
     origenOperacion: 'CANJE' | 'COMPRA' | null;
 

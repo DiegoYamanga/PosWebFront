@@ -13,7 +13,7 @@ export class TipoCanjeDialogoComponent {
 
     constructor(private dialogRef: MatDialogRef<TipoCanjeDialogoComponent>) {}
 
-  seleccionar(opcion: 'IMPORTE' | 'PUNTOS') {
+  seleccionar(opcion: 'I' | 'P') {
     this.dialogRef.close(opcion);
   }
 

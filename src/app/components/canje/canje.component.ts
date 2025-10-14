@@ -5,10 +5,11 @@ import { AppSelectors } from '../../redux/selectors';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { IdentificacionUsuarioComponent } from '../pop-ups/identificacion-usuario/identificacion-usuario.component';
 import { NavigationService } from '../../../logic/navigationService';
-import { StateOrigenOperacionAction } from '../../redux/action';
+import { StateFromComponent, StateOrigenOperacionAction } from '../../redux/action';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../header/header.component';
 import { DatosGlobalService } from '../../../logic/datosGlobalService';
+import { TarjetaUsuarioComponent } from '../pop-ups/tarjeta-usuario/tarjeta-usuario.component';
 
 @Component({
   selector: 'app-canje',
@@ -27,7 +28,7 @@ export class CanjeComponent implements OnInit {
   constructor(private store: Store,
               private dialog: MatDialog,
               private navigation: NavigationService,
-              private datosGlobalesService: DatosGlobalService
+              private datosGlobalesService: DatosGlobalService,
   ) {}
 
   ngOnInit(): void {
@@ -70,9 +71,21 @@ export class CanjeComponent implements OnInit {
     });
   }
 
+    accionQR(): void {
+      console.log("QR presionado");
+      this.store.dispatch(StateFromComponent.setFromComponent({ fromComponent: 'FIDELIDADCANJE' }));
+      this.navigation.goToQRScanner();
+    }
 
 
+    accionTarjeta(): void {
+      const dialogRef = this.dialog.open(TarjetaUsuarioComponent, {
+        data: {},
+        width: '400px',
+        height: 'auto'
+      });
 
+    }
 
 
 }

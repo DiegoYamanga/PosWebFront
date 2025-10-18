@@ -85,6 +85,13 @@ export class CanjeComponent implements OnInit {
         height: 'auto'
       });
 
+      dialogRef.afterClosed().subscribe((documentoIngresado) => {
+        if (documentoIngresado?.exitoso) {
+          this.store.dispatch(StateOrigenOperacionAction.setOrigenOperacion({ origen: 'CANJE' }));
+          this.navigation.goToDNIDetallesOperacion();
+        }
+      });
+
     }
 
 

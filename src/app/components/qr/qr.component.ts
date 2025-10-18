@@ -12,6 +12,7 @@ import { NotificacionComponent } from '../notificacion/notificacion.component';
 import { MatButtonModule } from '@angular/material/button';
 import { AppSelectors } from '../../redux/selectors';
 import { Html5QrcodeScanner, Html5QrcodeScanType } from "html5-qrcode";
+import { resLoginDTO } from '../../../DTOs/resLoginDTO';
 
 
 @Component({
@@ -100,6 +101,9 @@ export class QrComponent {
   fromComponent: string = ""
   cameraPermissionChecked = false;
   cameraGranted = false;
+  resLogin : resLoginDTO | undefined;
+  storeId : string | undefined;
+  branchId : string | undefined;
 
   constructor(private navigationService: NavigationService,
               private logic: EndpointAdapterLogic,
@@ -109,6 +113,11 @@ export class QrComponent {
   ) {}
 
   ngOnInit(){
+    this.store.select(AppSelectors.selectResLoginDTO).subscribe(resLog => {
+      this.resLogin = resLog;
+      this.storeId = resLog?.store?.id.toString();
+      this.branchId = resLog?.branch?.id.toString();
+    });
     this.store.select(AppSelectors.selectFromComponent).subscribe(fromComp => {
       this.fromComponent = fromComp ? fromComp : "";
     });
@@ -166,7 +175,7 @@ export class QrComponent {
 
     this.loading = true;
     try {
-      const cliente = await this.logic.buscarCliente("32", "43", this.scaneado);
+      const cliente = await this.logic.buscarCliente(this.storeId ?? "",this.branchId ?? "", this.scaneado);
       if(!cliente){
         this.error= "No existe un cliente con los datos ingresados";
         this.loading = false;
@@ -188,12 +197,16 @@ export class QrComponent {
         case "FIDELIDADCOMPRA":
           this.navigationService.goToDNIDetallesOperacion();
           break;
+        case "FIDELIDADCANJE":
+          this.store.dispatch(StateOrigenOperacionAction.setOrigenOperacion({ origen: 'CANJE' }));
+          this.navigationService.goToDNIDetallesOperacion();
+          break;
         default:
           this.navigationService.goToInicio();
           break;
       }
-      
-      
+
+
     } catch (e) {
       console.log("Error: ",e)
       this.error = "No existe un cliente con los datos ingresados"
@@ -236,7 +249,7 @@ export class QrComponent {
     }
   }
 
-  
+
 
 
 }

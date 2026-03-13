@@ -2,7 +2,7 @@
   <app-header [headerTitle]="'Registro de usuario'"></app-header>
   
   <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-    <div>
+    <!-- <div>
       <label>Terminal:</label>
       <input formControlName="terminal" type="text" />
     </div>
@@ -10,16 +10,19 @@
     <div>
       <label>Store ID:</label>
       <input formControlName="store_id" type="number" />
+    </div> -->
+    
+    <div>
+      <label>Tipo de Documento:</label>
+      <select formControlName="identification_type">
+        <option [ngValue]="null" disabled>Seleccione tipo</option>
+        <option *ngFor="let tipo of docTypes" [value]="tipo">{{ tipo }}</option>
+      </select>
     </div>
 
     <div>
-      <label>Identificación:</label>
+      <label>Documento:</label>
       <input formControlName="identification" type="text" />
-    </div>
-
-    <div>
-      <label>Tipo de Identificación:</label>
-      <input formControlName="identification_type" type="text" />
     </div>
 
     <div>
@@ -47,14 +50,17 @@
       <input formControlName="email" type="email" />
     </div>
 
-    <div>
+    <!-- <div>
       <label>Número de Tarjeta:</label>
       <input formControlName="card_number" type="text" />
-    </div>
+    </div> -->
 
     <div>
       <label>Sexo:</label>
-      <input formControlName="sex" type="text" />
+      <select formControlName="sex">
+        <option [ngValue]="null" disabled>Seleccione sexo</option>
+        <option *ngFor="let s of sexOptions" [value]="s.value">{{ s.label }}</option>
+      </select>
     </div>
 
 
@@ -99,7 +105,7 @@
       <input formControlName="province" type="hidden" />
       <input formControlName="city" type="hidden" />
 
-    <div>
+    <!-- <div>
       <label>Calle:</label>
       <input formControlName="street" type="text" />
     </div>
@@ -107,7 +113,7 @@
     <div>
       <label>Número:</label>
       <input formControlName="number" type="text" />
-    </div>
+    </div> -->
 
     <div>
       <label>Dirección:</label>

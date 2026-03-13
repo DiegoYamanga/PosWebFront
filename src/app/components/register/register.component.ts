@@ -7,6 +7,8 @@ import { take } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { AppSelectors } from '../../redux/selectors';
 import { HeaderComponent } from "../header/header.component";
+import { NotificacionComponent } from '../notificacion/notificacion.component';
+import { MatDialog } from '@angular/material/dialog';
 
 export interface PaisDTO { id: number; name: string; }
 export interface ProvinciaDTO { id: number; name: string; }
@@ -35,25 +37,33 @@ export class RegisterComponent implements OnInit, OnDestroy {
   loadingProvinces = false;
   loadingCities = false;
 
+  docTypes = ['DNI', 'LE', 'LC', 'Pasaporte'];
+  sexOptions = [
+    { label: 'Masculino', value: 'M' },
+    { label: 'Femenino', value: 'F' },
+    { label: 'Indefinido', value: 'I' }
+  ];
+
   private subs: Subscription[] = [];
 
   constructor(
     private fb: FormBuilder,
     private httpService: HttpService,
-    private store: Store
+    private store: Store,
+    private dialog: MatDialog
   ) {
     this.registerForm = this.fb.group({
-      terminal: ['', Validators.required],          
-      store_id: [null, Validators.required],   
+      terminal: ['', Validators.required],
+      store_id: [null, Validators.required],
       identification: ['', Validators.required],
-      identification_type: ['', Validators.required],
+      identification_type: [null, Validators.required],
       name: ['', Validators.required],
       last_name: ['', Validators.required],
       born_date: ['', Validators.required],
       phone: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      card_number: ['', Validators.required],
-      sex: ['', Validators.required],
+      // card_number: ['', Validators.required],
+      sex: [null, Validators.required],
 
       country_id: [null, Validators.required],
       province_id: [null, Validators.required],
@@ -63,9 +73,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
       province: [''],
       city: [''],
 
-      street: ['', Validators.required],
-      number: ['', Validators.required],
       address: ['', Validators.required],
+      // street: ['', Validators.required],
+      // number: ['', Validators.required],
       postal_code: ['', Validators.required]
     });
   }
@@ -160,19 +170,32 @@ export class RegisterComponent implements OnInit, OnDestroy {
     if (this.registerForm.invalid) return;
 
     this.syncLocationNames();
-
     const body = this.registerForm.getRawValue();
 
+    this.httpService.register(body).subscribe({
+      next: (response) => {
+        if (response && response.code == 200) {
+          this.openNotification(true, 'Usuario Creado', 'Se generó el usuario correctamente.');
+        } else {
+          const desc = (response.code == 1000) ? 'Usuario ya existente' : 'No se pudo generar el nuevo usuario.';
+          this.openNotification(false, 'Error al generar usuario', desc);
+        }
+      },
+      error: (error) => {
 
+        console.error('Error en el servidor:', error);
+        const mensajeBackend = error.error?.error || 'No se pudo generar el nuevo usuario.';
 
-    this.httpService.register(body).subscribe((response) => {
-      if (response.code == 200) {
-        this.responseMessage = 'Usuario creado correctamente';
-        console.log('Usuario creado correctamente ', response);
-      } else {
-        this.responseMessage = 'No se pudo crear el usuario';
-        console.log('No se creo el usuario ', response);
+        this.openNotification(false, 'Error al generar usuario', mensajeBackend);
       }
+    });
+  }
+
+  private openNotification(success: boolean, titulo: string, descripcion: string): void {
+    this.dialog.open(NotificacionComponent, {
+      panelClass: 'full-screen-dialog',
+      maxWidth: '100vw', maxHeight: '100vh', height: '100vh', width: '100vw',
+      data: { success, titulo, descripcion, origen: 'REGISTRO' }
     });
   }
 

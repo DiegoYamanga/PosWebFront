@@ -62,6 +62,9 @@ goHome(){
       case 'INICIO':
         this.navigation.goToInicio();
         break;
+      case 'REGISTRO':
+        this.navigation.goToInicio();
+        break;
       default:
         this.navigation.goToInicio();
         break;

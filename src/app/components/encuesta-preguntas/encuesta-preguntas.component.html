@@ -5,7 +5,7 @@
       <h4 class="subtitulo">{{ actual?.title }}</h4>
 
       <!-- Opciones desde values[] -->
-      <div *ngIf="esPreguntaConOpciones(actual)">
+      <div *ngIf="esPreguntaConOpciones(actual) && actual.type !== 'string'">
         <div *ngFor="let opcion of actual.values">
           <button
             class="opcion"
@@ -17,7 +17,7 @@
       </div>
 
       <!-- Rango numérico -->
-      <div *ngIf="!esPreguntaConOpciones(actual) && actual?.min_value !== null && actual?.max_value !== null">
+      <div *ngIf="!esPreguntaConOpciones(actual) && actual?.min_value !== null && actual?.max_value !== null  && actual.type !== 'string'">
         <div *ngFor="let num of rango">
           <button
             class="opcion"
@@ -26,6 +26,14 @@
             {{ num }}
           </button>
         </div>
+      </div>
+
+      <div *ngIf="actual.type === 'string'" class="campo-texto">
+        <textarea 
+          [(ngModel)]="respuestaSeleccionada" 
+          placeholder="Escribe tu comentario aquí..."
+          class="input-texto">
+        </textarea>
       </div>
 
       <div class="botones">

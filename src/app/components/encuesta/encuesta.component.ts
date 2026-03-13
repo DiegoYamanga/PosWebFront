@@ -145,6 +145,22 @@ export class EncuestaComponent {
 
     this.serviceLogic.getEncuestas(this.storeID, this.branchID).subscribe({
       next: (respuesta: EncuestaDTO[]) => {
+        if(!respuesta || respuesta == null){
+          this.dialog.open(NotificacionComponent, {
+            panelClass: 'full-screen-dialog',
+            maxWidth: '100vw',
+            maxHeight: '100vh',
+            height: '100vh',
+            width: '100vw',
+            data: {
+              success: false,
+              titulo: 'Error',
+              descripcion: 'No existen encuestas disponibles.',
+              origen: 'ENCUESTAS'
+            }
+          });
+          return;
+        }
         console.log("Encuesta - Respuesta de la encuesta:", respuesta);
         this.encuestasObtenidas = true;
         this.encuestas = respuesta;

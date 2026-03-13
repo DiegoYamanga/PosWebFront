@@ -7,13 +7,15 @@ import { MatDialog } from '@angular/material/dialog';
 import { NotificacionComponent } from '../notificacion/notificacion.component';
 import { CommonModule } from '@angular/common';
 import { NavigationService } from '../../../logic/navigationService';
+import { FormsModule } from '@angular/forms';
+
 
 @Component({
   selector: 'app-encuesta-preguntas',
   templateUrl: './encuesta-preguntas.component.html',
   styleUrls: ['./encuesta-preguntas.component.css'],
   standalone: true,
-  imports: [CommonModule]
+  imports: [CommonModule, FormsModule]
 })
 export class EncuestaPreguntasComponent {
   storeID!: number;
@@ -52,6 +54,23 @@ export class EncuestaPreguntasComponent {
   cargarPreguntas() {
     this.serviceLogic.obtenerPreguntasEncuesta(this.storeID, this.branchID, this.pollID).subscribe({
       next: (res) => {
+//         console.log("PREGUNTAS ENCUESTAS: ", res)
+        if(!res || res == null){
+          this.dialog.open(NotificacionComponent, {
+            panelClass: 'full-screen-dialog',
+            maxWidth: '100vw',
+            maxHeight: '100vh',
+            height: '100vh',
+            width: '100vw',
+            data: {
+              success: false,
+              titulo: 'Error',
+              descripcion: 'No hay preguntas cargadas para esta encuesta.',
+              origen: 'ENCUESTAS'
+            }
+          });
+          return;
+        }
         this.preguntas = res;
       },
       error: () => {

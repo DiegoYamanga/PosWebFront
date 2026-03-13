@@ -114,3 +114,24 @@
 .btn-verde:hover:not(:disabled) {
   background-color: #27ae60;
 }
+
+.campo-texto {
+  width: 100%;
+  margin: 20px 0;
+}
+
+.input-texto {
+  width: 100%;
+  min-height: 120px;
+  padding: 15px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  font-family: inherit;
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+.input-texto:focus {
+  outline: none;
+  border-color: #4CAF50;
+}

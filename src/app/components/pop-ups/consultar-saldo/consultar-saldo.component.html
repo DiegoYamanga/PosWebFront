@@ -10,9 +10,9 @@
   </div>
 
   <div *ngIf="data.tipo === 'GIFTCARD'">
-    <p><strong>Nombre:</strong> {{ data.cliente.datosCliente.name }}, {{ data.cliente.datosCliente.last_name }}</p>
-    <p><strong>Tarjeta:</strong> {{ data.tarjeta }}</p>
-    <p><strong>Saldo disponible:</strong> $ {{ data.saldo | number:'1.2-2' }}</p>
+    <p><strong>Nombre:</strong> {{ giftcard.name }} {{ giftcard.last_name }}</p>
+    <p><strong>Tarjeta:</strong> {{ giftcard.card_number }}</p>
+    <p><strong>Saldo disponible:</strong> $ {{ giftcard.cash| number:'1.2-2' }}</p>
   </div>
 
   <div class="popup-actions">

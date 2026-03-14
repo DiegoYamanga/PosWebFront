@@ -59,6 +59,11 @@ const selectDocSorteo = createSelector(
   (state) => state.docSorteo
 );
 
+const selectGiftcard = createSelector(
+  selectStateModule,
+  (state) => state.giftcard
+);
+
 
 export const AppSelectors = {
   selectState,
@@ -71,6 +76,7 @@ export const AppSelectors = {
   selectResLotsDTO,
   selectEncuestasDisponibles,
   selectFromComponent,
-  selectDocSorteo
+  selectDocSorteo,
+  selectGiftcard
   
 }

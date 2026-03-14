@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { AppSelectors } from '../../../redux/selectors';
 import { Store } from '@ngrx/store';
+import { GiftcardDTO } from '../../../../DTOs/giftCardsDTO';
 
 @Component({
   standalone: true,
@@ -20,6 +21,7 @@ export class ConsultarSaldoComponent {
   cliente?: any;
   storeID!: string;
   branchID!: string;
+  giftcard!: GiftcardDTO
 
   constructor(
     private dialogRef: MatDialogRef<ConsultarSaldoComponent>,
@@ -44,6 +46,11 @@ export class ConsultarSaldoComponent {
 
     }
     });
+    this.store.select(AppSelectors.selectGiftcard).subscribe(giftcard => {
+      if(giftcard){
+        this.giftcard = giftcard
+      }
+    })
   }
 
   salir(): void {

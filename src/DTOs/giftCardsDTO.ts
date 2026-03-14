@@ -4,6 +4,8 @@ export interface GiftcardDTO {
     points: number;
     cash: number;
     card_number: string;
-    store_id : string
+    store_id : string;
+    name: string;
+    last_name : string;
   }
   

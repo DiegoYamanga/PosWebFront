@@ -1,4 +1,5 @@
 import { EncuestaDTO } from "../../DTOs/encuestaDTO";
+import { GiftcardDTO } from "../../DTOs/giftCardsDTO";
 import { LotsDTO } from "../../DTOs/lotsDTO";
 import { ResClienteDTO } from "../../DTOs/resClienteDTO";
 import { resLoginDTO } from "../../DTOs/resLoginDTO";
@@ -28,5 +29,7 @@ export interface AppState {
     fromComponent: string | null;
 
     docSorteo: string | null;
+
+    giftcard: GiftcardDTO | null;
 
 }

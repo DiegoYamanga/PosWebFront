@@ -3,6 +3,7 @@ import { resLoginDTO } from '../../DTOs/resLoginDTO';
 import { ResClienteDTO } from '../../DTOs/resClienteDTO';
 import { LotsDTO } from '../../DTOs/lotsDTO';
 import { EncuestaDTO } from '../../DTOs/encuestaDTO';
+import { GiftcardDTO } from '../../DTOs/giftCardsDTO';
 
 
 export const StateResLoginDTOAction = createActionGroup({
@@ -80,6 +81,13 @@ export const StateDocSorteo = createActionGroup({
   source: 'DocSorteo',
   events: {
     'setDocSorteo': props<{ docSorteo: string }>()
+  },
+});
+
+export const StateGiftcard = createActionGroup({
+  source: 'Giftcard',
+  events: {
+    'setGiftcard': props<{ giftcard: GiftcardDTO }>()
   },
 });
 

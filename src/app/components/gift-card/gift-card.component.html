@@ -25,7 +25,8 @@
   <app-header [headerTitle]="titulo || 'GiftCard'" [arrowNavigation]="'giftcard'"></app-header>
 
 
-  <p class="nroTarjeta">Número de tarjeta: <strong>{{ numeroTarjeta }}</strong></p>
+  <p class="nroTarjeta">Número de documento: <strong>{{ giftcard.identification }}</strong></p>
+  <p class="nroTarjeta pt-1">Número de tarjeta: <strong>{{ giftcard.card_number }}</strong></p>
 
   <div class="input-group inputAmount w-75">
       <span class="input-group-text prefix">$</span>

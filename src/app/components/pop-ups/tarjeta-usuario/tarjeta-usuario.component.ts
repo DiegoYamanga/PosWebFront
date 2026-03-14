@@ -44,8 +44,8 @@ export class TarjetaUsuarioComponent {
         this.cliente = cliente;
       });
 
-  
-  
+
+
       this.store.select(AppSelectors.selectResLoginDTO).subscribe(loginData => {
         if (loginData) {
           this.storeID = loginData.store.id.toString();
@@ -54,7 +54,7 @@ export class TarjetaUsuarioComponent {
       });
 
     }
-  
+
 
 confirmarTarjeta(): void {
   this.loading = true;

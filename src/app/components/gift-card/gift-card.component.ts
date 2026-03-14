@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HeaderComponent } from '../header/header.component';
 import { NavigationService } from '../../../logic/navigationService';
-import { StateGiftCardOperacionAction, StateMontoGiftCardAction } from '../../redux/action';
+import { StateGiftcard, StateGiftCardOperacionAction, StateMontoGiftCardAction } from '../../redux/action';
 import { TarjetaUsuarioComponent } from '../pop-ups/tarjeta-usuario/tarjeta-usuario.component';
 import { Store } from '@ngrx/store';
 import { MatDialog } from '@angular/material/dialog';
@@ -34,6 +34,7 @@ export class GiftCardComponent {
   titulo: string = "";
   storeID!: string;
   branchID!: string;
+  giftcard!: GiftcardDTO;
 
   constructor(
     private navigation: NavigationService,
@@ -125,6 +126,8 @@ ngOnInit(): void {
 
       try {
         const respuesta: GiftcardDTO = await this.endpointAdapterLogic.consultarSaldoGiftCard(this.storeID, this.numeroTarjeta);
+        this.store.dispatch(StateGiftcard.setGiftcard({ giftcard: respuesta }));
+        this.giftcard = respuesta;
         this.serviceLogic.setGiftCardInfo(respuesta);
         this.titulo = this.obtenerTituloOperacion(operacion);
 
@@ -181,6 +184,7 @@ ngOnInit(): void {
       case 'COMPRA': return 'Monto de compra';
       case 'CARGAR_SALDO': return 'Cargar saldo';
       case 'ANULACION': return 'Anulación';
+      case 'CONSULTAR_SALDO': return 'Consulta saldo';
       default: return '';
     }
   }

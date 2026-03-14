@@ -21,6 +21,7 @@ import { ResEncuestaRespuesta } from "../DTOs/resEncuestaRespuesta";
 import { EncuestaPreguntas } from "../DTOs/encuestaPreguntas";
 import { SessionLogic } from "./sessionLogic";
 import { HttpClient } from "@angular/common/http";
+import { TransactionDTO } from "../DTOs/transactionsDTO";
 
 
 // @NgModule({
@@ -255,6 +256,9 @@ public loginFinal(reqLoginDTO: ReqLogicDTO): Observable<resLoginDTO> {
     return this.httpService.getEncuestasSucursal(storeID, branchID);
   }
 
+  public getTransactions(storeID: number): Observable<TransactionDTO[]>{
+    return this.httpService.getTransactions(storeID);
+  }
 
 
   public obtenerPreguntasEncuesta(

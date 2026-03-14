@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpService } from '../../service/HttpService';
@@ -9,6 +9,7 @@ import { AppSelectors } from '../../redux/selectors';
 import { HeaderComponent } from "../header/header.component";
 import { NotificacionComponent } from '../notificacion/notificacion.component';
 import { MatDialog } from '@angular/material/dialog';
+import { GoogleMapsModule } from '@angular/google-maps';
 
 export interface PaisDTO { id: number; name: string; }
 export interface ProvinciaDTO { id: number; name: string; }
@@ -17,11 +18,13 @@ export interface CiudadDTO { id: number; name: string; }
 @Component({
   standalone: true,
   selector: 'app-register',
-  imports: [CommonModule, ReactiveFormsModule, HeaderComponent],
+  imports: [CommonModule, ReactiveFormsModule, HeaderComponent, GoogleMapsModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
 export class RegisterComponent implements OnInit, OnDestroy {
+
+  @ViewChild('addressInput') addressInput!: ElementRef;
   registerForm: FormGroup;
   submitted = false;
   responseMessage = '';
@@ -73,11 +76,15 @@ export class RegisterComponent implements OnInit, OnDestroy {
       province: [''],
       city: [''],
 
-      address: ['', Validators.required],
+      address: ['', Validators.required]
       // street: ['', Validators.required],
       // number: ['', Validators.required],
-      postal_code: ['', Validators.required]
+      // postal_code: ['', Validators.required]
     });
+  }
+
+  ngAfterViewInit() {
+    this.initAutocomplete();
   }
 
   ngOnInit(): void {
@@ -213,5 +220,42 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   trackById(index: number, item: { id: number }): number {
     return item.id;
+  }
+
+
+  private initAutocomplete() {
+    const autocomplete = new google.maps.places.Autocomplete(this.addressInput.nativeElement, {
+      fields: ['address_components', 'formatted_address'],
+      types: ['address']
+    });
+
+    autocomplete.addListener('place_changed', () => {
+      const place = autocomplete.getPlace();
+      if (place.address_components) {
+        this.fillAddressFields(place.address_components, place.formatted_address);
+      }
+    });
+  }
+
+  private fillAddressFields(components: google.maps.GeocoderAddressComponent[], fullAddress: string | undefined) {
+    let streetNumber = '';
+    let route = '';
+    let cityName = '';
+    let stateName = '';
+    let postCode = '';
+
+    for (const component of components) {
+      const type = component.types[0];
+      switch (type) {
+        case 'street_number': streetNumber = component.long_name; break;
+        case 'route': route = component.long_name; break;
+        case 'locality': cityName = component.long_name; break;
+        case 'administrative_area_level_1': stateName = component.long_name; break;
+        case 'postal_code': postCode = component.long_name; break;
+      }
+    }
+    this.registerForm.patchValue({
+      address: fullAddress || `${route} ${streetNumber}`,
+    });
   }
 }

@@ -80,6 +80,10 @@ export class ServiceLogic {
     return this.endPointAdapterLogic.getEncuestasSucursal(storeID, branchID);
   }
 
+  public getTransactions(storeID: number){
+    return this.endPointAdapterLogic.getTransactions(storeID);
+  }
+
   public obtenerPreguntasEncuesta(
     storeID: number | undefined,
     branchID: number | undefined,

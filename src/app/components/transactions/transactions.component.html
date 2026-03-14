@@ -1,0 +1,62 @@
+  <app-header [headerTitle]="'Transacciones'" [arrowNavigation]="'inicio'"></app-header>
+
+  <div class="listado-container">
+  <h2 class="titulo">Historial de Ventas</h2>
+
+  <div class="filtros-card">
+    <div class="filtro-grupo">
+      <label>Fecha:</label>
+      <input type="date" [(ngModel)]="fechaFiltro" (change)="aplicarFiltros()">
+    </div>
+    
+    <div class="filtro-grupo">
+      <label>Desde:</label>
+      <input type="time" [(ngModel)]="horaDesde" (change)="aplicarFiltros()">
+    </div>
+
+    <div class="filtro-grupo">
+      <label>Hasta:</label>
+      <input type="time" [(ngModel)]="horaHasta" (change)="aplicarFiltros()">
+    </div>
+  </div>
+
+  <div class="lista">
+    <div *ngIf="cargando" class="loading">Cargando transacciones...</div>
+    
+    <div *ngFor="let t of transaccionesVisibles" 
+        class="item-transaccion" 
+        [ngClass]="{
+          'estado-error': t.status === 'cancelled' || t.type === 'ANNULMENT' || t.final_amount < 0,
+          'estado-ok': t.status === 'created' && t.type !== 'ANNULMENT'
+        }">
+      
+      <div class="item-header">
+        <span class="razon">{{ t.reason }}</span>
+        <span class="monto">
+          ${{ t.final_amount | number:'1.2-2' }}
+        </span>
+      </div>
+      
+      <div class="item-detalles">
+        <p><strong>Estado:</strong> {{ t.status | uppercase }}</p>
+        <p><strong>Cliente:</strong> {{ t.user_name }} {{ t.user_last_name }}</p>
+        <p class="fecha-hora">{{ t.date | date:'dd/MM/yyyy HH:mm' }} hs</p>
+      </div>
+
+      <div class="badge" [ngClass]="t.status">
+        {{ (t.status === 'cancelled') ? 'Cancelada' : (t.type === 'ANNULMENT' ? 'Anulada' : 'Completada') }}
+      </div>
+    </div>
+
+    <div *ngIf="transaccionesFiltradas.length === 0 && !cargando" class="no-data">
+      No se encontraron transacciones para estos filtros.
+    </div>
+
+    <button 
+      *ngIf="transaccionesFiltradas.length > limiteMostrar" 
+      class="btn-ver-mas" 
+      (click)="verMas()">
+      MOSTRAR MÁS (+{{ transaccionesFiltradas.length - limiteMostrar }})
+    </button>
+  </div>
+</div>

@@ -1,0 +1,150 @@
+.listado-container {
+  padding: 15px;
+  background-color: #f8f9fa;
+  min-height: 100vh;
+}
+
+.titulo {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.filtros-card {
+  background: white;
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.filtro-grupo {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 120px;
+}
+
+.filtro-grupo label {
+  font-size: 0.8rem;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.filtro-grupo input {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+
+.item-transaccion {
+  background: white;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 12px;
+  border-left: 5px solid #28a745;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.razon {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.monto {
+  font-weight: 800;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.item-detalles p {
+  margin: 3px 0;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.fecha-hora {
+  font-style: italic;
+  font-size: 0.8rem !important;
+}
+
+
+.badge {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  margin-top: 10px;
+  background: #e9ecef;
+}
+
+.badge.created { background: #d4edda; color: #155724; }
+
+
+.btn-ver-mas {
+  width: 100%;
+  padding: 12px;
+  background-color: #f1f1f1;
+  border: 2px dashed #ccc;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.btn-ver-mas:hover {
+  background-color: #e2e2e2;
+}
+
+.item-transaccion {
+  background: white;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+
+.estado-ok {
+  border-left: 6px solid #28a745;
+}
+.estado-ok .monto {
+  color: #28a745;
+}
+
+
+.estado-error {
+  border-left: 6px solid #dc3545;
+  background-color: #fffafa;
+}
+.estado-error .monto {
+  color: #dc3545;
+  text-decoration: line-through;
+}
+.estado-error .razon {
+  color: #888;
+}
+
+.badge {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.badge.created { background: #d4edda; color: #155724; }
+.badge.cancelled { background: #f8d7da; color: #721c24; }

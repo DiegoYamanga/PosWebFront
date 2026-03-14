@@ -99,6 +99,10 @@ export class HttpService {
     return this.http.get(this.BASE_URL + "/stores/" + storeID + "/branches/" + branchesID + "/polls",{});
   }
 
+  public getTransactions(storeID: number): Observable<any>{
+    return this.http.get(this.BASE_URL + "/stores/" + storeID + "/transactions",{})
+  }
+
   public obtenerEncuestas(branchID: string, storeID: string): Observable<EncuestaDTO[]> {
     return this.http.get<[EncuestaDTO]>(`${this.BASE_URL}/stores/${storeID}/branches/${branchID}/polls`);
   }

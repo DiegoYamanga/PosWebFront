@@ -54,4 +54,8 @@ export class HeaderComponent {
   this.navigation.goToRegister();
   }
 
+  getTransactions(){
+    this.navigation.goToTransactions();
+  }
+
 }

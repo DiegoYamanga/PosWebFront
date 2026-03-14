@@ -74,5 +74,9 @@ export class NavigationService{
     this.router.navigate(['/register']);
   }
 
+  goToTransactions() {
+    this.router.navigate(['/transactions']);
+  }
+
 
 }

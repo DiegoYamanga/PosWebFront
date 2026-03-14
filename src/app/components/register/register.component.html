@@ -117,13 +117,18 @@
 
     <div>
       <label>Dirección:</label>
-      <input formControlName="address" type="text" />
+      <input 
+        #addressInput 
+        formControlName="address" 
+        type="text" 
+        placeholder="Empieza a escribir tu dirección..." 
+      />
     </div>
 
-    <div>
+    <!-- <div>
       <label>Código Postal:</label>
       <input formControlName="postal_code" type="text" />
-    </div>
+    </div> -->
 
     <button type="submit" [disabled]="registerForm.invalid">Registrar</button>
   </form>

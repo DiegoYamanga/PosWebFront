@@ -16,6 +16,7 @@ import { EncuestaComponent } from './components/encuesta/encuesta.component';
 import { EncuestaPreguntasComponent } from './components/encuesta-preguntas/encuesta-preguntas.component';
 import { AnulacionComponent } from './components/anulacion/anulacion.component';
 import { QrComponent } from './components/qr/qr.component';
+import { TransactionsComponent } from './components/transactions/transactions.component';
 
 
 export const routes: Routes = [
@@ -37,8 +38,8 @@ export const routes: Routes = [
     { path: 'encuestaPreguntas', component: EncuestaPreguntasComponent },
     { path: 'anulacion', component: AnulacionComponent },
     { path: 'qrScanner', component: QrComponent},
-    { path: 'register', component: RegisterComponent }
-
+    { path: 'register', component: RegisterComponent },
+    { path: 'transactions', component: TransactionsComponent }
 
 ];
 

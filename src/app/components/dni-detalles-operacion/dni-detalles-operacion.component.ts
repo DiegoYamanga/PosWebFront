@@ -69,7 +69,7 @@ export class DniDetallesOperacionComponent {
     this.store.select(AppSelectors.selectResLoginDTO).subscribe(loginData => {
       if (loginData) {
         this.storeID = loginData.store.id.toString();
-        this.branchID = loginData.branch.id.toString();
+        this.branchID = loginData.branch?.id?.toString() || '';
       }
     });
   }
@@ -120,13 +120,17 @@ procederEtapa() {
     if (!this.cliente || !this.monto) return;
     this.loginSpinner = true;
 
+    console.log("confirmarOperacion - Valores actuales:", { monto: this.monto, branchID: this.branchID, storeID: this.storeID });
+
     const payload: reqTransactionsFidelidad = {
       serial_number: 'WEB',
       identification: this.cliente.datosCliente.identification,
       amount: parseFloat(this.monto),
       local_datetime: new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString(),
-      branch_id: this.branchID
+      branch_id: parseInt(this.branchID)
     };
+
+    console.log("confirmarOperacion - Payload construido:", payload);
 
     try {
 
@@ -137,7 +141,7 @@ procederEtapa() {
       }
 
       const result = await this.endpointAdapterlogic.crearTransaccionFidelidad(this.storeID, payload);
-      console.log("Transacción Fidelidad registrada:", result);
+      console.log("confirmarOperacion - Resultado del adaptador:", result);
 
       this.loginSpinner = false;
       this.dialog.open(NotificacionComponent, {
@@ -154,7 +158,7 @@ procederEtapa() {
         }
       });
       this.navigation.goToInicio();
-    } catch (e) {
+    } catch (e: any) {
       console.error("❌ Error al registrar transacción Fidelidad:", e);
       this.loginSpinner = false;
       this.dialog.open(NotificacionComponent, {
@@ -166,7 +170,7 @@ procederEtapa() {
         data: {
           success: false,
           titulo: 'Error',
-          descripcion: 'No se pudo registrar la transacción. Intente más tarde.',
+          descripcion: e.message || 'No se pudo registrar la transacción. Intente más tarde.',
           origen: 'FIDELIDAD'
         }
       });
@@ -227,7 +231,7 @@ const reqSwapDTO: ReqSwapDTO = {
   amount: parseFloat(this.monto), // number
   type: this.tipoCanje!, // 'PUNTOS' | 'IMPORTE'
   local_datetime: new Date().toISOString(), // string
-  branch_id: this.branchID // string
+  branch_id: parseInt(this.branchID)
 };
 
 

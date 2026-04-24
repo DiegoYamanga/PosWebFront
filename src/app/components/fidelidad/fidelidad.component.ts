@@ -38,7 +38,7 @@ export class FidelidadComponent {
     this.store.select(AppSelectors.selectResLoginDTO).subscribe(loginData => {
       if (loginData) {
           this.storeID = loginData.store.id.toString();
-          this.branchID = loginData.branch.id.toString();
+          this.branchID = loginData.branch?.id?.toString() || '';
     }
     });
   }

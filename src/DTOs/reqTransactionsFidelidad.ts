@@ -6,5 +6,5 @@ export interface reqTransactionsFidelidad {
     ticket_id?: string;
     payment_method?: string;
     local_datetime: string;
-    branch_id: string;
+    branch_id: number;
   }

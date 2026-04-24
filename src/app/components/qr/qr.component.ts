@@ -207,7 +207,7 @@ export class QrComponent {
       }
 
 
-    } catch (e) {
+    } catch (e: any) {
       console.log("Error: ",e)
       this.error = "No existe un cliente con los datos ingresados"
       this.loading = false;

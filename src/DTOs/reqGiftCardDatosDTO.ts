@@ -3,5 +3,5 @@ export interface ReqGiftCardDatosDTO {
     identification?: string;
     amount: number;
     local_datetime: string;
-    branch_id: string;
+    branch_id: number;
   }

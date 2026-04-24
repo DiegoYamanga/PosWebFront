@@ -70,7 +70,7 @@ export class IdentificacionUsuarioComponent {
         this.error="Error buscando cliente"
         this.loading = false;
       }
-    } catch (e) {
+    } catch (e: any) {
       console.log("Error: ",e)
       this.error = "No existe un cliente con los datos ingresados"
       this.loading = false;

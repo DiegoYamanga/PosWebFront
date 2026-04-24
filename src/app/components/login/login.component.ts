@@ -76,8 +76,8 @@ export class LoginComponent {
         }
         this.loginSpinner = false;
       },
-      error: () => {
-        this.error = 'Error al intentar ingresar.';
+      error: (err) => {
+        this.error = err.error?.message || err.error || 'Error al intentar ingresar.';
         // this.router.navigate(['/error-login']);
         this.loginSpinner = false;
       }

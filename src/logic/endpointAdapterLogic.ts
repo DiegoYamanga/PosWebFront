@@ -141,7 +141,7 @@ public loginFinal(reqLoginDTO: ReqLogicDTO): Observable<resLoginDTO> {
   }
 
 
-  async cargarSaldoGiftCard(storeID: string, branchID: string, cardNumber: string, amount: number): Promise<any> {
+  async cargarSaldoGiftCard(storeID: string, branchID: number, cardNumber: string, amount: number): Promise<any> {
     const payload: ReqGiftCardDatosDTO = {
       card_number: cardNumber,
       identification: "",
@@ -184,6 +184,9 @@ public loginFinal(reqLoginDTO: ReqLogicDTO): Observable<resLoginDTO> {
   }
 
   async anularTransaccion(storeID: string, transactionID: string, body: ReqCancelarTransaccionByID): Promise<any> {
+    if (!body.branch_id) {
+      body.branch_id = this.sesionLogic.getBranchId();
+    }
     try {
       return await firstValueFrom(this.httpService.cancelarTransaccionByIdRequest(storeID, transactionID, body));
     } catch (error: any) {
@@ -221,6 +224,9 @@ public loginFinal(reqLoginDTO: ReqLogicDTO): Observable<resLoginDTO> {
 
 
   async descargarSaldoGiftCard(storeID: string, body: ReqGiftCardDatosDTO): Promise<any> {
+    if (!body.branch_id) {
+      body.branch_id = this.sesionLogic.getBranchId();
+    }
     try {
       return await firstValueFrom(this.httpService.descargarGiftCards(storeID, body));
     } catch (error: any) {
@@ -229,12 +235,32 @@ public loginFinal(reqLoginDTO: ReqLogicDTO): Observable<resLoginDTO> {
   }
 
   async crearTransaccionFidelidad(storeID: string, body: reqTransactionsFidelidad): Promise<any> {
-    return await firstValueFrom(this.httpService.nuevaTransaccionFidelidad(storeID, body));
+    console.log("crearTransaccionFidelidad - Body original:", body);
+    if (!body.branch_id) {
+      const fallbackBranchId = this.sesionLogic.getBranchId();
+      console.log("crearTransaccionFidelidad - branch_id faltante, usando fallback de SessionLogic:", fallbackBranchId);
+      body.branch_id = fallbackBranchId;
+    } else {
+      console.log("crearTransaccionFidelidad - Usando branch_id del body:", body.branch_id);
+    }
+
+    try {
+      console.log("crearTransaccionFidelidad - Payload final a enviar:", body);
+      const res = await firstValueFrom(this.httpService.nuevaTransaccionFidelidad(storeID, body));
+      console.log("crearTransaccionFidelidad - Respuesta exitosa:", res);
+      return res;
+    } catch (error: any) {
+      console.error("crearTransaccionFidelidad - Error capturado:", error);
+      throw new Error(this.procesarError(error));
+    }
   }
 
   private procesarError(error: any): string {
     if (error?.status === 0 || error?.status >= 500) {
       return "Error de conectividad. Intente nuevamente más tarde.";
+    }
+    if (error?.error?.message) {
+      return error.error.message;
     }
     if (typeof error?.error === 'string') {
       return error.error;
@@ -243,6 +269,9 @@ public loginFinal(reqLoginDTO: ReqLogicDTO): Observable<resLoginDTO> {
   }
 
   async crearTransaccionSwap(storeID: string, body: ReqSwapDTO): Promise<ResTransactionCanheDTO> {
+    if (!body.branch_id) {
+      body.branch_id = this.sesionLogic.getBranchId();
+    }
     try {
       const response = await firstValueFrom(this.httpService.transaccionConCanjeDePuntos(storeID, body));
       return response as ResTransactionCanheDTO;

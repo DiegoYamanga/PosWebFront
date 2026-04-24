@@ -12,6 +12,7 @@ import { DatosGlobalService } from '../../../logic/datosGlobalService';
 import { TarjetaUsuarioComponent } from '../pop-ups/tarjeta-usuario/tarjeta-usuario.component';
 
 @Component({
+  standalone: true,
   selector: 'app-canje',
   imports: [MatDialogModule,CommonModule, HeaderComponent],
   templateUrl: './canje.component.html',
@@ -45,11 +46,11 @@ export class CanjeComponent implements OnInit {
       console.log("Cliente logueado:", cliente);
     });
 
-    this.store.select(AppSelectors.selectResLoginDTO).subscribe(loginData => {
+    this.store.select(AppSelectors.selectResLoginDTO).subscribe((loginData: any) => {
       if (loginData) {
           this.storeID = loginData.store.id.toString();
-          this.branchID = loginData.branch.id.toString();
-        console.log("ID de sucursal:", loginData.branch.id);
+          this.branchID = loginData.branch?.id?.toString() || '';
+        console.log("ID de sucursal:", this.branchID);
         console.log("ID de Store:", loginData.store.id);
     }
     });

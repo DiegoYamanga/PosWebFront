@@ -3,6 +3,6 @@ export interface ReqCancelarTransaccionByID {
   card_number?: string | null;
   identification?: string | null;
   local_datetime: string;
-  branch_id: string;
+  branch_id: number;
 
 }

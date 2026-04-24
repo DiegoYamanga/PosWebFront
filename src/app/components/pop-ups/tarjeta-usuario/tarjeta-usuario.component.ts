@@ -85,7 +85,7 @@ confirmarTarjeta(): void {
       this.error = null;
 
       this.close();
-    } catch (e) {
+    } catch (e: any) {
       console.log("Error:", e);
       this.error = "No existe un cliente con los datos ingresados";
     } finally {

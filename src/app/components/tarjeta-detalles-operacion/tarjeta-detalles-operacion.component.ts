@@ -50,7 +50,7 @@ export class TarjetaDetallesOperacionComponent {
     this.store.select(AppSelectors.selectResLoginDTO).subscribe(loginData => {
       if (loginData) {
         this.storeID = loginData.store.id.toString();
-        this.branchID = loginData.branch.id.toString();
+        this.branchID = loginData.branch?.id?.toString() || '';
       }
     });
 
@@ -117,7 +117,7 @@ export class TarjetaDetallesOperacionComponent {
       card_number: tarjetaInfo.card_number,
       amount: parseFloat(this.monto),
       local_datetime: new Date().toISOString(),
-      branch_id: this.branchID
+      branch_id: parseInt(this.branchID)
     };
 
     try {
@@ -147,7 +147,7 @@ export class TarjetaDetallesOperacionComponent {
         data: {
           success: false,
           titulo: 'Error en la operación',
-          descripcion: 'No se pudo registrar la compra. Intente más tarde.',
+          descripcion: error.message || 'No se pudo registrar la compra. Intente más tarde.',
           origen: 'GIFTCARD'
         }
       });
@@ -165,7 +165,7 @@ export class TarjetaDetallesOperacionComponent {
       identification: this.cliente.datosCliente.identification,
       amount: parseFloat(this.monto),
       local_datetime: new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString(),
-      branch_id: this.branchID
+      branch_id: parseInt(this.branchID)
     };
 
     try {
@@ -186,7 +186,7 @@ export class TarjetaDetallesOperacionComponent {
         }
       });
       this.navigation.goToInicio();
-    } catch (e) {
+    } catch (e: any) {
       console.error("❌ Error al registrar transacción Fidelidad:", e);
       this.loginSpinner = false;
       this.dialog.open(NotificacionComponent, {
@@ -198,7 +198,7 @@ export class TarjetaDetallesOperacionComponent {
         data: {
           success: false,
           titulo: 'Error',
-          descripcion: 'No se pudo registrar la transacción. Intente más tarde.',
+          descripcion: e.message || 'No se pudo registrar la transacción. Intente más tarde.',
           origen: 'FIDELIDAD'
         }
       });

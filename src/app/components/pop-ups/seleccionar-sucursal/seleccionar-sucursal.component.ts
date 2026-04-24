@@ -26,7 +26,12 @@ export class SeleccionarSucursalComponent {
     this.store.select(AppSelectors.selectResLoginDTO)
         .subscribe(value => {
           this.resLogin = value;
-          this.branchesList = value?.branches?.branches
+          // Manejar ambos formatos: si branches es el array directamente o si es un objeto con la propiedad branches
+          if (Array.isArray(value?.branches)) {
+            this.branchesList = value.branches;
+          } else {
+            this.branchesList = value?.branches?.branches;
+          }
         });
   }
 

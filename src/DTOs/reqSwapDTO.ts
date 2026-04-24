@@ -5,5 +5,5 @@ export interface ReqSwapDTO {
     amount: number;
     type: 'P' | 'I';
     local_datetime: string;
-    branch_id: string;
+    branch_id: number;
   }

@@ -33,7 +33,7 @@ export class GiftCardComponent {
   etapa: 'seleccion' | 'monto' = 'seleccion';
   titulo: string = "";
   storeID!: string;
-  branchID!: string;
+  branchID!: number;
   giftcard!: GiftcardDTO;
 
   constructor(
@@ -56,7 +56,7 @@ ngOnInit(): void {
 
       //Caso 1: branch único
       if (branchData && !Array.isArray(branchData) && Object.keys(branchData).length > 0) {
-        this.branchID = branchData.id.toString();
+        this.branchID = branchData.id;
         console.log("Branch de sistema - branchID:", this.branchID);
       }
 
@@ -73,7 +73,7 @@ ngOnInit(): void {
 
         dialogRef.afterClosed().subscribe(result => {
           if (result) {
-            this.branchID = result.id.toString();
+            this.branchID = result.id;
             console.log("Branch seleccionada: ", this.branchID);
           } else {
             console.warn("");
@@ -203,7 +203,7 @@ ngOnInit(): void {
           puntos: response.points
         }
       });
-    } catch (e) {
+    } catch (e: any) {
       console.error("Error al consultar saldo:", e);
     }
   }
@@ -305,15 +305,9 @@ ngOnInit(): void {
     } catch (error: any) {
       console.error("❌ Error en operación GiftCard:", error);
 
-      let mensaje = "Ocurrió un problema al procesar la operación.";
+      let mensaje = error?.message || "Ocurrió un problema al procesar la operación.";
 
-      if (error?.status === 0) {
-        mensaje = "Error de conexión con el servidor. Intente nuevamente.";
-      } else if (typeof error?.error === 'string') {
-        mensaje = error.error;
-      } else if (error?.message) {
-        mensaje = error.message;
-      }
+      console.error("ERROR DETECTADO:", error);
 
       this.dialog.open(NotificacionComponent, {
         panelClass: 'full-screen-dialog',

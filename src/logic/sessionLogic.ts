@@ -6,6 +6,7 @@ import { NavigationService } from './navigationService';
 import { Store } from '@ngrx/store';
 import { EndpointAdapterLogic } from './endpointAdapterLogic';
 import { ServiceLogic } from './serviceLogic';
+import { AppSelectors } from '../app/redux/selectors';
 
 @Injectable({
   providedIn: 'root',
@@ -26,6 +27,18 @@ export class SessionLogic {
       if (userData && token) {
           this.store.dispatch(StateResLoginDTOAction.setResLoginDTO({ resLoginDTO: userData }));
       }
+
+      // Sincronizar SessionLogic con el Store
+      // Cada vez que el Store cambie (ej. al seleccionar sucursal), actualizamos SessionLogic y LocalStorage
+      this.store.select(AppSelectors.selectResLoginDTO).subscribe((data: any) => {
+        if (data) {
+          console.log("SessionLogic detectó cambio en el Store, nueva branch:", data.branch?.id);
+          this.userData = data;
+          if (this.isBrowser()) {
+            localStorage.setItem("USER_DATA", JSON.stringify(data));
+          }
+        }
+      });
   }
 
   private isBrowser(): boolean {
@@ -36,6 +49,10 @@ export class SessionLogic {
   setLoginData(token: string, userData: any): void {
     this.token = token;
     this.userData = userData;
+    
+    // Despachar al Store para que toda la app se entere del login
+    this.store.dispatch(StateResLoginDTOAction.setResLoginDTO({ resLoginDTO: userData }));
+
     console.log("Como viene del back el dato user ticket--->",userData.allow_ticket_number)
     this.allowNumberTicket = userData.allow_ticket_number ?? null;
     if(this.isBrowser()){

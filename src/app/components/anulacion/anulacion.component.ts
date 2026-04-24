@@ -42,7 +42,7 @@ transacciones: ResTransactionCanheDTO[] = [];
     this.store.select(AppSelectors.selectResLoginDTO).subscribe(loginData => {
       if (loginData) {
         this.storeID = loginData.store.id.toString();
-        this.branchID = loginData.branch.id;
+        this.branchID = loginData.branch?.id || 0;
       }
     });
 
@@ -112,7 +112,7 @@ transacciones: ResTransactionCanheDTO[] = [];
         card_number: trans.card_number || null,
         identification: trans.user_identification || null,
         local_datetime: new Date().toISOString().slice(0, 19),
-        branch_id: trans.branch_id.toString()
+        branch_id: trans.branch_id
       };
 
 
@@ -137,9 +137,7 @@ transacciones: ResTransactionCanheDTO[] = [];
         
         })
         .catch((err) => {
-          const mensaje = err?.message?.includes('La transacción no puede ser cancelada')
-            ? 'La transacción no puede ser cancelada. Inténtelo nuevamente.'
-            : 'No se pudo realizar la anulación. Inténtelo más tarde.';
+          const mensaje = err?.message || 'No se pudo realizar la anulación. Inténtelo más tarde.';
             
             console.error("ERROR EN ANULACIÓN:", err);
 
